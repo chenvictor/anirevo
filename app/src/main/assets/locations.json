@@ -1,0 +1,34 @@
+[
+  {
+    "title": "Main Events",
+    "subtitle": "Ballroom A"
+  },
+  {
+    "title": "Blue Stage",
+    "subtitle": "Vendor Hall"
+  },
+  {
+    "title": "Panel Room 1",
+    "subtitle": "Meeting Room 109"
+  },
+  {
+    "title": "Panel Room 2",
+    "subtitle": "Meeting Room 119"
+  },
+  {
+    "title": "Panel Room 3",
+    "subtitle": "Meeting Room 121"
+  },
+  {
+    "title": "Creation Station",
+    "subtitle": "Meeting Room 116"
+  },
+  {
+    "title": "Viewing Room 1",
+    "subtitle": "Meeting Room 111"
+  },
+  {
+    "title": "Viewing Room 2",
+    "subtitle": "Meeting Room 114"
+  }
+]

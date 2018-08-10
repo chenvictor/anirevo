@@ -1,0 +1,39 @@
+[
+  {
+    "category": "Official Contests",
+    "events": [
+      {
+        "title": "placeholder_title",
+        "desc": "placeholder_description",
+        "location": "placeholder_location",
+        "start": 930,
+        "end": 1000,
+        "guests": [
+          "placeholder_guest1"
+        ],
+        "tags": [
+          "placeholder_tag_1",
+          "placeholder_tag_2"
+        ]
+      }
+    ]
+  },
+  {
+    "category": "placeholder_category",
+    "events": [
+      {
+        "title": "placeholder_title",
+        "desc": "placeholder_description",
+        "location": "placeholder_location",
+        "start": 930,
+        "end": 1000,
+        "guests": [
+          "placeholder_guest2"
+        ],
+        "tags": [
+          "placeholder_tag_1"
+        ]
+      }
+    ]
+  }
+]
