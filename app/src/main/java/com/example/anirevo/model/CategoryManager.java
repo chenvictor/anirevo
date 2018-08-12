@@ -1,13 +1,20 @@
 package com.example.anirevo.model;
 
+import android.support.annotation.NonNull;
+
+import com.example.anirevo.EventListItem;
+
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
-public class CategoryManager {
+public class CategoryManager implements Iterable<ArCategory>{
 
     private static CategoryManager instance;
 
-    private Set<ArCategory> categories;
+    private List<ArCategory> categories;
 
     public static CategoryManager getInstance() {
         if (instance == null) {
@@ -17,7 +24,7 @@ public class CategoryManager {
     }
 
     private CategoryManager() {
-        categories = new HashSet<>();
+        categories = new ArrayList<>();
     }
 
     public ArCategory getCategory(String title) {
@@ -32,6 +39,13 @@ public class CategoryManager {
     }
 
     public void clear() {
-
+        categories.clear();
     }
+
+    @NonNull
+    @Override
+    public Iterator<ArCategory> iterator() {
+        return categories.iterator();
+    }
+
 }

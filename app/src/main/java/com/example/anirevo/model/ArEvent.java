@@ -15,6 +15,7 @@ public class ArEvent {
     private ArLocation location;
     private int start;
     private int end;
+    private AgeRestriction restriction;
 
     private ArCategory category;
     private Set<ArGuest> guests;
@@ -92,5 +93,17 @@ public class ArEvent {
 
     public void setCategory(ArCategory category) {
         this.category = category;
+    }
+
+    public AgeRestriction getRestriction() {
+        return restriction;
+    }
+
+    public boolean isAgeRestricted() {
+        return restriction != null;
+    }
+
+    public void setRestriction(AgeRestriction restriction) {
+        this.restriction = restriction;
     }
 }

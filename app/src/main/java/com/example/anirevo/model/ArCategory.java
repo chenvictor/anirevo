@@ -1,9 +1,14 @@
 package com.example.anirevo.model;
 
+import android.support.annotation.NonNull;
+
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
-public class ArCategory {
+public class ArCategory implements Iterable<ArEvent>{
 
     /**
      * Represents a general category for ArEvents
@@ -11,11 +16,11 @@ public class ArCategory {
 
     private String title;
 
-    private Set<ArEvent> events;
+    private List<ArEvent> events;
 
     public ArCategory(String title) {
         this.title = title;
-        events = new HashSet<>();
+        events = new ArrayList<>();
     }
 
     public void addEvent(ArEvent event) {
@@ -24,5 +29,11 @@ public class ArCategory {
 
     public String getTitle() {
         return title;
+    }
+
+    @NonNull
+    @Override
+    public Iterator<ArEvent> iterator() {
+        return events.iterator();
     }
 }

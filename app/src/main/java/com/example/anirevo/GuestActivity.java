@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.example.anirevo.model.ArGuest;
 import com.example.anirevo.model.GuestManager;
 
-public class ActivityGuest extends AppCompatActivity {
+public class GuestActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

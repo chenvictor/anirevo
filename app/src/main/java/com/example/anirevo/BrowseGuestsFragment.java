@@ -21,7 +21,7 @@ import java.util.List;
 
 public class BrowseGuestsFragment extends Fragment {
 
-    public static final String EXTRA_GUEST_IDX = "cvic.anirevo.BROWSE_GUEST";
+    public static final String EXTRA_GUEST_IDX = "cvic.anirevo.EXTRA_GUEST_IDX";
 
     private GridView gridView;
     private CustomAdapter adapter;
@@ -37,13 +37,13 @@ public class BrowseGuestsFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         View view = getView();
-        gridView = view.findViewById(R.id.guestgridview);
+        gridView = view.findViewById(R.id.grid_view_guest);
 
         adapter = new CustomAdapter(getContext(), GuestManager.getInstance().getGuests());
         gridView.setAdapter(adapter);
     }
 
-    class CustomAdapter extends BaseAdapter {
+    private class CustomAdapter extends BaseAdapter {
 
         Context mCtx;
         List<ArGuest> guests;
@@ -88,8 +88,8 @@ public class BrowseGuestsFragment extends Fragment {
             view.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
-                    //Move to ActivityGuest
-                    Intent intent = new Intent(getContext(), ActivityGuest.class);
+                    //Move to GuestActivity
+                    Intent intent = new Intent(getContext(), GuestActivity.class);
                     intent.putExtra(EXTRA_GUEST_IDX, i);
                     startActivity(intent);
                 }

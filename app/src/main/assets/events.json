@@ -3,7 +3,21 @@
     "category": "Official Contests",
     "events": [
       {
-        "title": "placeholder_title",
+        "title": "event 1",
+        "desc": "placeholder_description",
+        "location": "placeholder_location",
+        "start": 930,
+        "end": 1000,
+        "guests": [
+          "placeholder_guest1"
+        ],
+        "tags": [
+          "placeholder_tag_1",
+          "placeholder_tag_2"
+        ]
+      },
+      {
+        "title": "event 2",
         "desc": "placeholder_description",
         "location": "placeholder_location",
         "start": 930,
@@ -22,7 +36,85 @@
     "category": "placeholder_category",
     "events": [
       {
-        "title": "placeholder_title",
+        "title": "event 3",
+        "desc": "placeholder_description",
+        "location": "placeholder_location",
+        "start": 930,
+        "end": 1000,
+        "guests": [
+          "placeholder_guest2"
+        ],
+        "tags": [
+          "placeholder_tag_1"
+        ]
+      },
+      {
+        "title": "event 4",
+        "desc": "placeholder_description",
+        "location": "placeholder_location",
+        "start": 930,
+        "end": 1000,
+        "guests": [
+          "placeholder_guest2"
+        ],
+        "tags": [
+          "placeholder_tag_1"
+        ]
+      },
+      {
+        "title": "event 5",
+        "desc": "placeholder_description",
+        "location": "placeholder_location",
+        "start": 930,
+        "end": 1000,
+        "guests": [
+          "placeholder_guest2"
+        ],
+        "tags": [
+          "placeholder_tag_1"
+        ]
+      },
+      {
+        "title": "event 6",
+        "desc": "placeholder_description",
+        "location": "placeholder_location",
+        "start": 930,
+        "end": 1000,
+        "guests": [
+          "placeholder_guest2"
+        ],
+        "tags": [
+          "placeholder_tag_1"
+        ]
+      },
+      {
+        "title": "event 7",
+        "desc": "placeholder_description",
+        "location": "placeholder_location",
+        "start": 930,
+        "end": 1000,
+        "guests": [
+          "placeholder_guest2"
+        ],
+        "tags": [
+          "placeholder_tag_1"
+        ]
+      },
+      {
+        "title": "event 8",
+        "desc": "placeholder_description",
+        "location": "placeholder_location",
+        "start": 930,
+        "end": 1000,
+        "guests": [
+          "placeholder_guest2"
+        ],
+        "tags": [
+          "placeholder_tag_1"
+        ]
+      },
+      {
+        "title": "event 9",
         "desc": "placeholder_description",
         "location": "placeholder_location",
         "start": 930,
