@@ -1,6 +1,7 @@
 package com.example.anirevo;
 
 
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -31,6 +32,8 @@ import java.util.List;
 public class EventsFragment extends Fragment {
 
     public static final String TAG = "cvic.anirevo.EVENTS";
+
+    public static final String EXTRA_EVENT_ID = "cvic.anirevo.EXTRA_EVENT_ID";
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -173,13 +176,14 @@ public class EventsFragment extends Fragment {
                     holder.mView.setCardBackgroundColor(item.getHeaderColor());
                     TextView text = holder.mView.findViewById(R.id.event_header_card_text);
                     text.setText(item.getHeaderText());
+                    holder.itemView.setOnClickListener(null);
                     break;
                 case EVENT_ITEM:
                     TextView name = holder.mView.findViewById(R.id.event_header_card_text);
                     TextView details = holder.mView.findViewById(R.id.event_card_details);
                     TextView desc = holder.mView.findViewById(R.id.event_card_description);
                     TextView age = holder.mView.findViewById(R.id.event_card_age_restriction);
-                    ArEvent event = item.getEvent();
+                    final ArEvent event = item.getEvent();
                     name.setText(event.getTitle());
                     details.setText(event.getDetails());
                     desc.setText(event.getDesc());
@@ -191,6 +195,14 @@ public class EventsFragment extends Fragment {
                     } else {
                         age.setVisibility(View.INVISIBLE);
                     }
+                    holder.itemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(getContext(), EventActivity.class);
+                            intent.putExtra(EXTRA_EVENT_ID, event.getId());
+                            startActivity(intent);
+                        }
+                    });
                     break;
                 default:
                     throw new UnsupportedOperationException("ViewType is invalid");

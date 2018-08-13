@@ -2,15 +2,19 @@ package com.example.anirevo.model;
 
 import android.support.annotation.NonNull;
 
+import com.example.anirevo.InvalidIdException;
+
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 public class EventManager implements Iterable<ArEvent>{
 
     private static EventManager instance;
 
-    private Set<ArEvent> events;
+    private List<ArEvent> events;
 
     public static EventManager getInstance() {
         if (instance == null) {
@@ -20,7 +24,13 @@ public class EventManager implements Iterable<ArEvent>{
     }
 
     private EventManager() {
-        events = new HashSet<>();
+        events = new ArrayList<>();
+    }
+
+    public ArEvent getEvent(int id) throws InvalidIdException{
+        if (id < 0 || id >= events.size())
+            throw new InvalidIdException();
+        return events.get(id);
     }
 
     public ArEvent getEvent(String title) {
@@ -29,7 +39,7 @@ public class EventManager implements Iterable<ArEvent>{
                 return event;
             }
         }
-        ArEvent newEvent = new ArEvent(title);
+        ArEvent newEvent = new ArEvent(title, events.size());
         events.add(newEvent);
         return newEvent;
     }

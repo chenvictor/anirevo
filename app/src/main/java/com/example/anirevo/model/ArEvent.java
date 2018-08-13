@@ -10,6 +10,9 @@ public class ArEvent {
      * Represents an event with a time, location, etc.
      */
 
+    //Reference of the array position in EventManager
+    private int id;
+
     private String title;
     private String date;
     private String start;
@@ -23,7 +26,8 @@ public class ArEvent {
     private Set<ArGuest> guests;
     private Set<ArTag> tags;
 
-    protected ArEvent(String title) {
+    protected ArEvent(String title, int id) {
+        this.id = id;
         this.title = title;
         guests = new HashSet<>();
         tags = new HashSet<>();
@@ -119,5 +123,9 @@ public class ArEvent {
 
     public void setRestriction(AgeRestriction restriction) {
         this.restriction = restriction;
+    }
+
+    public int getId() {
+        return id;
     }
 }

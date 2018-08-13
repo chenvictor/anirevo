@@ -6,13 +6,16 @@ import java.util.Set;
 
 public class ArGuest {
 
+    private int id;
+
     private String name;
     private String title;
     private String japanese;
 
     private Set<ArEvent> events;
 
-    public ArGuest(String name) {
+    public ArGuest(String name, int id) {
+        this.id = id;
         this.name = name;
         events = new HashSet<>();
     }
@@ -57,5 +60,9 @@ public class ArGuest {
 
     public void setJapanese(String japanese) {
         this.japanese = japanese;
+    }
+
+    public int getId() {
+        return id;
     }
 }

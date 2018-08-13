@@ -1,13 +1,15 @@
 package com.example.anirevo.model;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class LocationManager {
 
     private static LocationManager instance;
 
-    private Set<ArLocation> locations;
+    private List<ArLocation> locations;
 
     public static LocationManager getInstance() {
         if(instance == null) {
@@ -17,7 +19,7 @@ public class LocationManager {
     }
 
     private LocationManager() {
-        locations = new HashSet<>();
+        locations = new ArrayList<>();
     }
 
     public ArLocation getLocation(String title) {
@@ -29,6 +31,14 @@ public class LocationManager {
         ArLocation newLoc = new ArLocation(title);
         locations.add(newLoc);
         return newLoc;
+    }
+
+    public int size() {
+        return locations.size();
+    }
+
+    public ArLocation getLocation(int id) {
+        return locations.get(id);
     }
 
     public void clear() {

@@ -21,7 +21,7 @@ import java.util.List;
 
 public class BrowseGuestsFragment extends Fragment {
 
-    public static final String EXTRA_GUEST_IDX = "cvic.anirevo.EXTRA_GUEST_IDX";
+    public static final String EXTRA_GUEST_ID = "cvic.anirevo.EXTRA_GUEST_ID";
 
     private GridView gridView;
     private CustomAdapter adapter;
@@ -90,7 +90,7 @@ public class BrowseGuestsFragment extends Fragment {
                 public void onClick(View v) {
                     //Move to GuestActivity
                     Intent intent = new Intent(getContext(), GuestActivity.class);
-                    intent.putExtra(EXTRA_GUEST_IDX, i);
+                    intent.putExtra(EXTRA_GUEST_ID, guest.getId());
                     startActivity(intent);
                 }
             });

@@ -3,9 +3,11 @@ package com.example.anirevo;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.anirevo.model.ArGuest;
 import com.example.anirevo.model.GuestManager;
@@ -18,7 +20,14 @@ public class GuestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_guest);
 
         Intent intent = getIntent();
-        ArGuest guest = GuestManager.getInstance().getGuest(intent.getIntExtra(BrowseGuestsFragment.EXTRA_GUEST_IDX, 0));
+        ArGuest guest = null;
+        try {
+            guest = GuestManager.getInstance().getGuest(intent.getIntExtra(BrowseGuestsFragment.EXTRA_GUEST_ID, 0));
+        } catch (InvalidIdException e) {
+            //Make toast
+            Toast.makeText(getApplicationContext(), "Invalid Guest ID Provided", Toast.LENGTH_SHORT).show();
+            finish();
+        }
 
         ImageView img = findViewById(R.id.guest_portrait);
         TextView name = findViewById(R.id.guest_name);
@@ -32,5 +41,14 @@ public class GuestActivity extends AppCompatActivity {
         } else {
             japanese.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return false;
     }
 }

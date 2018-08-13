@@ -1,5 +1,6 @@
 package com.example.anirevo;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,11 +9,14 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.anirevo.model.LocationManager;
 
 
 /**
@@ -35,20 +39,15 @@ public class ScheduleFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-//        mTabs = getView().findViewById(R.id.schedule_tabs);
-//        //add 5 tabs temporarily
-//        for (int i = 0; i< 5; i++) {
-//            mTabs.addTab(mTabs.newTab().setText("Tab " + String.valueOf(i)));
-//        }
-
-        mAdapter = new CustomPagerAdapter(getActivity().getSupportFragmentManager());
         mViewPager = getView().findViewById(R.id.schedule_pager);
+        mAdapter = new CustomPagerAdapter(getActivity().getSupportFragmentManager());
         mViewPager.setAdapter(mAdapter);
+
+        mTabs = getView().findViewById(R.id.schedule_tabs);
+        mTabs.setupWithViewPager(mViewPager);
     }
 
-    class CustomPagerAdapter extends FragmentPagerAdapter {
-
-        String[] tempPages = {"MainHall", "Meeting Room 121", "Vendor Hall - Blue Stage", "Many Locations", "Overflow is used"};
+    class CustomPagerAdapter extends FragmentStatePagerAdapter {
 
         CustomPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -56,19 +55,18 @@ public class ScheduleFragment extends Fragment {
 
         @Override
         public Fragment getItem(int i) {
-            Fragment temp = CalendarFragment.newInstance("Location " + String.valueOf(i));
-            return temp;
+            return CalendarFragment.newInstance(LocationManager.getInstance().getLocation(i).getTitle());
         }
 
         @Override
         public int getCount() {
-            return tempPages.length;
+            return LocationManager.getInstance().size();
         }
 
         @Nullable
         @Override
         public CharSequence getPageTitle(int position) {
-            return tempPages[position];
+            return LocationManager.getInstance().getLocation(position).getTitle();
         }
     }
 }

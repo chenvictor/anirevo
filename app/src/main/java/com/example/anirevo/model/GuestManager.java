@@ -1,5 +1,7 @@
 package com.example.anirevo.model;
 
+import com.example.anirevo.InvalidIdException;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -27,26 +29,28 @@ public class GuestManager {
         guests = new ArrayList<>();
     }
 
+    public ArGuest getGuest(int id) throws InvalidIdException {
+        if (id < 0 || id >= guests.size())
+            throw new InvalidIdException();
+        return guests.get(id);
+    }
+
     public ArGuest getGuest(String name) {
         for (ArGuest guest : guests) {
             if (guest.getName().equals(name)) {
                 return guest;
             }
         }
-        ArGuest newGuest = new ArGuest(name);
+        ArGuest newGuest = new ArGuest(name, guests.size());
         guests.add(newGuest);
         return newGuest;
-    }
-
-    public ArGuest getGuest(int idx) {
-        return guests.get(idx);
     }
 
     public List<ArGuest> getGuests() {
         return Collections.unmodifiableList(guests);
     }
 
-    public int getNumGuests(){
+    public int size(){
         return guests.size();
     }
 

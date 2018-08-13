@@ -138,6 +138,170 @@
         "desc": "The end of an era has come. Join Natsu-Heroes for their 4th annual Anirevo panel as they say goodbye to performing as Muse and Aqours. Let's reminisce on our journey thus far and connect over our shared love for Love Live and idols as a whole. Watch them sing and dance to the hits and fan favorites from Love Live: School Idol Project. (With a little bit of variety idol songs sprinkled in for good measure.) Let's make this a memorable show!",
         "tags": [
         ]
+      },
+      {
+        "title": "Sigma Anniversary Live: Summer Parade",
+        "date": "Friday, Aug 3",
+        "start": "5PM",
+        "end": "6:30PM",
+        "location": "Blue Stage - Vendor Hall",
+        "desc": "Returning once again to Anirevo, Sigma is prepared to bring you another exciting live with songs from Love Live! Sunshine! They will also be making an important announcement so make sure to come and join in on this amazing live!",
+        "tags": [
+        ]
+      },
+      {
+        "title": "Twizzie Ramos",
+        "date": "Saturday, Aug 4",
+        "start": "12:30PM",
+        "end": "1:30PM",
+        "location": "Blue Stage - Vendor Hall",
+        "desc": "Twizzie Ramos: The Otaku Rapper.\n\nLive performance meshing Anime/gaming culture with Hip Hop!",
+        "tags": [
+        ]
+      },
+      {
+        "title": "We are Zeus!",
+        "date": "Saturday, Aug 4",
+        "start": "5PM",
+        "end": "6:30PM",
+        "location": "Blue Stage - Vendor Hall",
+        "desc": "Join in for Idol group Zeus' exciting dance covers of ACG and idol songs!",
+        "tags": [
+        ]
+      },
+      {
+        "title": "背徳のシナリオ - Idol Group",
+        "date": "Saturday, Aug 4",
+        "start": "2PM",
+        "end": "3PM",
+        "location": "Blue Stage - Vendor Hall",
+        "desc": "We are a group that mainly focuses on Showa (and early 1990s) idol culture. Since Showa era is the golden age of Japan's music industry, it will be nice to promote through the youth. We will introduce some history of Japan along with some live performances that would bring our audiences back in time.",
+        "tags": [
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Main Events",
+    "events": [
+      {
+        "title": "Opening Ceremonies",
+        "date": "Friday, Aug 3",
+        "start": "10AM",
+        "end": "11AM",
+        "location": "Ballroom A",
+        "desc": "Join us as we officially celebrate the opening of this year's event! Plus, learn what to expect for Anirevo 2018!",
+        "tags": [
+        ]
+      },
+      {
+        "title": "Closing Ceremonies",
+        "date": "Sunday, Aug 5",
+        "start": "7PM",
+        "end": "8PM",
+        "location": "Ballroom A",
+        "desc": "All good things must come to an end. Finish off the weekend with our Closing Ceremonies!",
+        "tags": [
+        ]
+      },
+      {
+        "title": "Anirevo Charity Auction",
+        "date": "Sunday, Aug 5",
+        "start": "5:30PM",
+        "end": "6:30PM",
+        "location": "Meeting Room 109",
+        "desc": "Our Annual Charity auction returns! Come on out and bid on some great stuff all in support of local charity!",
+        "tags": [
+        ]
+      },
+      {
+        "title": "Anirevo Lolita Ball",
+        "date": "Friday, Aug 3",
+        "start": "11PM",
+        "end": "12AM",
+        "location": "Ballroom A",
+        "desc": "Whether you like Gothic, sweet, or classic forms of Lolita, come show it off at our Anirevo Ball, and feel transported to the Victorian era!",
+        "tags": [
+        ]
+      },
+      {
+        "title": "That 70s Dating Game",
+        "date": "Friday, Aug 3",
+        "start": "9PM",
+        "end": "10PM",
+        "location": "Ballroom A",
+        "desc": "That 70's Anime Dating Game (18+) is back again for Anirevo! Have you ever seen those cheesy dating games from the 70's where you have a bachelor or bachelorette looking for love, asking some contestants some questions and whoever answers the most desirably they choose to date? Well this is a nerdy, 18+ version. The bachelor(ettes) will be looking for love out of the crowd! So come on stage if you're chosen, or cheer for whoever you think is owning the stage! The winner will get a date (a hug, picture, and a prize).\n\nYour host, as always, is Savi and friends!",
+        "tags": [
+        ],
+        "age": 18
+      },
+      {
+        "title": "Walk-off: East vs. West",
+        "date": "Friday, Aug 3|Saturday Aug 4|Sunday Aug 5",
+        "start": "2PM|1:30PM|12PM",
+        "end": "4PM|3:30PM|2PM",
+        "location": "Ballroom A",
+        "desc": "Two worlds collide, rival fandoms. There's so much at stake. Does the crowd understand? Is it East versus West, or man against man? Join us in this titanic clash of fandoms from the East and West! Watch our contestants shake, shimmy, and slide their way into the DMs of your hearts in this three day battle royale. (PG-13)",
+        "tags": [
+        ],
+        "age": 13
+      }
+    ]
+  },
+  {
+    "category": "Community",
+    "events": [
+      {
+        "title": "Anime Abominations",
+        "date": "Saturday, Aug 4",
+        "start": "11PM",
+        "end": "12AM",
+        "location": "Meeting Room 121",
+        "desc": "Are you someone who nitpicks flaws in animation? Do you jump onto Twitter to share screen caps from anime where characters go off modelz? If you do, then let us break you of that awful habit as we show you a world where people use primitive 3D animation tools to create anime that never should have been. You'll never complain about good old 2D anime again once you've stared into the glassy dead eyes of these 3D abominations of art.",
+        "tags": [
+        ],
+        "age": 18
+      },
+      {
+        "title": "Anime Figures Q&A with Otaku HQ",
+        "date": "Friday, Aug 3",
+        "start": "9:30PM",
+        "end": "10:30PM",
+        "location": "Meeting Room 121",
+        "desc": "Come share your love of anime figures with fellow collectors and the webmaster of Otaku HQ! We will cover important events since Anirevo 2017, right up to the annual Wonder Festival 2018 Summer!! Come prepared for our Q&A session, and stay till the end for the prize draw!",
+        "tags": [
+        ],
+        "age": 18
+      },
+      {
+        "title": "Awesome Anime Openings",
+        "date": "Friday, Aug 3",
+        "start": "11AM",
+        "end": "12PM",
+        "location": "Meeting Room 109",
+        "desc": "You know that opening minute and thiry seconds before you favorite anime starts? I'll bet that you skip it most of the time to get to what you really want. Well, not this time. Come see some of the best openings anime has to offer and, as always, no skipping allowed!",
+        "tags": [
+        ]
+      },
+      {
+        "title": "BanG Dream! Girls Band Party! - The Mobile Game That Unites Anime Fans Worldwide",
+        "date": "Sunday, Aug 5",
+        "start": "3:30PM",
+        "end": "4:30PM",
+        "location": "Meeting Room 119",
+        "desc": "BanG Dream! Girls Band Party! is the Japanese mobile game taking the world by storm. Come learn about the series, the game, and why it has become such a worldwide success!",
+        "tags": [
+        ]
+      },
+      {
+        "title": "Bara vs. Yaoi",
+        "date": "Saturday, Aug 4",
+        "start": "9PM",
+        "end": "10PM",
+        "location": "Meeting Room 119",
+        "desc": "Many of us are familiar with the term 'Yaoi,' which is generally described as love and intimate relationships depicted between two males, as written by females for a female audience. But not many are aware of the term 'Bara,' which is a more gruff and realistic depiction of love and intimate relationships between two males, as written by gay men for gay men. We will discuss the differences and watch some scenes from some known and infamous Yaoi series, and open a discussion on the topic. There will be some objectionable content shown!",
+        "tags": [
+        ]
       }
     ]
   }
