@@ -2,12 +2,11 @@ package com.example.anirevo.parser;
 
 import android.util.Log;
 
+import com.example.anirevo.model.AgeRestriction;
 import com.example.anirevo.model.ArCategory;
 import com.example.anirevo.model.ArEvent;
-import com.example.anirevo.model.ArGuest;
 import com.example.anirevo.model.CategoryManager;
 import com.example.anirevo.model.EventManager;
-import com.example.anirevo.model.GuestManager;
 import com.example.anirevo.model.LocationManager;
 import com.example.anirevo.model.TagManager;
 
@@ -47,33 +46,43 @@ public class EventParser {
 
     private static void parseEvent(JSONObject event, ArCategory category) throws JSONException{
         String title = event.getString("title");
-        String desc = event.getString("desc");
+        String date = event.getString("date");
+        String start = event.getString("start");
+        String end = event.getString("end");
         String loc = event.getString("location");
-        int startTime = event.getInt("start");
-        int endTime = event.getInt("end");
-        JSONArray guests = event.getJSONArray("guests");
+        String desc = event.getString("desc");
         JSONArray tags = event.getJSONArray("tags");
 
         //Set basic properties
         ArEvent arEvent = EventManager.getInstance().getEvent(title);
-        arEvent.setDesc(desc);
+        arEvent.setDate(date);
+        arEvent.setStart(start);
+        arEvent.setEnd(end);
         arEvent.setLocation(LocationManager.getInstance().getLocation(loc));
-        arEvent.setStart(startTime);
-        arEvent.setEnd(endTime);
+        arEvent.setDesc(desc);
+
+        if (event.has("age")) {
+            //Set age restriction
+            int ageRestrict = event.getInt("age");
+            AgeRestriction restrict = null;
+            switch(ageRestrict) {
+                case 13:
+                    restrict = AgeRestriction.AGE_RESTRICTION_13;
+                    break;
+                case 18:
+                    restrict = AgeRestriction.AGE_RESTRICTION_18;
+                    break;
+                default:
+                    break;
+            }
+            if (restrict != null) {
+                arEvent.setRestriction(restrict);
+            }
+        }
 
         //Establish mutual reference
         arEvent.setCategory(category);
         category.addEvent(arEvent);
-
-        //Add guests
-        GuestManager gManager = GuestManager.getInstance();
-        for (int i = 0; i < guests.length(); i++) {
-            ArGuest guest = gManager.getGuest(guests.getString(i));
-
-            //Establish mutual reference
-            guest.addEvent(arEvent);
-            arEvent.addGuest(guest);
-        }
 
         TagManager tManager = TagManager.getInstance();
         for (int i = 0; i< tags.length(); i++) {

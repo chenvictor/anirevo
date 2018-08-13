@@ -11,10 +11,12 @@ public class ArEvent {
      */
 
     private String title;
-    private String desc;
+    private String date;
+    private String start;
+
+    private String end;
     private ArLocation location;
-    private int start;
-    private int end;
+    private String desc;
     private AgeRestriction restriction;
 
     private ArCategory category;
@@ -27,6 +29,10 @@ public class ArEvent {
         tags = new HashSet<>();
     }
 
+    public String getDetails() {
+        return getDate() + ", " + getStart() + " - " + getEnd() + " | " + getLocation().getTitle();
+    }
+
     public void addGuest(ArGuest guest) {
         guests.add(guest);
     }
@@ -35,20 +41,36 @@ public class ArEvent {
         tags.add(tag);
     }
 
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getStart() {
+        return start;
+    }
+
+    public void setStart(String start) {
+        this.start = start;
+    }
+
+    public String getEnd() {
+        return end;
+    }
+
+    public void setEnd(String end) {
+        this.end = end;
+    }
+
     public void setDesc(String desc) {
         this.desc = desc;
     }
 
     public void setLocation(ArLocation location) {
         this.location = location;
-    }
-
-    public void setStart(int start) {
-        this.start = start;
-    }
-
-    public void setEnd(int end) {
-        this.end = end;
     }
 
     public String getTitle() {
@@ -61,14 +83,6 @@ public class ArEvent {
 
     public ArLocation getLocation() {
         return location;
-    }
-
-    public int getStart() {
-        return start;
-    }
-
-    public int getEnd() {
-        return end;
     }
 
     @Override

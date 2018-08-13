@@ -3,127 +3,140 @@
     "category": "Official Contests",
     "events": [
       {
-        "title": "event 1",
-        "desc": "placeholder_description",
-        "location": "placeholder_location",
-        "start": 930,
-        "end": 1000,
-        "guests": [
-          "placeholder_guest1"
-        ],
+        "title": "AMV Contest",
+        "date": "Saturday, Aug 4",
+        "start": "4PM",
+        "end": "5:30PM",
+        "location": "Meeting Room 109",
+        "desc": "The best of the best in Anime Music Videos will be on display this year! You'll laugh, maybe cry, perhaps scratch your head... It's all for the fun and creativity! Help decide who will win this year at this special event, or just come to kick back and watch some great videos!",
         "tags": [
-          "placeholder_tag_1",
-          "placeholder_tag_2"
         ]
       },
       {
-        "title": "event 2",
-        "desc": "placeholder_description",
-        "location": "placeholder_location",
-        "start": 930,
-        "end": 1000,
-        "guests": [
-          "placeholder_guest1"
-        ],
+        "title": "Anirevo Idol Preliminaries",
+        "date": "Friday, Aug 3",
+        "start": "4PM",
+        "end": "6PM",
+        "location": "Meeting Room 121",
+        "desc": "This is a closed-door event, as potential contestants perform for their peers and our panel of judges see if they can perform at the finals on Sunday! Drop-In contestants are welcome, but please bring your music on a USB and have several choices to avoid potential repeats. Please only contestants and up to one additional friend should attend this event.",
         "tags": [
-          "placeholder_tag_1",
-          "placeholder_tag_2"
+        ]
+      },
+      {
+        "title": "Anirevo Idol Finals",
+        "date": "Sunday, Aug 5",
+        "start": "2:30PM",
+        "end": "4PM",
+        "location": "Ballroom A",
+        "desc": "Come on down to see contestants perform covers of their favorite Japanese tunes in front of loving fans, as they face off against each other for the title of Anirevo Idol 2018.",
+        "tags": [
+        ]
+      },
+      {
+        "title": "Cosplay Contest",
+        "date": "Sunday, Aug 5",
+        "start": "5PM",
+        "end": "6:30PM",
+        "location": "Ballroom A",
+        "desc": "Anirevo's annual Cosplay Contest is a chance for people to show off the fruits of their labor, brought on by hours of blood, sweat, and tears. Sit back, relax, and prepare to laugh and cheer the contestants on! Featuring special guest cosplay judges!",
+        "tags": [
+        ]
+      },
+      {
+        "title": "Swimsuit Contest",
+        "date": "Saturday, Aug 6",
+        "start": "6:30PM",
+        "end": "8:30PM",
+        "location": "Ballroom A",
+        "desc": "It's back! Our special guest Jacob Powers of H. Cupcake Productions presents the annual Swimsuit Contest where contestants strut their stuff and compete to out do each other through their introductions, performances and Q&A session! Who will be victorious this year? Make sure to stop by and see!",
+        "tags": [
+        ],
+        "age": 18
+      },
+      {
+        "title": "Worst Cosplay Contest",
+        "date": "Sunday, Aug 5",
+        "start": "11AM",
+        "end": "11:30AM",
+        "location": "Ballroom A",
+        "desc": "Have you ever watched a Cosplay Contest and thought, 'This is great... but it would be better if it were the exact opposite?' Well, like a version of the Cosplay Contest from the darkest timeline, we bring you the return of the Worst Cosplay Contest!\n\nThe Worst Cosplay Contest is a just-for-fun cosplay improv show where audience members are the contestants. Get up on stage, make a fool of yourself and join us all in having a laugh in a series of wacky quizzes, games, and general weirdness.",
+        "tags": [
         ]
       }
     ]
   },
   {
-    "category": "placeholder_category",
+    "category": "Concerts & Performances",
     "events": [
       {
-        "title": "event 3",
-        "desc": "placeholder_description",
-        "location": "placeholder_location",
-        "start": 930,
-        "end": 1000,
-        "guests": [
-          "placeholder_guest2"
-        ],
+        "title": "Anirevo Convention Idol Festival",
+        "date": "Saturday, Aug 4",
+        "start": "10:30AM",
+        "end": "1PM",
+        "location": "Ballroom A",
+        "desc": "Dust off your wota sticks and prepare to cheer for your favorite idol team! Several local Idol Groups will share the stage, performing dance covers from anime and J-pop groups.",
         "tags": [
-          "placeholder_tag_1"
         ]
       },
       {
-        "title": "event 4",
-        "desc": "placeholder_description",
-        "location": "placeholder_location",
-        "start": 930,
-        "end": 1000,
-        "guests": [
-          "placeholder_guest2"
-        ],
+        "title": "Anirevo's Got Talent",
+        "date": "Friday, Aug 3",
+        "start": "12PM",
+        "end": "1:30PM",
+        "location": "Ballroom A",
+        "desc": "A stage where attendees, guests, and whomever, can converge and bring something magical to life! Singers, dancers, magicians, and musicians. All are welcome!",
         "tags": [
-          "placeholder_tag_1"
         ]
       },
       {
-        "title": "event 5",
-        "desc": "placeholder_description",
-        "location": "placeholder_location",
-        "start": 930,
-        "end": 1000,
-        "guests": [
-          "placeholder_guest2"
-        ],
+        "title": "Concert for the Otaku! ~Pardoy Palooza~",
+        "date": "Sunday, Aug 5",
+        "start": "10AM",
+        "end": "11AM",
+        "location": "Meeting Room 121",
+        "desc": "Join 3 time Otafest Idol winner and Anirevo's former Director of Programming, Jeremy Androsoff, as he performs a ridiculous show celebrating (and parodying) the joys of fandom overall! This unapologetic and random variety show will cover everything from Sailer Moon to Bronies, Yaoi fans to Cosplayers, and everything in between. It's all fair game!",
         "tags": [
-          "placeholder_tag_1"
+        ],
+        "age": 13
+      },
+      {
+        "title": "Flying Tonkatsu Concert",
+        "date": "Friday, Aug 3",
+        "start": "7:30PM",
+        "end": "8:30PM",
+        "location": "Ballroom A",
+        "desc": "Flying Tonkatsu is a Vancouver based music ensemble that arranges and performs anime soundtracks. Being excited about anime and the music within, their repertoire includes loyal interpretations of background music from your favorite anime shows, as well as arrangements from various popular serioes. Through the musical instruments, the group hopes to recreate and share beautiful and memorable moments from anime across eras and genres.",
+        "tags": [
         ]
       },
       {
-        "title": "event 6",
-        "desc": "placeholder_description",
-        "location": "placeholder_location",
-        "start": 930,
-        "end": 1000,
-        "guests": [
-          "placeholder_guest2"
-        ],
+        "title": "IDOLiSH7 NATSU☆Voyage! BOYiSH7 2nd Anniversary Live",
+        "date": "Sunday, Aug 5",
+        "start": "2PM",
+        "end": "3PM",
+        "location": "Blue Stage - Vendor Hall",
+        "desc": "Join in on a summer voyage to Anirevo with BOYiSH7! Let the idols from IDOLiSH7, TRIGGER, and Re:vale pump you up on how to Let's☆SUMMER with lots of dancing, singing, games, and preizes! You'll also learn more about their journey as Vancouver's first idol boy cover group during their Q&A and of course, their most heartthrobbing performance yet!",
         "tags": [
-          "placeholder_tag_1"
         ]
       },
       {
-        "title": "event 7",
-        "desc": "placeholder_description",
-        "location": "placeholder_location",
-        "start": 930,
-        "end": 1000,
-        "guests": [
-          "placeholder_guest2"
-        ],
+        "title": "Kimono Fashion Show",
+        "date": "Friday, Aug 3",
+        "start": "5:30PM",
+        "end": "6:30PM",
+        "location": "Ballroom A",
+        "desc": "Come and watch a beautiful display of kimono fashion! We will be demonstrating the elements of kimono, and their influence on loli dressing and anime costumes. Featuring kimonos by Fumiko",
         "tags": [
-          "placeholder_tag_1"
         ]
       },
       {
-        "title": "event 8",
-        "desc": "placeholder_description",
-        "location": "placeholder_location",
-        "start": 930,
-        "end": 1000,
-        "guests": [
-          "placeholder_guest2"
-        ],
+        "title": "Natsu-Heroes Final LoveLive! ~μ's and Aqours Forever♪♪♪♪♪♪♪♪♪~",
+        "date": "Friday, Aug 3",
+        "start": "1:30PM",
+        "end": "3PM",
+        "location": "Blue Stage - Vendor Hall",
+        "desc": "The end of an era has come. Join Natsu-Heroes for their 4th annual Anirevo panel as they say goodbye to performing as Muse and Aqours. Let's reminisce on our journey thus far and connect over our shared love for Love Live and idols as a whole. Watch them sing and dance to the hits and fan favorites from Love Live: School Idol Project. (With a little bit of variety idol songs sprinkled in for good measure.) Let's make this a memorable show!",
         "tags": [
-          "placeholder_tag_1"
-        ]
-      },
-      {
-        "title": "event 9",
-        "desc": "placeholder_description",
-        "location": "placeholder_location",
-        "start": 930,
-        "end": 1000,
-        "guests": [
-          "placeholder_guest2"
-        ],
-        "tags": [
-          "placeholder_tag_1"
         ]
       }
     ]

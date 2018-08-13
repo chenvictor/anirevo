@@ -181,7 +181,7 @@ public class EventsFragment extends Fragment {
                     TextView age = holder.mView.findViewById(R.id.event_card_age_restriction);
                     ArEvent event = item.getEvent();
                     name.setText(event.getTitle());
-                    details.setText("TODO"); //TODO
+                    details.setText(event.getDetails());
                     desc.setText(event.getDesc());
                     if (event.isAgeRestricted()) {
                         AgeRestriction restriction = event.getRestriction();
