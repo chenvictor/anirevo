@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CalendarDayView">
+        <attr name="dayHeight" format="dimension"/>
+        <attr name="startHour" format="integer"/>
+        <attr name="endHour" format="integer"/>
+    </declare-styleable>
+</resources>
