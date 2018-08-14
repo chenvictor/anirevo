@@ -4,9 +4,13 @@
     "events": [
       {
         "title": "AMV Contest",
-        "date": "Saturday, Aug 4",
-        "start": "4PM",
-        "end": "5:30PM",
+        "time": [
+          {
+            "date": "Saturday, Aug 4",
+            "start": "4PM",
+            "end": "5:30PM"
+          }
+        ],
         "location": "Meeting Room 109",
         "desc": "The best of the best in Anime Music Videos will be on display this year! You'll laugh, maybe cry, perhaps scratch your head... It's all for the fun and creativity! Help decide who will win this year at this special event, or just come to kick back and watch some great videos!",
         "tags": [
@@ -14,9 +18,13 @@
       },
       {
         "title": "Anirevo Idol Preliminaries",
-        "date": "Friday, Aug 3",
-        "start": "4PM",
-        "end": "6PM",
+        "time": [
+          {
+            "date": "Friday, Aug 3",
+            "start": "4PM",
+            "end": "6PM"
+          }
+        ],
         "location": "Meeting Room 121",
         "desc": "This is a closed-door event, as potential contestants perform for their peers and our panel of judges see if they can perform at the finals on Sunday! Drop-In contestants are welcome, but please bring your music on a USB and have several choices to avoid potential repeats. Please only contestants and up to one additional friend should attend this event.",
         "tags": [
@@ -24,9 +32,13 @@
       },
       {
         "title": "Anirevo Idol Finals",
-        "date": "Sunday, Aug 5",
-        "start": "2:30PM",
-        "end": "4PM",
+        "time": [
+          {
+            "date": "Sunday, Aug 5",
+            "start": "2:30PM",
+            "end": "4PM"
+          }
+        ],
         "location": "Ballroom A",
         "desc": "Come on down to see contestants perform covers of their favorite Japanese tunes in front of loving fans, as they face off against each other for the title of Anirevo Idol 2018.",
         "tags": [
@@ -34,9 +46,13 @@
       },
       {
         "title": "Cosplay Contest",
-        "date": "Sunday, Aug 5",
-        "start": "5PM",
-        "end": "6:30PM",
+        "time": [
+          {
+            "date": "Sunday, Aug 5",
+            "start": "5PM",
+            "end": "6:30PM"
+          }
+        ],
         "location": "Ballroom A",
         "desc": "Anirevo's annual Cosplay Contest is a chance for people to show off the fruits of their labor, brought on by hours of blood, sweat, and tears. Sit back, relax, and prepare to laugh and cheer the contestants on! Featuring special guest cosplay judges!",
         "tags": [
@@ -44,9 +60,13 @@
       },
       {
         "title": "Swimsuit Contest",
-        "date": "Saturday, Aug 6",
-        "start": "6:30PM",
-        "end": "8:30PM",
+        "time": [
+          {
+            "date": "Saturday, Aug 6",
+            "start": "6:30PM",
+            "end": "8:30PM"
+          }
+        ],
         "location": "Ballroom A",
         "desc": "It's back! Our special guest Jacob Powers of H. Cupcake Productions presents the annual Swimsuit Contest where contestants strut their stuff and compete to out do each other through their introductions, performances and Q&A session! Who will be victorious this year? Make sure to stop by and see!",
         "tags": [
@@ -55,9 +75,13 @@
       },
       {
         "title": "Worst Cosplay Contest",
-        "date": "Sunday, Aug 5",
-        "start": "11AM",
-        "end": "11:30AM",
+        "time": [
+          {
+            "date": "Sunday, Aug 5",
+            "start": "11AM",
+            "end": "11:30AM"
+          }
+        ],
         "location": "Ballroom A",
         "desc": "Have you ever watched a Cosplay Contest and thought, 'This is great... but it would be better if it were the exact opposite?' Well, like a version of the Cosplay Contest from the darkest timeline, we bring you the return of the Worst Cosplay Contest!\n\nThe Worst Cosplay Contest is a just-for-fun cosplay improv show where audience members are the contestants. Get up on stage, make a fool of yourself and join us all in having a laugh in a series of wacky quizzes, games, and general weirdness.",
         "tags": [
@@ -70,9 +94,13 @@
     "events": [
       {
         "title": "Anirevo Convention Idol Festival",
-        "date": "Saturday, Aug 4",
-        "start": "10:30AM",
-        "end": "1PM",
+        "time": [
+          {
+            "date": "Saturday, Aug 4",
+            "start": "10:30AM",
+            "end": "1PM"
+          }
+        ],
         "location": "Ballroom A",
         "desc": "Dust off your wota sticks and prepare to cheer for your favorite idol team! Several local Idol Groups will share the stage, performing dance covers from anime and J-pop groups.",
         "tags": [
@@ -80,9 +108,13 @@
       },
       {
         "title": "Anirevo's Got Talent",
-        "date": "Friday, Aug 3",
-        "start": "12PM",
-        "end": "1:30PM",
+        "time": [
+          {
+            "date": "Friday, Aug 3",
+            "start": "12PM",
+            "end": "1:30PM"
+          }
+        ],
         "location": "Ballroom A",
         "desc": "A stage where attendees, guests, and whomever, can converge and bring something magical to life! Singers, dancers, magicians, and musicians. All are welcome!",
         "tags": [
@@ -90,9 +122,13 @@
       },
       {
         "title": "Concert for the Otaku! ~Pardoy Palooza~",
-        "date": "Sunday, Aug 5",
-        "start": "10AM",
-        "end": "11AM",
+        "time": [
+          {
+            "date": "Sunday, Aug 5",
+            "start": "10AM",
+            "end": "11AM"
+          }
+        ],
         "location": "Meeting Room 121",
         "desc": "Join 3 time Otafest Idol winner and Anirevo's former Director of Programming, Jeremy Androsoff, as he performs a ridiculous show celebrating (and parodying) the joys of fandom overall! This unapologetic and random variety show will cover everything from Sailer Moon to Bronies, Yaoi fans to Cosplayers, and everything in between. It's all fair game!",
         "tags": [
@@ -101,9 +137,13 @@
       },
       {
         "title": "Flying Tonkatsu Concert",
-        "date": "Friday, Aug 3",
-        "start": "7:30PM",
-        "end": "8:30PM",
+        "time": [
+          {
+            "date": "Friday, Aug 3",
+            "start": "7:30PM",
+            "end": "8:30PM"
+          }
+        ],
         "location": "Ballroom A",
         "desc": "Flying Tonkatsu is a Vancouver based music ensemble that arranges and performs anime soundtracks. Being excited about anime and the music within, their repertoire includes loyal interpretations of background music from your favorite anime shows, as well as arrangements from various popular serioes. Through the musical instruments, the group hopes to recreate and share beautiful and memorable moments from anime across eras and genres.",
         "tags": [
@@ -111,9 +151,13 @@
       },
       {
         "title": "IDOLiSH7 NATSU☆Voyage! BOYiSH7 2nd Anniversary Live",
-        "date": "Sunday, Aug 5",
-        "start": "2PM",
-        "end": "3PM",
+        "time": [
+          {
+            "date": "Sunday, Aug 5",
+            "start": "2PM",
+            "end": "3PM"
+          }
+        ],
         "location": "Blue Stage - Vendor Hall",
         "desc": "Join in on a summer voyage to Anirevo with BOYiSH7! Let the idols from IDOLiSH7, TRIGGER, and Re:vale pump you up on how to Let's☆SUMMER with lots of dancing, singing, games, and preizes! You'll also learn more about their journey as Vancouver's first idol boy cover group during their Q&A and of course, their most heartthrobbing performance yet!",
         "tags": [
@@ -121,9 +165,13 @@
       },
       {
         "title": "Kimono Fashion Show",
-        "date": "Friday, Aug 3",
-        "start": "5:30PM",
-        "end": "6:30PM",
+        "time": [
+          {
+            "date": "Friday, Aug 3",
+            "start": "5:30PM",
+            "end": "6:30PM"
+          }
+        ],
         "location": "Ballroom A",
         "desc": "Come and watch a beautiful display of kimono fashion! We will be demonstrating the elements of kimono, and their influence on loli dressing and anime costumes. Featuring kimonos by Fumiko",
         "tags": [
@@ -131,9 +179,13 @@
       },
       {
         "title": "Natsu-Heroes Final LoveLive! ~μ's and Aqours Forever♪♪♪♪♪♪♪♪♪~",
-        "date": "Friday, Aug 3",
-        "start": "1:30PM",
-        "end": "3PM",
+        "time": [
+          {
+            "date": "Friday, Aug 3",
+            "start": "1:30PM",
+            "end": "3PM"
+          }
+        ],
         "location": "Blue Stage - Vendor Hall",
         "desc": "The end of an era has come. Join Natsu-Heroes for their 4th annual Anirevo panel as they say goodbye to performing as Muse and Aqours. Let's reminisce on our journey thus far and connect over our shared love for Love Live and idols as a whole. Watch them sing and dance to the hits and fan favorites from Love Live: School Idol Project. (With a little bit of variety idol songs sprinkled in for good measure.) Let's make this a memorable show!",
         "tags": [
@@ -141,9 +193,13 @@
       },
       {
         "title": "Sigma Anniversary Live: Summer Parade",
-        "date": "Friday, Aug 3",
-        "start": "5PM",
-        "end": "6:30PM",
+        "time": [
+          {
+            "date": "Friday, Aug 3",
+            "start": "5PM",
+            "end": "6:30PM"
+          }
+        ],
         "location": "Blue Stage - Vendor Hall",
         "desc": "Returning once again to Anirevo, Sigma is prepared to bring you another exciting live with songs from Love Live! Sunshine! They will also be making an important announcement so make sure to come and join in on this amazing live!",
         "tags": [
@@ -151,9 +207,13 @@
       },
       {
         "title": "Twizzie Ramos",
-        "date": "Saturday, Aug 4",
-        "start": "12:30PM",
-        "end": "1:30PM",
+        "time": [
+          {
+            "date": "Saturday, Aug 4",
+            "start": "12:30PM",
+            "end": "1:30PM"
+          }
+        ],
         "location": "Blue Stage - Vendor Hall",
         "desc": "Twizzie Ramos: The Otaku Rapper.\n\nLive performance meshing Anime/gaming culture with Hip Hop!",
         "tags": [
@@ -161,9 +221,13 @@
       },
       {
         "title": "We are Zeus!",
-        "date": "Saturday, Aug 4",
-        "start": "5PM",
-        "end": "6:30PM",
+        "time": [
+          {
+            "date": "Saturday, Aug 4",
+            "start": "5PM",
+            "end": "6:30PM"
+          }
+        ],
         "location": "Blue Stage - Vendor Hall",
         "desc": "Join in for Idol group Zeus' exciting dance covers of ACG and idol songs!",
         "tags": [
@@ -171,9 +235,13 @@
       },
       {
         "title": "背徳のシナリオ - Idol Group",
-        "date": "Saturday, Aug 4",
-        "start": "2PM",
-        "end": "3PM",
+        "time": [
+          {
+            "date": "Saturday, Aug 4",
+            "start": "2PM",
+            "end": "3PM"
+          }
+        ],
         "location": "Blue Stage - Vendor Hall",
         "desc": "We are a group that mainly focuses on Showa (and early 1990s) idol culture. Since Showa era is the golden age of Japan's music industry, it will be nice to promote through the youth. We will introduce some history of Japan along with some live performances that would bring our audiences back in time.",
         "tags": [
@@ -186,9 +254,13 @@
     "events": [
       {
         "title": "Opening Ceremonies",
-        "date": "Friday, Aug 3",
-        "start": "10AM",
-        "end": "11AM",
+        "time": [
+          {
+            "date": "Friday, Aug 3",
+            "start": "10AM",
+            "end": "11AM"
+          }
+        ],
         "location": "Ballroom A",
         "desc": "Join us as we officially celebrate the opening of this year's event! Plus, learn what to expect for Anirevo 2018!",
         "tags": [
@@ -196,9 +268,13 @@
       },
       {
         "title": "Closing Ceremonies",
-        "date": "Sunday, Aug 5",
-        "start": "7PM",
-        "end": "8PM",
+        "time": [
+          {
+            "date": "Sunday, Aug 5",
+            "start": "7PM",
+            "end": "8PM"
+          }
+        ],
         "location": "Ballroom A",
         "desc": "All good things must come to an end. Finish off the weekend with our Closing Ceremonies!",
         "tags": [
@@ -206,9 +282,13 @@
       },
       {
         "title": "Anirevo Charity Auction",
-        "date": "Sunday, Aug 5",
-        "start": "5:30PM",
-        "end": "6:30PM",
+        "time": [
+          {
+            "date": "Sunday, Aug 5",
+            "start": "5:30PM",
+            "end": "6:30PM"
+          }
+        ],
         "location": "Meeting Room 109",
         "desc": "Our Annual Charity auction returns! Come on out and bid on some great stuff all in support of local charity!",
         "tags": [
@@ -216,9 +296,13 @@
       },
       {
         "title": "Anirevo Lolita Ball",
-        "date": "Friday, Aug 3",
-        "start": "11PM",
-        "end": "12AM",
+        "time": [
+          {
+            "date": "Friday, Aug 3",
+            "start": "11PM",
+            "end": "12AM"
+          }
+        ],
         "location": "Ballroom A",
         "desc": "Whether you like Gothic, sweet, or classic forms of Lolita, come show it off at our Anirevo Ball, and feel transported to the Victorian era!",
         "tags": [
@@ -226,9 +310,13 @@
       },
       {
         "title": "That 70s Dating Game",
-        "date": "Friday, Aug 3",
-        "start": "9PM",
-        "end": "10PM",
+        "time": [
+          {
+            "date": "Friday, Aug 3",
+            "start": "9PM",
+            "end": "10PM"
+          }
+        ],
         "location": "Ballroom A",
         "desc": "That 70's Anime Dating Game (18+) is back again for Anirevo! Have you ever seen those cheesy dating games from the 70's where you have a bachelor or bachelorette looking for love, asking some contestants some questions and whoever answers the most desirably they choose to date? Well this is a nerdy, 18+ version. The bachelor(ettes) will be looking for love out of the crowd! So come on stage if you're chosen, or cheer for whoever you think is owning the stage! The winner will get a date (a hug, picture, and a prize).\n\nYour host, as always, is Savi and friends!",
         "tags": [
@@ -237,9 +325,23 @@
       },
       {
         "title": "Walk-off: East vs. West",
-        "date": "Friday, Aug 3|Saturday Aug 4|Sunday Aug 5",
-        "start": "2PM|1:30PM|12PM",
-        "end": "4PM|3:30PM|2PM",
+        "time": [
+          {
+            "date": "Friday, Aug 3",
+            "start": "2PM",
+            "end": "4PM"
+          },
+          {
+            "date": "Saturday, Aug 4",
+            "start": "1:30PM",
+            "end": "3:30PM"
+          },
+          {
+            "date": "Sunday, Aug 5",
+            "start": "12PM",
+            "end": "2PM"
+          }
+        ],
         "location": "Ballroom A",
         "desc": "Two worlds collide, rival fandoms. There's so much at stake. Does the crowd understand? Is it East versus West, or man against man? Join us in this titanic clash of fandoms from the East and West! Watch our contestants shake, shimmy, and slide their way into the DMs of your hearts in this three day battle royale. (PG-13)",
         "tags": [
@@ -253,9 +355,13 @@
     "events": [
       {
         "title": "Anime Abominations",
-        "date": "Saturday, Aug 4",
-        "start": "11PM",
-        "end": "12AM",
+        "time": [
+          {
+            "date": "Saturday, Aug 4",
+            "start": "11PM",
+            "end": "12AM"
+          }
+        ],
         "location": "Meeting Room 121",
         "desc": "Are you someone who nitpicks flaws in animation? Do you jump onto Twitter to share screen caps from anime where characters go off modelz? If you do, then let us break you of that awful habit as we show you a world where people use primitive 3D animation tools to create anime that never should have been. You'll never complain about good old 2D anime again once you've stared into the glassy dead eyes of these 3D abominations of art.",
         "tags": [
@@ -264,9 +370,13 @@
       },
       {
         "title": "Anime Figures Q&A with Otaku HQ",
-        "date": "Friday, Aug 3",
-        "start": "9:30PM",
-        "end": "10:30PM",
+        "time": [
+          {
+            "date": "Friday, Aug 3",
+            "start": "9:30PM",
+            "end": "10:30PM"
+          }
+        ],
         "location": "Meeting Room 121",
         "desc": "Come share your love of anime figures with fellow collectors and the webmaster of Otaku HQ! We will cover important events since Anirevo 2017, right up to the annual Wonder Festival 2018 Summer!! Come prepared for our Q&A session, and stay till the end for the prize draw!",
         "tags": [
@@ -275,9 +385,13 @@
       },
       {
         "title": "Awesome Anime Openings",
-        "date": "Friday, Aug 3",
-        "start": "11AM",
-        "end": "12PM",
+        "time": [
+          {
+            "date": "Friday, Aug 3",
+            "start": "11AM",
+            "end": "12PM"
+          }
+        ],
         "location": "Meeting Room 109",
         "desc": "You know that opening minute and thiry seconds before you favorite anime starts? I'll bet that you skip it most of the time to get to what you really want. Well, not this time. Come see some of the best openings anime has to offer and, as always, no skipping allowed!",
         "tags": [
@@ -285,9 +399,13 @@
       },
       {
         "title": "BanG Dream! Girls Band Party! - The Mobile Game That Unites Anime Fans Worldwide",
-        "date": "Sunday, Aug 5",
-        "start": "3:30PM",
-        "end": "4:30PM",
+        "time": [
+          {
+            "date": "Sunday, Aug 5",
+            "start": "3:30PM",
+            "end": "4:30PM"
+          }
+        ],
         "location": "Meeting Room 119",
         "desc": "BanG Dream! Girls Band Party! is the Japanese mobile game taking the world by storm. Come learn about the series, the game, and why it has become such a worldwide success!",
         "tags": [
@@ -295,9 +413,13 @@
       },
       {
         "title": "Bara vs. Yaoi",
-        "date": "Saturday, Aug 4",
-        "start": "9PM",
-        "end": "10PM",
+        "time": [
+          {
+            "date": "Saturday, Aug 4",
+            "start": "9PM",
+            "end": "10PM"
+          }
+        ],
         "location": "Meeting Room 119",
         "desc": "Many of us are familiar with the term 'Yaoi,' which is generally described as love and intimate relationships depicted between two males, as written by females for a female audience. But not many are aware of the term 'Bara,' which is a more gruff and realistic depiction of love and intimate relationships between two males, as written by gay men for gay men. We will discuss the differences and watch some scenes from some known and infamous Yaoi series, and open a discussion on the topic. There will be some objectionable content shown!",
         "tags": [
