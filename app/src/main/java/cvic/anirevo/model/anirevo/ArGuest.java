@@ -14,7 +14,7 @@ public class ArGuest {
 
     private Set<ArEvent> events;
 
-    public ArGuest(String name, int id) {
+    ArGuest(String name, int id) {
         this.id = id;
         this.name = name;
         events = new HashSet<>();

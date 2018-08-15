@@ -81,7 +81,7 @@ public class CalendarDayView extends FrameLayout {
         refresh();
     }
 
-    public void refresh() {
+    private void refresh() {
         drawDayViews();
 
         drawEvents();
@@ -139,7 +139,7 @@ public class CalendarDayView extends FrameLayout {
         refresh();
     }
 
-    public CalendarDayViewDecoration getDecoration() {
+    private CalendarDayViewDecoration getDecoration() {
         return mDecoration;
     }
 }

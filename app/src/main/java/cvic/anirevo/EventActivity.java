@@ -39,7 +39,7 @@ public class EventActivity extends AppCompatActivity {
 
         title.setText(event.getTitle());
         time.setText(event.getDetails()); //TODO: modify this
-        loc.setText(event.getLocation().getTitle());
+        loc.setText(event.getLocation().getPurpose());
         desc.setText(event.getDesc());
 
         age.setVisibility(View.GONE);

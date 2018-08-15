@@ -96,10 +96,10 @@ public class EventParser {
             EventTime start = EventTime.parse(time.getString("start"));
             EventTime end = EventTime.parse(time.getString("end"));
             CalendarEvent calEvent = new CalendarEvent(arEvent);
-            date.addEvent(calEvent);
             calEvent.setDate(date);
             calEvent.setStart(start);
             calEvent.setEnd(end);
+            date.addEvent(calEvent);
             arEvent.addTimeblock(calEvent);
         }
 

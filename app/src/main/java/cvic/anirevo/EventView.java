@@ -1,6 +1,7 @@
 package cvic.anirevo;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Rect;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
@@ -9,10 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.Locale;
-
+import cvic.anirevo.model.anirevo.AgeRestriction;
 import cvic.anirevo.model.calendar.CalendarEvent;
 
 /**
@@ -22,15 +21,13 @@ import cvic.anirevo.model.calendar.CalendarEvent;
 
 public class EventView extends FrameLayout {
 
-    protected CalendarEvent mEvent;
+    private CalendarEvent mEvent;
 
-    protected OnEventClickListener mEventClickListener;
+    private EventClickListener mClickListener;
 
-    protected CardView mEventCard;
-
-    protected TextView mEventTime;
-
-    protected TextView mEventName;
+    private CardView mEventCard;
+    private TextView mEventName;
+    private TextView mAge;
 
     public EventView(Context context) {
         super(context);
@@ -47,36 +44,26 @@ public class EventView extends FrameLayout {
         init(attrs);
     }
 
-    protected void init(AttributeSet attrs) {
+    private void init(AttributeSet attrs) {
         LayoutInflater.from(getContext()).inflate(R.layout.view_event, this, true);
 
         mEventCard = findViewById(R.id.calendar_event_card);
-        mEventTime = findViewById(R.id.item_event_time);
         mEventName = findViewById(R.id.item_event_name);
-
-        OnClickListener eventItemClickListener = new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(), "Event Tapped", Toast.LENGTH_SHORT).show();
-            }
-        };
-        mEventCard.setOnClickListener(eventItemClickListener);
-    }
-
-    public void setOnEventClickListener(OnEventClickListener listener){
-        this.mEventClickListener = listener;
-    }
-
-    @Override
-    public void setOnClickListener(final OnClickListener l) {
-        throw new UnsupportedOperationException("you should use setOnEventClickListener()");
+        mAge = findViewById(R.id.item_event_age);
+        mClickListener = new EventClickListener();
+        mEventCard.setOnClickListener(mClickListener);
     }
 
     public void setEvent(CalendarEvent event) {
         this.mEvent = event;
         mEventName.setText(String.valueOf(event.getName()));
-        mEventTime.setText(String.format(Locale.CANADA, "%s - %s", mEvent.getStartTime(), mEvent.getEndTime()));
         mEventCard.setCardBackgroundColor(event.getColor());
+        if (AgeRestriction.AGE_RESTRICTION_18.equals(event.getEvent().getRestriction())) {
+            mAge.setVisibility(VISIBLE);
+        } else {
+            mAge.setVisibility(GONE);
+        }
+        mClickListener.setEventId(event.getEvent().getId());
     }
 
     public void setPosition(Rect rect, int topMargin, int bottomMargin){
@@ -96,8 +83,20 @@ public class EventView extends FrameLayout {
         mEventCard.setLayoutParams(cardParams);
     }
 
-    public interface OnEventClickListener {
-        void onEventClick(EventView view, CalendarEvent data);
-        void onEventViewClick(View view, EventView eventView, CalendarEvent data);
+    class EventClickListener implements OnClickListener {
+
+        private int eventId = 0;
+
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(getContext(), EventActivity.class);
+            intent.putExtra(EventsFragment.EXTRA_EVENT_ID, eventId);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            view.getContext().startActivity(intent);
+        }
+
+        void setEventId(int eventId) {
+            this.eventId = eventId;
+        }
     }
 }

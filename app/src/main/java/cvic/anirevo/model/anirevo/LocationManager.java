@@ -20,13 +20,13 @@ public class LocationManager {
         locations = new ArrayList<>();
     }
 
-    public ArLocation getLocation(String title) {
+    public ArLocation getLocation(String location) {
         for(ArLocation loc : locations) {
-            if (loc.getTitle().equals(title)) {
+            if (loc.getPurpose().equals(location)) {
                 return loc;
             }
         }
-        ArLocation newLoc = new ArLocation(title);
+        ArLocation newLoc = new ArLocation(location);
         locations.add(newLoc);
         return newLoc;
     }

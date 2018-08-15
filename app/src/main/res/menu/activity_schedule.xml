@@ -6,6 +6,6 @@
         android:title="date spinner title"
         app:actionViewClass="android.widget.Spinner"
         android:background="#ffffff"
-        android:spinnerMode="dropdown"
+        android:spinnerMode="dialog"
         app:showAsAction="always" />
 </menu>

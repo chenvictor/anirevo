@@ -1,34 +1,42 @@
 [
   {
-    "title": "Main Events",
-    "subtitle": "Ballroom A"
+    "purpose": "Main Events",
+    "location": "Ballroom A"
   },
   {
-    "title": "Blue Stage",
-    "subtitle": "Vendor Hall"
+    "purpose": "Blue Stage",
+    "location": "Vendor Hall"
   },
   {
-    "title": "Panel Room 1",
-    "subtitle": "Meeting Room 109"
+    "purpose": "Panel Room 1",
+    "location": "Meeting Room 109"
   },
   {
-    "title": "Panel Room 2",
-    "subtitle": "Meeting Room 119"
+    "purpose": "Panel Room 2",
+    "location": "Meeting Room 119"
   },
   {
-    "title": "Panel Room 3",
-    "subtitle": "Meeting Room 121"
+    "purpose": "Panel Room 3",
+    "location": "Meeting Room 121"
   },
   {
-    "title": "Creation Station",
-    "subtitle": "Meeting Room 116"
+    "purpose": "Creation Station",
+    "location": "Meeting Room 116"
   },
   {
-    "title": "Viewing Room 1",
-    "subtitle": "Meeting Room 111"
+    "purpose": "Viewing Room 1",
+    "location": "Meeting Room 111"
   },
   {
-    "title": "Viewing Room 2",
-    "subtitle": "Meeting Room 114"
+    "purpose": "Viewing Room 2",
+    "location": "Meeting Room 114"
+  },
+  {
+    "purpose": "Console Gaming",
+    "location": "Vendor Hall"
+  },
+  {
+    "purpose": "Tabletop Gaming",
+    "location": "Vendor Hall"
   }
 ]

@@ -3,11 +3,23 @@ package cvic.anirevo;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ScrollView;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import cvic.anirevo.model.anirevo.ArEvent;
+import cvic.anirevo.model.anirevo.ArLocation;
+import cvic.anirevo.model.anirevo.LocationManager;
+import cvic.anirevo.model.calendar.CalendarDate;
+import cvic.anirevo.model.calendar.CalendarEvent;
+import cvic.anirevo.model.calendar.DateManager;
 
 
 /**
@@ -19,31 +31,28 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class CalendarFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
+    private static final String ARG_LOC_IDX = "AR_LOC_IDX";
+    private static final String ARG_DATE_IDX = "AR_DATE_IDX";
 
+    private CalendarDate mDate;
+    private ArLocation mLocation;
+
+    private ScrollView mScrollView;
     private OnFragmentInteractionListener mListener;
-
-    public CalendarFragment() {
-        // Required empty public constructor
-    }
 
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param tempText Parameter 1.
+     * @param locIdx     Index of the location in LocationManager.
      * @return A new instance of fragment CalendarFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static CalendarFragment newInstance(String tempText) {
+    public static CalendarFragment newInstance(int locIdx, int dateIdx) {
         CalendarFragment fragment = new CalendarFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, tempText);
+        args.putInt(ARG_LOC_IDX, locIdx);
+        args.putInt(ARG_DATE_IDX, dateIdx);
         fragment.setArguments(args);
         return fragment;
     }
@@ -52,21 +61,39 @@ public class CalendarFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
+            mLocation = LocationManager.getInstance().getLocation(getArguments().getInt(ARG_LOC_IDX));
+            mDate = DateManager.getInstance().getDate(getArguments().getInt(ARG_DATE_IDX));
         } else {
-            mParam1 = "Placeholder text";
+            throw new UnsupportedOperationException("CalendarFragment requires a location and date index");
         }
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        mScrollView = getView().findViewById(R.id.calendar_scroller);
+
         CalendarDayView view = getView().findViewById(R.id.calendar_view);
-        view.setLimitTime(10, 25);
+        view.setLimitTime(mDate.getStartHour(), mDate.getEndHour());
+
+        setEvents(view);
+    }
+
+    private void setEvents(CalendarDayView view) {
+        List<CalendarEvent> events = new ArrayList<>();
+
+        for (ArEvent arEvent : mLocation) {
+            for (CalendarEvent calEvent : arEvent.getTimeblocks()) {
+                if (calEvent.getDate().equals(mDate)) {
+                    events.add(calEvent);
+                }
+            }
+        }
+        view.setEvents(events);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_calendar, container, false);

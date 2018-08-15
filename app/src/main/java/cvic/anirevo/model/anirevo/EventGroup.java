@@ -3,7 +3,7 @@ package cvic.anirevo.model.anirevo;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EventGroup {
+class EventGroup {
 
     private int headerColor;
     private String headerText;

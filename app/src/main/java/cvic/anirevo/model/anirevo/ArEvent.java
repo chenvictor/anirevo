@@ -28,7 +28,7 @@ public class ArEvent {
     private Set<ArGuest> guests;
     private Set<ArTag> tags;
 
-    protected ArEvent(String title, int id) {
+    ArEvent(String title, int id) {
         this.id = id;
         this.title = title;
         guests = new HashSet<>();
@@ -40,14 +40,14 @@ public class ArEvent {
         if (timeblocks.size() == 1) {
             //If 1 event, details show specifics
             CalendarEvent calEvent = timeblocks.get(0);
-            return String.format("%s, %s - %s | %s", calEvent.getDate(), calEvent.getStartTime(), calEvent.getEndTime(), getLocation().getTitle());
+            return String.format("%s, %s - %s | %s", calEvent.getDate(), calEvent.getStartTime(), calEvent.getEndTime(), getLocation().getPurpose());
         } else {
             //If multiple event, details show only each day
             StringBuilder details = new StringBuilder();
             for (CalendarEvent calEvent : timeblocks) {
                 details.append(calEvent.getDate()).append(" | ");
             }
-            details.append(getLocation().getTitle());
+            details.append(getLocation().getPurpose());
             return details.toString();
         }
     }
@@ -74,6 +74,7 @@ public class ArEvent {
 
     public void setLocation(ArLocation location) {
         this.location = location;
+        location.addEvent(this);
     }
 
     public String getTitle() {

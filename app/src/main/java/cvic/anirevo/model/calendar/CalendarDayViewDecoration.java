@@ -15,8 +15,6 @@ public class CalendarDayViewDecoration {
 
     private Context mContext;
 
-    private EventView.OnEventClickListener mEventClickListener;
-
     public CalendarDayViewDecoration(Context context) {
         this.mContext = context;
     }
@@ -26,7 +24,7 @@ public class CalendarDayViewDecoration {
         EventView eventView = new EventView(mContext);
         eventView.setEvent(event);
         eventView.setPosition(eventBound, -hourHeight, hourHeight);
-        eventView.setOnEventClickListener(mEventClickListener);
+        eventView.invalidate(); //Invalidate after setting height so constraints can be refreshed
         return eventView;
     }
 
@@ -34,10 +32,6 @@ public class CalendarDayViewDecoration {
         DayView dayView = new DayView(mContext);
         dayView.setText(formatHourString(hour));
         return dayView;
-    }
-
-    public void setOnEventClickListener(EventView.OnEventClickListener listener) {
-        this.mEventClickListener = listener;
     }
 
     private String formatHourString(int hour) {

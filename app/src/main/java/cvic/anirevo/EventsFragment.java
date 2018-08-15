@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -32,6 +33,10 @@ public class EventsFragment extends Fragment {
     public static final String TAG = "cvic.anirevo.EVENTS";
 
     public static final String EXTRA_EVENT_ID = "cvic.anirevo.EXTRA_EVENT_ID";
+
+    private static final String BUNDLE_SCROLL_Y = "ef.bundle.scrollY";
+
+    private static Parcelable scrollState;
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -76,6 +81,28 @@ public class EventsFragment extends Fragment {
                         (HeaderItemDecoration.StickyHeaderInterface) mAdapter));
 
     }
+
+    /**
+     * Save the fragment's scroll state ------------------------------------------
+     */
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        scrollState = mRecyclerView.getLayoutManager().onSaveInstanceState();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (scrollState != null ) {
+            mRecyclerView.getLayoutManager().onRestoreInstanceState(scrollState);
+        }
+    }
+
+    /**
+     * Save the fragment's scroll state ------------------------------------------
+     */
 
     class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements HeaderItemDecoration.StickyHeaderInterface{
 
@@ -142,8 +169,9 @@ public class EventsFragment extends Fragment {
         }
 
         // Create new views (invoked by the layout manager)
+        @NonNull
         @Override
-        public MyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
+        public MyAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent,
                                                        int viewType) {
             // create a new view
             CardView view;
@@ -159,13 +187,12 @@ public class EventsFragment extends Fragment {
                 default:
                     throw new UnsupportedOperationException("ViewType is invalid");
             }
-            ViewHolder vh = new ViewHolder(view);
-            return vh;
+            return new ViewHolder(view);
         }
 
         // Replace the contents of a view (invoked by the layout manager)
         @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             // - get element from your dataset at this position
             // - replace the contents of the view with that element
             EventListItem item = items.get(position);
@@ -224,15 +251,16 @@ public class EventsFragment extends Fragment {
 
             // On Sticky Header Click
             recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
-                public boolean onInterceptTouchEvent(RecyclerView recyclerView, MotionEvent motionEvent) {
+                public boolean onInterceptTouchEvent(@NonNull RecyclerView recyclerView, @NonNull MotionEvent motionEvent) {
                     if (motionEvent.getY() <= mStickyHeaderHeight) {
                         // Handle the clicks on the header here ...
+                        // TODO: Header clicks scroll user to the header content
                         return true;
                     }
                     return false;
                 }
 
-                public void onTouchEvent(RecyclerView recyclerView, MotionEvent motionEvent) {
+                public void onTouchEvent(@NonNull RecyclerView recyclerView, @NonNull MotionEvent motionEvent) {
 
                 }
 
@@ -243,7 +271,7 @@ public class EventsFragment extends Fragment {
         }
 
         @Override
-        public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
+        public void onDrawOver(@NonNull Canvas c, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
             super.onDrawOver(c, parent, state);
 
             View topChild = parent.getChildAt(0);
@@ -329,7 +357,7 @@ public class EventsFragment extends Fragment {
             view.layout(0, 0, view.getMeasuredWidth(), mStickyHeaderHeight = view.getMeasuredHeight());
         }
 
-        public interface StickyHeaderInterface {
+        interface StickyHeaderInterface {
 
             /**
              * This method gets called by {@link HeaderItemDecoration} to fetch the position of the header item in the adapter

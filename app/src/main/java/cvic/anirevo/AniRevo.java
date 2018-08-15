@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.support.design.widget.NavigationView;
@@ -14,6 +15,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -30,6 +33,7 @@ import cvic.anirevo.model.anirevo.EventManager;
 import cvic.anirevo.model.anirevo.GuestManager;
 import cvic.anirevo.model.anirevo.LocationManager;
 import cvic.anirevo.model.anirevo.TagManager;
+import cvic.anirevo.model.calendar.CalendarEvent;
 import cvic.anirevo.model.calendar.DateManager;
 import cvic.anirevo.parser.EventParser;
 import cvic.anirevo.parser.GuestParser;
@@ -59,19 +63,37 @@ public class AniRevo extends AppCompatActivity
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        init();
         loadJSONData();
 
         //Load first fragment
         onNavigationItemSelected(navigationView.getMenu().getItem(0));
     }
 
-
+    private void init() {
+        CalendarEvent.setDefaultColor(getResources().getColor(R.color.calendarEventDefault));
+    }
 
     private void setScheduleSpinnerOptions(Menu menu) {
         MenuItem item = menu.findItem(R.id.schedule_spinner_date);
         Spinner spinner = (Spinner) item.getActionView();
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.spinner_item, DateManager.getInstance().getSpinnerOptions());
         spinner.setAdapter(adapter);
+        spinner.setLayoutMode(Spinner.MODE_DIALOG);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Fragment frag = getSupportFragmentManager().findFragmentById(R.id.content_ani_revo);
+                if (frag instanceof ScheduleFragment) {
+                    ((ScheduleFragment) frag).changeDate(i);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                //Do nothing
+            }
+        });
     }
 
     @Override
@@ -182,7 +204,7 @@ public class AniRevo extends AppCompatActivity
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
 
         if (!item.isChecked()) {
@@ -221,25 +243,24 @@ public class AniRevo extends AppCompatActivity
                 item.setChecked(true);
                 setTitle(item.getTitle());
                 changeMenu(newMenuResource);
-
-                new Handler().post(new Runnable() {
-                    @Override
-                    public void run() {
-                        final DrawerLayout drawer = findViewById(R.id.drawer_layout);
-                        drawer.closeDrawer(GravityCompat.START);
-                    }
-                });
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
 
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                final DrawerLayout drawer = findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+            }
+        });
 
         return true;
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    public String getJSONString(Context context, String path) {
+    private String getJSONString(Context context, String path) {
         String json;
         try {
             InputStream is = context.getAssets().open(path);

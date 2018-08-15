@@ -1,6 +1,7 @@
 package cvic.anirevo;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -19,12 +20,16 @@ import cvic.anirevo.model.anirevo.LocationManager;
  */
 public class ScheduleFragment extends Fragment {
 
-    PagerAdapter mAdapter;
-    TabLayout mTabs;
-    ViewPager mViewPager;
+    private final static String TAG = "anirevo.SchedFrag";
+
+    private int currentDate = 0;
+
+    private PagerAdapter mAdapter;
+    private TabLayout mTabs;
+    private ViewPager mViewPager;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_schedule, container, false);
@@ -42,6 +47,13 @@ public class ScheduleFragment extends Fragment {
         mTabs.setupWithViewPager(mViewPager);
     }
 
+    public void changeDate(int newDate) {
+        if (newDate != currentDate) {
+            currentDate = newDate;
+            mAdapter.notifyDataSetChanged();
+        }
+    }
+
     class CustomPagerAdapter extends FragmentStatePagerAdapter {
 
         CustomPagerAdapter(FragmentManager fm) {
@@ -50,7 +62,12 @@ public class ScheduleFragment extends Fragment {
 
         @Override
         public Fragment getItem(int i) {
-            return CalendarFragment.newInstance(LocationManager.getInstance().getLocation(i).getTitle());
+            return CalendarFragment.newInstance(i, currentDate);
+        }
+
+        @Override
+        public int getItemPosition(@NonNull Object object) {
+            return POSITION_NONE;
         }
 
         @Override
@@ -61,7 +78,7 @@ public class ScheduleFragment extends Fragment {
         @Nullable
         @Override
         public CharSequence getPageTitle(int position) {
-            return LocationManager.getInstance().getLocation(position).getTitle();
+            return LocationManager.getInstance().getLocation(position).getPurpose();
         }
     }
 }

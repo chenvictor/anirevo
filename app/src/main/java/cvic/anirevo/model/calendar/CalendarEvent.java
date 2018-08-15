@@ -11,16 +11,26 @@ import cvic.anirevo.model.anirevo.ArEvent;
 
 public class CalendarEvent {
 
+    private static int defaultColor = Color.GREEN;
+
     private final ArEvent event;
 
     private CalendarDate date;
     private EventTime start;
     private EventTime end;
 
-    private int color = Color.BLUE;
+    private int color = defaultColor;
+
+    public static void setDefaultColor(int color) {
+        defaultColor = color;
+    }
 
     public CalendarEvent(ArEvent event) {
         this.event = event;
+    }
+
+    public ArEvent getEvent() {
+        return event;
     }
 
     public String getName() {
@@ -61,5 +71,18 @@ public class CalendarEvent {
 
     public void setDate(CalendarDate date) {
         this.date = date;
+    }
+
+    //Extra Helpers to assist with Calendar Fragment
+    public int getStartHour() {
+        return start.getHour();
+    }
+
+    public int getEndHour() {
+        if (end.getMinute() == 0) {
+            return end.getHour();
+        } else {
+            return end.getHour() + 1;
+        }
     }
 }

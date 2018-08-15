@@ -2,7 +2,7 @@ package cvic.anirevo;
 
 import cvic.anirevo.model.anirevo.ArEvent;
 
-public class EventListItem {
+class EventListItem {
 
     //Either an item or a header
 

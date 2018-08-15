@@ -2,6 +2,7 @@ package cvic.anirevo;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -23,8 +24,12 @@ public class BrowseGuestsFragment extends Fragment {
 
     public static final String EXTRA_GUEST_ID = "cvic.anirevo.EXTRA_GUEST_ID";
 
-    private GridView gridView;
-    private CustomAdapter adapter;
+    private static final String BUNDLE_SCROLL_Y = "bgf.bundle.scrollY";
+
+    private static Parcelable scrollState;
+
+    private GridView mGridView;
+    private CustomAdapter mAdapter;
 
     @Nullable
     @Override
@@ -37,11 +42,35 @@ public class BrowseGuestsFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         View view = getView();
-        gridView = view.findViewById(R.id.grid_view_guest);
+        mGridView = view.findViewById(R.id.grid_view_guest);
 
-        adapter = new CustomAdapter(getContext(), GuestManager.getInstance().getGuests());
-        gridView.setAdapter(adapter);
+        if (mAdapter == null) {
+            mAdapter = new CustomAdapter(getContext(), GuestManager.getInstance().getGuests());
+        }
+        mGridView.setAdapter(mAdapter);
     }
+
+    /**
+     * Save the fragment's scroll state ------------------------------------------
+     */
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        scrollState = mGridView.onSaveInstanceState();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (scrollState != null ) {
+            mGridView.onRestoreInstanceState(scrollState);
+        }
+    }
+
+    /**
+     * Save the fragment's scroll state ------------------------------------------
+     */
 
     private class CustomAdapter extends BaseAdapter {
 

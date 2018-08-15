@@ -1,7 +1,7 @@
 package cvic.anirevo.model.anirevo;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TagManager {
 
@@ -10,7 +10,7 @@ public class TagManager {
      */
 
     private static TagManager instance;
-    private Set<ArTag> tags;
+    private List<ArTag> tags;
 
     public static TagManager getInstance() {
         if (instance == null) {
@@ -20,7 +20,7 @@ public class TagManager {
     }
 
     private TagManager() {
-        tags = new HashSet<>();
+        tags = new ArrayList<>();
     }
 
     public ArTag getTag(String name) {
@@ -28,6 +28,6 @@ public class TagManager {
     }
 
     public void clear() {
-        //stub
+        tags.clear();
     }
 }

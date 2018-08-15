@@ -9,7 +9,7 @@ public class EventTime {
     private int hour;
     private int minute;
 
-    public EventTime(int hour, int minute) throws InvalidTimeException {
+    private EventTime(int hour, int minute) throws InvalidTimeException {
         if (minute < 0 || minute > 59) {
             throw new InvalidTimeException();
         }
@@ -46,7 +46,7 @@ public class EventTime {
     }
 
     /**
-     * Parse a timestring into EventTime
+     * Parse a time string into EventTime
      * @param timeString    String in the format HH[:MM]PM/AM
      * @return              EventTime
      */

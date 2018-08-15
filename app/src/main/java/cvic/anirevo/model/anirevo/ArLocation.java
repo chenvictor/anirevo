@@ -1,33 +1,44 @@
 package cvic.anirevo.model.anirevo;
 
-import java.util.Objects;
-import java.util.Set;
+import android.support.annotation.NonNull;
 
-public class ArLocation {
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Objects;
+
+public class ArLocation implements Iterable<ArEvent>{
 
     /**
      * Represents a Location for an ArEvent
      */
 
-    private String title;
-    private String subtitle;
+    private String purpose;
+    private String location;
 
-    private Set<ArEvent> events;
+    private List<ArEvent> events;
 
-    public ArLocation(String title) {
-        this.title = title;
+    ArLocation(String purpose) {
+        this.purpose = purpose;
+        events = new ArrayList<>();
     }
 
-    public String getTitle() {
-        return title;
+    public void addEvent(ArEvent event) {
+        if (!events.contains(event)) {
+            events.add(event);
+        }
     }
 
-    public String getSubtitle() {
-        return subtitle;
+    public String getPurpose() {
+        return purpose;
     }
 
-    public void setSubtitle(String subtitle) {
-        this.subtitle = subtitle;
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     @Override
@@ -35,12 +46,18 @@ public class ArLocation {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ArLocation that = (ArLocation) o;
-        return Objects.equals(title, that.title) &&
-                Objects.equals(subtitle, that.subtitle);
+        return Objects.equals(purpose, that.purpose) &&
+                Objects.equals(location, that.location);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title, subtitle);
+        return Objects.hash(purpose);
+    }
+
+    @NonNull
+    @Override
+    public Iterator<ArEvent> iterator() {
+        return events.iterator();
     }
 }

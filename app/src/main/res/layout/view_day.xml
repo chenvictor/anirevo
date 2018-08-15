@@ -12,7 +12,7 @@
         android:layout_height="16dp"
         android:layout_marginStart="8dp"
         android:gravity="end"
-        android:text="12PM"
+        android:text="@string/placeholder_time"
         android:textColor="#5e5e5e"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"

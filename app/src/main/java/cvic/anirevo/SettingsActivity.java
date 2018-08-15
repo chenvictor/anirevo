@@ -3,7 +3,6 @@ package cvic.anirevo;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
@@ -34,7 +33,7 @@ public class SettingsActivity extends AppCompatActivity {
         });
     }
 
-    public void toggle13Button(CompoundButton buttonView, boolean isChecked) {
+    private void toggle13Button(CompoundButton buttonView, boolean isChecked) {
         //Log.i(TAG, "13+ btn toggled");
         Switch switch18 = findViewById(R.id.settings_switch_18);
         if (isChecked) {
@@ -50,7 +49,7 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
-    public void toggle18Button(CompoundButton buttonView, boolean isChecked) {
+    private void toggle18Button(CompoundButton buttonView, boolean isChecked) {
         //Log.i(TAG, "18+ btn toggled");
     }
 

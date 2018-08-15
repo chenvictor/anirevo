@@ -38,10 +38,10 @@ public class LocationParser {
      * @throws JSONException    ---
      */
     private static void parseLoc(JSONObject loc) throws JSONException{
-        String title = loc.getString("title");
-        String subtitle = loc.getString("subtitle");
-        ArLocation arLoc = LocationManager.getInstance().getLocation(title);
-        arLoc.setSubtitle(subtitle);
+        String purpose = loc.getString("purpose");
+        String location = loc.getString("location");
+        ArLocation arLoc = LocationManager.getInstance().getLocation(purpose);
+        arLoc.setLocation(location);
     }
 
 }
