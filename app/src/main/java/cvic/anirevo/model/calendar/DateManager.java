@@ -1,7 +1,5 @@
 package cvic.anirevo.model.calendar;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +39,6 @@ public class DateManager {
         String[] options = new String[dates.size()];
         for (int i = 0; i < dates.size(); i++) {
             options[i] = dates.get(i).getName();
-            Log.i("temp", options[i]);
         }
         return options;
     }

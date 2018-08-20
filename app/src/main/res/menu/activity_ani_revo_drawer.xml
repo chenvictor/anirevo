@@ -14,15 +14,12 @@
             android:id="@+id/nav_guests"
             android:title="@string/nav_drawer_guests" />
         <item
-            android:id="@+id/nav_temp1"
-            android:title="@string/placeholder_text" />
+            android:id="@+id/nav_settings"
+            android:title="@string/nav_drawer_settings" />
     </group>
 
     <item android:title="Subgroup">
         <menu>
-            <item
-                android:id="@+id/nav_settings"
-                android:title="@string/nav_drawer_settings"/>
             <item
                 android:id="@+id/nav_sub1"
                 android:title="sub_item_1" />

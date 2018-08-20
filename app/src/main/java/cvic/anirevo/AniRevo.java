@@ -1,9 +1,10 @@
 package cvic.anirevo;
 
 import android.content.Context;
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -28,6 +29,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 
+import cvic.anirevo.model.anirevo.AgeRestriction;
 import cvic.anirevo.model.anirevo.CategoryManager;
 import cvic.anirevo.model.anirevo.EventManager;
 import cvic.anirevo.model.anirevo.GuestManager;
@@ -41,11 +43,13 @@ import cvic.anirevo.parser.InfoParser;
 import cvic.anirevo.parser.LocationParser;
 
 public class AniRevo extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener{
+        implements NavigationView.OnNavigationItemSelectedListener, SettingsFragment.SettingsFragmentInteractionListener{
 
     private static final String TAG = "cvic.anirevo.MAIN";
 
-    private int menuToChoose = R.menu.ani_revo;
+    private Class currentFragClass = null;
+
+    private int menuToChoose = R.menu.empty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +68,9 @@ public class AniRevo extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         init();
-        loadJSONData();
+
+        //Load JSON
+        loadJSONData(getAgeRestriction());
 
         //Load first fragment
         onNavigationItemSelected(navigationView.getMenu().getItem(0));
@@ -72,6 +78,18 @@ public class AniRevo extends AppCompatActivity
 
     private void init() {
         CalendarEvent.setDefaultColor(getResources().getColor(R.color.calendarEventDefault));
+    }
+
+    private AgeRestriction getAgeRestriction() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        AgeRestriction restriction = null;
+        if (prefs.getBoolean(getString(R.string.display_13_key), true)) {
+            restriction = AgeRestriction.AGE_RESTRICTION_13;
+            if (prefs.getBoolean(getString(R.string.display_18_key), false)) {
+                restriction = AgeRestriction.AGE_RESTRICTION_18;
+            }
+        }
+        return restriction;
     }
 
     private void setScheduleSpinnerOptions(Menu menu) {
@@ -113,13 +131,13 @@ public class AniRevo extends AppCompatActivity
     /**
      * Load all JSON files
      */
-    private void loadJSONData() {
+    private void loadJSONData(AgeRestriction restriction) {
         CategoryManager.getInstance().clear();
         TagManager.getInstance().clear();
         loadInfo();
         loadLocations();
         loadGuests();
-        loadEvents();
+        loadEvents(restriction);
     }
 
     private void loadInfo() {
@@ -163,12 +181,12 @@ public class AniRevo extends AppCompatActivity
         }
     }
 
-    private void loadEvents() {
+    private void loadEvents(AgeRestriction restriction) {
         EventManager.getInstance().clear();
         try {
             JSONArray events = new JSONArray(getJSONString(getApplicationContext(),"events.json"));
             Log.i(TAG, "Events JSON Loaded");
-            EventParser.parseEvents(events);
+            EventParser.parseEvents(events, restriction);
         } catch (JSONException e) {
             e.printStackTrace();
             Log.i(TAG, e.getMessage());
@@ -194,11 +212,6 @@ public class AniRevo extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -206,40 +219,40 @@ public class AniRevo extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
+        Class fragmentClass = null;
+        int newMenuResource = R.menu.empty; //default menu
 
-        if (!item.isChecked()) {
-            Class fragmentClass = null;
-            int newMenuResource = R.menu.ani_revo; //default menu
+        switch (item.getItemId()) {
+            case R.id.nav_schedule:
+                Log.i(TAG, "Schedule btn pressed");
+                fragmentClass = ScheduleFragment.class;
+                newMenuResource = R.menu.activity_schedule;
+                break;
+            case R.id.nav_events:
+                Log.i(TAG, "Events btn pressed");
+                fragmentClass = EventsFragment.class;
+                newMenuResource = R.menu.empty;
+                break;
+            case R.id.nav_guests:
+                Log.i(TAG, "Guests btn pressed");
+                fragmentClass = BrowseGuestsFragment.class;
+                newMenuResource = R.menu.empty;
+                break;
+            case R.id.nav_settings:
+                Log.i(TAG, "Settings btn pressed");
+                fragmentClass = SettingsFragment.class;
+                newMenuResource = R.menu.empty;
+                break;
+            default:
+                Toast.makeText(this, "TODO", Toast.LENGTH_SHORT).show();
+                break;
+        }
 
-            switch (item.getItemId()) {
-                case R.id.nav_schedule:
-                    Log.i(TAG, "Schedule btn pressed");
-                    fragmentClass = ScheduleFragment.class;
-                    newMenuResource = R.menu.activity_schedule;
-                    break;
-                case R.id.nav_events:
-                    Log.i(TAG, "Events btn pressed");
-                    fragmentClass = EventsFragment.class;
-                    newMenuResource = R.menu.activity_events;
-                    break;
-                case R.id.nav_guests:
-                    Log.i(TAG, "Guests btn pressed");
-                    fragmentClass = BrowseGuestsFragment.class;
-                    newMenuResource = R.menu.activity_browse_guests;
-                    break;
-                case R.id.nav_settings:
-                    Log.i(TAG, "Settings btn pressed");
-                    Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
-                    startActivity(intent);
-                    break;
-                default:
-                    Toast.makeText(this, "TODO", Toast.LENGTH_SHORT).show();
-                    break;
-            }
-
+        if (currentFragClass == null || !currentFragClass.equals(fragmentClass)) {
             try {
+                currentFragClass = fragmentClass;
                 Fragment fragment = (Fragment) fragmentClass.newInstance();
-                getSupportFragmentManager().beginTransaction().replace(R.id.content_ani_revo, fragment).commitNow();
+                getSupportFragmentManager().beginTransaction().replace(R.id.content_ani_revo, fragment).commit();
                 item.setChecked(true);
                 setTitle(item.getTitle());
                 changeMenu(newMenuResource);
@@ -277,4 +290,8 @@ public class AniRevo extends AppCompatActivity
         return json;
     }
 
+    @Override
+    public void reloadJSON(AgeRestriction restriction) {
+        loadJSONData(restriction);
+    }
 }
