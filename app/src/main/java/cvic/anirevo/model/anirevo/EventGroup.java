@@ -5,8 +5,8 @@ import java.util.List;
 
 class EventGroup {
 
-    private int headerColor;
-    private String headerText;
+    private final int headerColor;
+    private final String headerText;
 
     private List<ArEvent> events;
 

@@ -34,13 +34,9 @@ public class EventsFragment extends Fragment {
 
     public static final String EXTRA_EVENT_ID = "cvic.anirevo.EXTRA_EVENT_ID";
 
-    private static final String BUNDLE_SCROLL_Y = "ef.bundle.scrollY";
-
     private static Parcelable scrollState;
 
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -60,7 +56,7 @@ public class EventsFragment extends Fragment {
         mRecyclerView.setHasFixedSize(true);
 
         // use a linear layout manager
-        mLayoutManager = new LinearLayoutManager(getContext());
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // specify an adapter (see also next example)
@@ -74,7 +70,7 @@ public class EventsFragment extends Fragment {
             }
         }
 
-        mAdapter = new MyAdapter(dataset);
+        RecyclerView.Adapter mAdapter = new MyAdapter(dataset);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addItemDecoration(
                 new HeaderItemDecoration(mRecyclerView,

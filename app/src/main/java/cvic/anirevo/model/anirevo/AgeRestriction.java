@@ -7,8 +7,8 @@ public enum AgeRestriction {
     AGE_RESTRICTION_13(13, Color.BLUE),
     AGE_RESTRICTION_18(18, Color.RED);
 
-    private int age;
-    private int textColor;
+    private final int age;
+    private final int textColor;
 
     AgeRestriction(int age, int color) {
         this.age = age;

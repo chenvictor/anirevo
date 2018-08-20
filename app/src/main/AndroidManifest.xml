@@ -31,16 +31,9 @@
                 android:value=".AniRevo" />
         </activity>
         <activity
-            android:name=".SettingsActivity"
-            android:label="Settings"
-            android:screenOrientation="portrait">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".AniRevo" />
-        </activity>
-        <activity
             android:name=".EventActivity"
-            android:label="Event">
+            android:label="Event"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".AniRevo" />

@@ -52,7 +52,4 @@ public class DayView extends FrameLayout {
         return mTextHour.getLineHeight();
     }
 
-    public float getSeparateHeight() {
-        return mSeparateHour.getLayoutParams().height;
-    }
 }

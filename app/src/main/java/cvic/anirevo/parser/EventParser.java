@@ -105,8 +105,8 @@ public class EventParser {
         for (int i = 0; i < timeblocks.length(); i++) {
             JSONObject time = timeblocks.getJSONObject(i);
             CalendarDate date = dManager.getDate(time.getString("date"));
-            EventTime start = EventTime.parse(time.getString("start"));
-            EventTime end = EventTime.parse(time.getString("end"));
+            EventTime start = EventTimeParser.parse(time.getString("start"));
+            EventTime end = EventTimeParser.parse(time.getString("end"));
             CalendarEvent calEvent = new CalendarEvent(arEvent);
             calEvent.setDate(date);
             calEvent.setStart(start);

@@ -1,9 +1,12 @@
 package cvic.anirevo.model.anirevo;
 
+import android.support.annotation.NonNull;
+
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public class LocationManager {
+public class LocationManager implements Iterable<ArLocation>{
 
     private static LocationManager instance;
 
@@ -43,4 +46,9 @@ public class LocationManager {
         locations.clear();
     }
 
+    @NonNull
+    @Override
+    public Iterator<ArLocation> iterator() {
+        return locations.iterator();
+    }
 }

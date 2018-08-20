@@ -16,9 +16,9 @@ public class ArEvent {
      */
 
     //Reference of the array position in EventManager
-    private int id;
+    private final int id;
 
-    private String title;
+    private final String title;
     private ArLocation location;
     private String desc;
     private AgeRestriction restriction;

@@ -5,14 +5,11 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import cvic.anirevo.model.anirevo.ArLocation;
 import cvic.anirevo.model.anirevo.LocationManager;
 
 /**
@@ -22,11 +19,8 @@ public class ScheduleFragment extends Fragment {
 
     private final static String TAG = "anirevo.SchedFrag";
 
-    private int currentDate = 0;
-
-    private PagerAdapter mAdapter;
     private TabLayout mTabs;
-    private ViewPager mViewPager;
+    private CalendarFragment calendarFragment;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -38,47 +32,45 @@ public class ScheduleFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        mViewPager = getView().findViewById(R.id.schedule_pager);
-        mAdapter = new CustomPagerAdapter(getActivity().getSupportFragmentManager());
-        mViewPager.setAdapter(mAdapter);
-
         mTabs = getView().findViewById(R.id.schedule_tabs);
-        mTabs.setupWithViewPager(mViewPager);
+        calendarFragment = (CalendarFragment) getChildFragmentManager().findFragmentById(R.id.fragment_calendar);
+        initTabs();
     }
 
-    public void changeDate(int newDate) {
-        if (newDate != currentDate) {
-            currentDate = newDate;
-            mAdapter.notifyDataSetChanged();
+    private void initTabs() {
+        //Add tabs
+        mTabs.removeAllTabs();
+        for (ArLocation location : LocationManager.getInstance()) {
+            mTabs.addTab(mTabs.newTab().setText(location.getPurpose()));
+        }
+
+        mTabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                calendarFragment.changeLocation(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                //Do nothing
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                //Do nothing
+            }
+        });
+    }
+
+    public void changeDate(int i) {
+        if (calendarFragment != null) {
+            calendarFragment.changeDate(i);
         }
     }
 
-    class CustomPagerAdapter extends FragmentStatePagerAdapter {
+    public interface ScheduleInteractionListener {
+        void changeDate(int idx);
 
-        CustomPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int i) {
-            return CalendarFragment.newInstance(i, currentDate);
-        }
-
-        @Override
-        public int getItemPosition(@NonNull Object object) {
-            return POSITION_NONE;
-        }
-
-        @Override
-        public int getCount() {
-            return LocationManager.getInstance().size();
-        }
-
-        @Nullable
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return LocationManager.getInstance().getLocation(position).getPurpose();
-        }
+        void changeLocation(int idx);
     }
 }

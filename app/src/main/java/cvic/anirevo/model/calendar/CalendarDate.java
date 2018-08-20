@@ -9,7 +9,7 @@ import java.util.Objects;
 
 public class CalendarDate implements Iterable<CalendarEvent>{
 
-    private String name;
+    private final String name;
 
     private List<CalendarEvent> events;
 

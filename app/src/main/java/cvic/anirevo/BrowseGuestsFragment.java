@@ -24,8 +24,6 @@ public class BrowseGuestsFragment extends Fragment {
 
     public static final String EXTRA_GUEST_ID = "cvic.anirevo.EXTRA_GUEST_ID";
 
-    private static final String BUNDLE_SCROLL_Y = "bgf.bundle.scrollY";
-
     private static Parcelable scrollState;
 
     private GridView mGridView;

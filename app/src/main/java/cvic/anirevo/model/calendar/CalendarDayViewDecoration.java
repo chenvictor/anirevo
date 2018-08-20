@@ -5,6 +5,7 @@ import android.graphics.Rect;
 
 import cvic.anirevo.DayView;
 import cvic.anirevo.EventView;
+import cvic.anirevo.utils.TimeUtils;
 
 /**
  * Created by FRAMGIA\pham.van.khac on 07/07/2016.
@@ -30,17 +31,8 @@ public class CalendarDayViewDecoration {
 
     public DayView getDayView(int hour) {
         DayView dayView = new DayView(mContext);
-        dayView.setText(formatHourString(hour));
+        dayView.setText(TimeUtils.formatHourString(hour));
         return dayView;
-    }
-
-    private String formatHourString(int hour) {
-        //Format into a 12hr AM/PM with wraparound. eg(hour 25 = 1AM next day)
-        int hourNum = hour % 12;
-        if (hourNum == 0)
-            hourNum = 12;
-        String period = ((hour) % 24 < 12) ? "AM" : "PM";
-        return String.valueOf(hourNum) + period;
     }
 
 }

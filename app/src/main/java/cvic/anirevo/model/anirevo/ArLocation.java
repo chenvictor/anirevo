@@ -13,7 +13,7 @@ public class ArLocation implements Iterable<ArEvent>{
      * Represents a Location for an ArEvent
      */
 
-    private String purpose;
+    private final String purpose;
     private String location;
 
     private List<ArEvent> events;

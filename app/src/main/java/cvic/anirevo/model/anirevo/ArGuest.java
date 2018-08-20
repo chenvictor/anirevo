@@ -6,9 +6,9 @@ import java.util.Set;
 
 public class ArGuest {
 
-    private int id;
+    private final int id;
 
-    private String name;
+    private final String name;
     private String title;
     private String japanese;
 
