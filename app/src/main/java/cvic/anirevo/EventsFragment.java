@@ -100,7 +100,7 @@ public class EventsFragment extends Fragment {
      * Save the fragment's scroll state ------------------------------------------
      */
 
-    class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements HeaderItemDecoration.StickyHeaderInterface{
+    class MyAdapter extends RecyclerView.Adapter<CardViewHolder> implements HeaderItemDecoration.StickyHeaderInterface{
 
         private static final int HEADER_ITEM = 0;
         private static final int EVENT_ITEM = 1;
@@ -139,18 +139,6 @@ public class EventsFragment extends Fragment {
             return items.get(itemPosition).isHeader();
         }
 
-        // Provide a reference to the views for each data item
-        // Complex data items may need more than one view per item, and
-        // you provide access to all the views for a data item in a view holder
-        class ViewHolder extends RecyclerView.ViewHolder {
-            // each data item is just a string in this case
-            CardView mView;
-            ViewHolder(CardView v) {
-                super(v);
-                mView = v;
-            }
-        }
-
         // Provide a suitable constructor (depends on the kind of dataset)
         MyAdapter(List<EventListItem> items) {
             this.items = items;
@@ -167,7 +155,7 @@ public class EventsFragment extends Fragment {
         // Create new views (invoked by the layout manager)
         @NonNull
         @Override
-        public MyAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent,
+        public CardViewHolder onCreateViewHolder(@NonNull ViewGroup parent,
                                                        int viewType) {
             // create a new view
             CardView view;
@@ -183,27 +171,28 @@ public class EventsFragment extends Fragment {
                 default:
                     throw new UnsupportedOperationException("ViewType is invalid");
             }
-            return new ViewHolder(view);
+            return new CardViewHolder(view);
         }
 
         // Replace the contents of a view (invoked by the layout manager)
         @Override
-        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull CardViewHolder holder, int position) {
             // - get element from your dataset at this position
             // - replace the contents of the view with that element
             EventListItem item = items.get(position);
+            CardView view = holder.getCardView();
             switch (holder.getItemViewType()) {
                 case HEADER_ITEM:
-                    holder.mView.setCardBackgroundColor(item.getHeaderColor());
-                    TextView text = holder.mView.findViewById(R.id.event_header_card_text);
+                    view.setCardBackgroundColor(item.getHeaderColor());
+                    TextView text = view.findViewById(R.id.event_header_card_text);
                     text.setText(item.getHeaderText());
                     holder.itemView.setOnClickListener(null);
                     break;
                 case EVENT_ITEM:
-                    TextView name = holder.mView.findViewById(R.id.event_header_card_text);
-                    TextView details = holder.mView.findViewById(R.id.event_card_details);
-                    TextView desc = holder.mView.findViewById(R.id.event_card_description);
-                    TextView age = holder.mView.findViewById(R.id.event_card_age_restriction);
+                    TextView name = view.findViewById(R.id.event_header_card_text);
+                    TextView details = view.findViewById(R.id.event_card_details);
+                    TextView desc = view.findViewById(R.id.event_card_description);
+                    TextView age = view.findViewById(R.id.event_card_age_restriction);
                     final ArEvent event = item.getEvent();
                     name.setText(event.getTitle());
                     details.setText(event.getDetails());

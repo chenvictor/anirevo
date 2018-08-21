@@ -18,10 +18,17 @@
         app:tabMode="scrollable"
         app:tabSelectedTextColor="@android:color/white" />
 
-    <fragment
-        android:id="@+id/fragment_calendar"
-        android:name="cvic.anirevo.CalendarFragment"
+    <ScrollView
+        android:id="@+id/calendar_scroller"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        tools:context=".CalendarFragment">
+
+        <cvic.anirevo.CalendarDayView
+            android:id="@+id/calendar_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </ScrollView>
 
 </LinearLayout>

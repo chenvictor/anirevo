@@ -8,9 +8,17 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ScrollView;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import cvic.anirevo.model.anirevo.ArEvent;
 import cvic.anirevo.model.anirevo.ArLocation;
 import cvic.anirevo.model.anirevo.LocationManager;
+import cvic.anirevo.model.calendar.CalendarDate;
+import cvic.anirevo.model.calendar.CalendarEvent;
+import cvic.anirevo.model.calendar.DateManager;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -20,7 +28,11 @@ public class ScheduleFragment extends Fragment {
     private final static String TAG = "anirevo.SchedFrag";
 
     private TabLayout mTabs;
-    private CalendarFragment calendarFragment;
+    private ScrollView mScrollView;
+    private CalendarDayView mView;
+
+    private CalendarDate mDate;
+    private ArLocation mLocation;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -33,8 +45,12 @@ public class ScheduleFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mTabs = getView().findViewById(R.id.schedule_tabs);
-        calendarFragment = (CalendarFragment) getChildFragmentManager().findFragmentById(R.id.fragment_calendar);
+        mScrollView = getView().findViewById(R.id.calendar_scroller);
+        mView = getView().findViewById(R.id.calendar_view);
+
         initTabs();
+        initDateLoc();
+        setEvents();
     }
 
     private void initTabs() {
@@ -47,7 +63,7 @@ public class ScheduleFragment extends Fragment {
         mTabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                calendarFragment.changeLocation(tab.getPosition());
+                changeLocation(tab.getPosition());
             }
 
             @Override
@@ -62,15 +78,36 @@ public class ScheduleFragment extends Fragment {
         });
     }
 
-    public void changeDate(int i) {
-        if (calendarFragment != null) {
-            calendarFragment.changeDate(i);
+    private void initDateLoc() {
+        mLocation = LocationManager.getInstance().getLocation(0);
+        mDate = DateManager.getInstance().getDate(0);
+
+        mView.setLimitTime(mDate.getStartHour(), mDate.getEndHour());
+    }
+
+    private void setEvents() {
+        List<CalendarEvent> events = new ArrayList<>();
+
+        for (ArEvent arEvent : mLocation) {
+            for (CalendarEvent calEvent : arEvent.getTimeblocks()) {
+                if (calEvent.getDate().equals(mDate)) {
+                    events.add(calEvent);
+                }
+            }
         }
+        mView.setEvents(events);
     }
 
-    public interface ScheduleInteractionListener {
-        void changeDate(int idx);
-
-        void changeLocation(int idx);
+    public void changeDate(int idx) {
+        mDate = DateManager.getInstance().getDate(idx);
+        mView.setLimitTime(mDate.getStartHour(), mDate.getEndHour());
+        mScrollView.setScrollY(0);
+        setEvents();
     }
+
+    public void changeLocation(int idx) {
+        mLocation = LocationManager.getInstance().getLocation(idx);
+        setEvents();
+    }
+
 }

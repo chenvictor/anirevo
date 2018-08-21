@@ -47,6 +47,8 @@ public class AniRevo extends AppCompatActivity
 
     private static final String TAG = "cvic.anirevo.MAIN";
 
+    private Spinner schedSpinner;
+
     private Class currentFragClass = null;
 
     private int menuToChoose = R.menu.empty;
@@ -94,11 +96,11 @@ public class AniRevo extends AppCompatActivity
 
     private void setScheduleSpinnerOptions(Menu menu) {
         MenuItem item = menu.findItem(R.id.schedule_spinner_date);
-        Spinner spinner = (Spinner) item.getActionView();
+        schedSpinner = (Spinner) item.getActionView();
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.spinner_item, DateManager.getInstance().getSpinnerOptions());
-        spinner.setAdapter(adapter);
-        spinner.setLayoutMode(Spinner.MODE_DIALOG);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        schedSpinner.setAdapter(adapter);
+        schedSpinner.setLayoutMode(Spinner.MODE_DIALOG);
+        schedSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 Fragment frag = getSupportFragmentManager().findFragmentById(R.id.content_ani_revo);
@@ -288,6 +290,10 @@ public class AniRevo extends AppCompatActivity
             return null;
         }
         return json;
+    }
+
+    public Spinner getSchedSpinner() {
+        return schedSpinner;
     }
 
     @Override

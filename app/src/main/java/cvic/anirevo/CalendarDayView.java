@@ -136,6 +136,7 @@ public class CalendarDayView extends FrameLayout {
     public void setLimitTime(int startHour, int endHour) {
         mStartHour = startHour;
         mEndHour = endHour;
+        scrollTo(0,0);
         refresh();
     }
 

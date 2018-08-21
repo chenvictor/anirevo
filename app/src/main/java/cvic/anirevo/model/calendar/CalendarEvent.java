@@ -3,6 +3,7 @@ package cvic.anirevo.model.calendar;
 import android.graphics.Color;
 
 import cvic.anirevo.model.anirevo.ArEvent;
+import cvic.anirevo.utils.TimeUtils;
 
 /**
  * Created by FRAMGIA\pham.van.khac on 07/07/2016.
@@ -59,7 +60,7 @@ public class CalendarEvent {
 
     public void setEnd(EventTime end) {
         //if end time 'before' start, add 24 hours
-        if (start.after(end)) {
+        if (TimeUtils.timeAfter(start, end)) {
             end.increment();
         }
         this.end = end;

@@ -8,4 +8,7 @@
     <!-- CalendarView -->
     <dimen name="dayHeight">64dp</dimen>
     <dimen name="cdv_event_margin">4dp</dimen>
+
+    <!-- BrowseGuests -->
+    <dimen name="guest_card_width">110dp</dimen>
 </resources>

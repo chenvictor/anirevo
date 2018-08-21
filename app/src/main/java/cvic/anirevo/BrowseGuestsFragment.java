@@ -7,11 +7,13 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,6 +21,7 @@ import java.util.List;
 
 import cvic.anirevo.model.anirevo.ArGuest;
 import cvic.anirevo.model.anirevo.GuestManager;
+import cvic.anirevo.utils.LayoutUtils;
 
 public class BrowseGuestsFragment extends Fragment {
 
@@ -26,7 +29,7 @@ public class BrowseGuestsFragment extends Fragment {
 
     private static Parcelable scrollState;
 
-    private GridView mGridView;
+    private RecyclerView mRecyclerView;
     private CustomAdapter mAdapter;
 
     @Nullable
@@ -40,12 +43,13 @@ public class BrowseGuestsFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         View view = getView();
-        mGridView = view.findViewById(R.id.grid_view_guest);
+        mRecyclerView = view.findViewById(R.id.recycler_view_guest);
+        mRecyclerView.setLayoutManager(LayoutUtils.createGridLayoutManager(getContext(), getResources().getDimension(R.dimen.guest_card_width)));
 
         if (mAdapter == null) {
             mAdapter = new CustomAdapter(getContext(), GuestManager.getInstance().getGuests());
         }
-        mGridView.setAdapter(mAdapter);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     /**
@@ -55,14 +59,14 @@ public class BrowseGuestsFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        scrollState = mGridView.onSaveInstanceState();
+        scrollState = mRecyclerView.getLayoutManager().onSaveInstanceState();
     }
 
     @Override
     public void onResume() {
         super.onResume();
         if (scrollState != null ) {
-            mGridView.onRestoreInstanceState(scrollState);
+            mRecyclerView.getLayoutManager().onRestoreInstanceState(scrollState);
         }
     }
 
@@ -70,7 +74,7 @@ public class BrowseGuestsFragment extends Fragment {
      * Save the fragment's scroll state ------------------------------------------
      */
 
-    private class CustomAdapter extends BaseAdapter {
+    private class CustomAdapter extends RecyclerView.Adapter<CardViewHolder> {
 
         Context mCtx;
         List<ArGuest> guests;
@@ -80,34 +84,22 @@ public class BrowseGuestsFragment extends Fragment {
             this.guests = guests;
         }
 
+        @NonNull
         @Override
-        public int getCount() {
-            return guests.size();
+        public CardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            CardView view = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.guest_card_layout, parent, false);
+            return new CardViewHolder(view);
         }
 
         @Override
-        public Object getItem(int i) {
-            return guests.get(i);
-        }
+        public void onBindViewHolder(@NonNull CardViewHolder viewHolder, int i) {
+            final ArGuest guest = guests.get(i);
 
-        @Override
-        public long getItemId(int i) {
-            return i;
-        }
-
-        @Override
-        public View getView(final int i, View view, ViewGroup viewGroup) {
-            if (view == null) {
-                view = LayoutInflater.from(mCtx).inflate(R.layout.guest_card_layout, viewGroup,false);
-            }
-
-            final ArGuest guest = (ArGuest) getItem(i);
-
+            View view = viewHolder.getCardView();
             ImageView img = view.findViewById(R.id.guest_card_portrait);
             TextView name = view.findViewById(R.id.guest_card_name);
             TextView title = view.findViewById(R.id.guest_card_title);
 
-            //
             img.setImageDrawable(mCtx.getResources().getDrawable(R.drawable.placeholder_portrait));
             name.setText(guest.getName());
             title.setText(guest.getTitle());
@@ -121,8 +113,16 @@ public class BrowseGuestsFragment extends Fragment {
                     startActivity(intent);
                 }
             });
+        }
 
-            return view;
+        @Override
+        public long getItemId(int i) {
+            return i;
+        }
+
+        @Override
+        public int getItemCount() {
+            return guests.size();
         }
     }
 
