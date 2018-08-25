@@ -41,18 +41,9 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                SharedPreferences prefs = getPreferenceManager().getSharedPreferences();
-                AgeRestriction restriction = null;
-
-                if (prefs.getBoolean(getString(R.string.display_13_key), true)) {
-                    restriction = AgeRestriction.AGE_RESTRICTION_13;
-                    if (prefs.getBoolean(getString(R.string.display_18_key), false)) {
-                        restriction = AgeRestriction.AGE_RESTRICTION_18;
-                    }
-                }
                 if (mListener != null) {
                     showToastMessage("Applying changes...");
-                    mListener.reloadJSON(restriction);
+                    mListener.reloadJSON();
                     return true;
                 }
                 return false;
@@ -99,7 +90,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
      */
     public interface SettingsFragmentInteractionListener {
         // TODO: Update argument type and name
-        void reloadJSON (AgeRestriction restriction);
+        void reloadJSON ();
     }
 
 }

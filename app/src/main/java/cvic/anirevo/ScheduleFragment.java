@@ -1,11 +1,14 @@
 package cvic.anirevo;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
@@ -26,6 +29,7 @@ import cvic.anirevo.model.calendar.DateManager;
 public class ScheduleFragment extends Fragment {
 
     private final static String TAG = "anirevo.SchedFrag";
+
 
     private TabLayout mTabs;
     private ScrollView mScrollView;

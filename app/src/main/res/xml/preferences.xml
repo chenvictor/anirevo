@@ -15,4 +15,21 @@
             android:key="@string/apply_age_restriction_key"
             android:title="Apply Changes"/>
     </PreferenceCategory>
+    <PreferenceCategory
+        android:title="Download Preferences">
+        <SwitchPreferenceCompat
+            android:key="@string/startup_update_check_key"
+            android:title="Check for updates on startup"
+            android:defaultValue="true"/>
+        <SwitchPreferenceCompat
+            android:key="@string/download_only_wifi_key"
+            android:title="Download updates on wifi only"
+            android:summaryOn="Updates will only be downloaded on wifi"
+            android:summaryOff="Updates may be downloaded on data if wifi is unavailable"
+            android:defaultValue="true"/>
+        <Preference
+            android:key="@string/check_updates_key"
+            android:title="Check for updates"/>
+
+    </PreferenceCategory>
 </android.support.v7.preference.PreferenceScreen>

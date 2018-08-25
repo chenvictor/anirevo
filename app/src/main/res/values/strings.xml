@@ -18,6 +18,10 @@
     <string name="display_13_key">display_13</string>
     <string name="display_18_key">display_18</string>
 
+    <string name="startup_update_check_key">startup_update_check</string>
+    <string name="download_only_wifi_key">download_only_wifi</string>
+    <string name="check_updates_key">check_updates_now</string>
+
     <!-- Example settings for Data & Sync -->
     <string name="pref_header_data_sync">Data &amp; sync</string>
 
