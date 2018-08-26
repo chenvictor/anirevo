@@ -3,8 +3,8 @@ package cvic.anirevo.model.calendar;
 import android.content.Context;
 import android.graphics.Rect;
 
-import cvic.anirevo.DayView;
-import cvic.anirevo.EventView;
+import cvic.anirevo.ui.DayView;
+import cvic.anirevo.ui.EventView;
 import cvic.anirevo.utils.TimeUtils;
 
 /**

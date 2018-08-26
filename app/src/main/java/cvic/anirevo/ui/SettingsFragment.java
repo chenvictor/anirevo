@@ -1,7 +1,6 @@
-package cvic.anirevo;
+package cvic.anirevo.ui;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -9,7 +8,8 @@ import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.widget.Toast;
 
-import cvic.anirevo.model.anirevo.AgeRestriction;
+import cvic.anirevo.R;
+import cvic.anirevo.tasks.CheckUpdatesTask;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,14 +36,26 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         findPreference(getString(R.string.display_13_key)).setOnPreferenceChangeListener(preferenceChangeListener);
         findPreference(getString(R.string.display_18_key)).setOnPreferenceChangeListener(preferenceChangeListener);
 
-        //Set button
-        Preference button = findPreference(getString(R.string.apply_age_restriction_key));
-        button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+        //Set buttons
+        Preference ageApplyBtn = findPreference(getString(R.string.apply_age_restriction_key));
+        ageApplyBtn.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 if (mListener != null) {
                     showToastMessage("Applying changes...");
                     mListener.reloadJSON();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        final Preference checkUpdateBtn = findPreference(getString(R.string.check_updates_key));
+        checkUpdateBtn.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                if (mListener != null) {
+                    mListener.checkUpdates();
                     return true;
                 }
                 return false;
@@ -89,8 +101,10 @@ public class SettingsFragment extends PreferenceFragmentCompat {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface SettingsFragmentInteractionListener {
-        // TODO: Update argument type and name
+
         void reloadJSON ();
+
+        void checkUpdates();
     }
 
 }

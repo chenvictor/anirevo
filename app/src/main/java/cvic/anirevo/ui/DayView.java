@@ -1,4 +1,4 @@
-package cvic.anirevo;
+package cvic.anirevo.ui;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+
+import cvic.anirevo.R;
 
 /**
  * Created by FRAMGIA\pham.van.khac on 07/07/2016.

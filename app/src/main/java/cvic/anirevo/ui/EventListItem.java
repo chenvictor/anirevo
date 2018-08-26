@@ -1,4 +1,4 @@
-package cvic.anirevo;
+package cvic.anirevo.ui;
 
 import cvic.anirevo.model.anirevo.ArEvent;
 

@@ -1,4 +1,4 @@
-package cvic.anirevo;
+package cvic.anirevo.ui;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import cvic.anirevo.R;
 import cvic.anirevo.model.calendar.CalendarDayViewDecoration;
 import cvic.anirevo.model.calendar.CalendarEvent;
 import cvic.anirevo.model.calendar.EventTime;

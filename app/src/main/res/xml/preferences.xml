@@ -17,15 +17,17 @@
     </PreferenceCategory>
     <PreferenceCategory
         android:title="Download Preferences">
+        <ListPreference
+            android:key="download_update_type"
+            android:title="Download Updates"
+            android:entries="@array/download_types"
+            android:entryValues="@array/download_types_values"
+            android:summary="%s"
+            android:defaultValue="0">
+        </ListPreference>
         <SwitchPreferenceCompat
             android:key="@string/startup_update_check_key"
             android:title="Check for updates on startup"
-            android:defaultValue="true"/>
-        <SwitchPreferenceCompat
-            android:key="@string/download_only_wifi_key"
-            android:title="Download updates on wifi only"
-            android:summaryOn="Updates will only be downloaded on wifi"
-            android:summaryOff="Updates may be downloaded on data if wifi is unavailable"
             android:defaultValue="true"/>
         <Preference
             android:key="@string/check_updates_key"

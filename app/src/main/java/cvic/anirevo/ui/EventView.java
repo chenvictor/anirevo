@@ -1,4 +1,4 @@
-package cvic.anirevo;
+package cvic.anirevo.ui;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import cvic.anirevo.EventActivity;
+import cvic.anirevo.R;
 import cvic.anirevo.model.anirevo.AgeRestriction;
 import cvic.anirevo.model.calendar.CalendarEvent;
 

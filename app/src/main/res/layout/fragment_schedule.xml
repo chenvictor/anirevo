@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ScheduleFragment">
+    tools:context=".ui.ScheduleFragment">
 
     <android.support.design.widget.TabLayout
         android:id="@+id/schedule_tabs"
@@ -24,7 +24,7 @@
         android:layout_height="match_parent"
         tools:context=".CalendarFragment">
 
-        <cvic.anirevo.CalendarDayView
+        <cvic.anirevo.ui.CalendarDayView
             android:id="@+id/calendar_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>

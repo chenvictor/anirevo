@@ -22,6 +22,16 @@
     <string name="download_only_wifi_key">download_only_wifi</string>
     <string name="check_updates_key">check_updates_now</string>
 
+    <string-array name="download_types">
+        <item>Only when on Wi-Fi</item>
+        <item>On any network</item>
+    </string-array>
+
+    <string-array name="download_types_values">
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
     <!-- Example settings for Data & Sync -->
     <string name="pref_header_data_sync">Data &amp; sync</string>
 

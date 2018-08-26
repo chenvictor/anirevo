@@ -1,4 +1,4 @@
-package cvic.anirevo;
+package cvic.anirevo.ui;
 
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;

@@ -1,9 +1,12 @@
 package cvic.anirevo.model.calendar;
 
+import android.support.annotation.NonNull;
+
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public class DateManager {
+public class DateManager implements Iterable<CalendarDate>{
 
     private static DateManager instance;
 
@@ -30,16 +33,14 @@ public class DateManager {
                 return date;
             }
         }
-        CalendarDate newDate = new CalendarDate(dateString);
+        CalendarDate newDate = new CalendarDate(dateString, dates.size());
         dates.add(newDate);
         return newDate;
     }
 
-    public String[] getSpinnerOptions() {
-        String[] options = new String[dates.size()];
-        for (int i = 0; i < dates.size(); i++) {
-            options[i] = dates.get(i).getName();
-        }
-        return options;
+    @NonNull
+    @Override
+    public Iterator<CalendarDate> iterator() {
+        return dates.iterator();
     }
 }

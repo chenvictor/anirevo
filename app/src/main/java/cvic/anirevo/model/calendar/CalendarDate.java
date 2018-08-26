@@ -10,16 +10,47 @@ import java.util.Objects;
 public class CalendarDate implements Iterable<CalendarEvent>{
 
     private final String name;
+    private final int id;
 
     private List<CalendarEvent> events;
 
     //Default is 10AM - 10PM
+    private boolean visible = false;    //visibility in the schedule fragment, default false
     private int startHour = 10;
     private int endHour = 22;
 
-    CalendarDate(String name) {
+    CalendarDate(String name, int id) {
         this.name = name;
+        this.id = id;
         events = new ArrayList<>();
+    }
+
+    public void setVisible() {
+        setVisible(true);
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
+
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getStartHour() {
+        return startHour;
+    }
+
+    public int getEndHour() {
+        return endHour;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public void addEvent(CalendarEvent calEvent) {
@@ -36,21 +67,9 @@ public class CalendarDate implements Iterable<CalendarEvent>{
         }
     }
 
-    public String getName() {
-        return name;
-    }
-
     @Override
     public String toString() {
-        return name;
-    }
-
-    public int getStartHour() {
-        return startHour;
-    }
-
-    public int getEndHour() {
-        return endHour;
+        return getName();
     }
 
     @Override
@@ -63,7 +82,6 @@ public class CalendarDate implements Iterable<CalendarEvent>{
 
     @Override
     public int hashCode() {
-
         return Objects.hash(name);
     }
 
@@ -72,4 +90,5 @@ public class CalendarDate implements Iterable<CalendarEvent>{
     public Iterator<CalendarEvent> iterator() {
         return events.iterator();
     }
+
 }

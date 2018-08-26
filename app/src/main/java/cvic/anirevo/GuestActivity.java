@@ -12,6 +12,7 @@ import android.widget.Toast;
 import cvic.anirevo.exceptions.InvalidIdException;
 import cvic.anirevo.model.anirevo.ArGuest;
 import cvic.anirevo.model.anirevo.GuestManager;
+import cvic.anirevo.ui.BrowseGuestsFragment;
 
 public class GuestActivity extends AppCompatActivity {
 

@@ -12,6 +12,7 @@ import cvic.anirevo.exceptions.InvalidIdException;
 import cvic.anirevo.model.anirevo.AgeRestriction;
 import cvic.anirevo.model.anirevo.ArEvent;
 import cvic.anirevo.model.anirevo.EventManager;
+import cvic.anirevo.ui.EventsFragment;
 
 public class EventActivity extends AppCompatActivity {
 

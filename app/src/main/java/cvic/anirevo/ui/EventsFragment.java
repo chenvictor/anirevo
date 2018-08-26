@@ -1,4 +1,4 @@
-package cvic.anirevo;
+package cvic.anirevo.ui;
 
 import android.content.Intent;
 import android.graphics.Canvas;
@@ -20,6 +20,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import cvic.anirevo.EventActivity;
+import cvic.anirevo.R;
 import cvic.anirevo.model.anirevo.AgeRestriction;
 import cvic.anirevo.model.anirevo.ArCategory;
 import cvic.anirevo.model.anirevo.ArEvent;
@@ -28,15 +30,17 @@ import cvic.anirevo.model.anirevo.CategoryManager;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class EventsFragment extends Fragment {
+public class EventsFragment extends StateHolderFragment {
 
     public static final String TAG = "cvic.anirevo.EVENTS";
 
     public static final String EXTRA_EVENT_ID = "cvic.anirevo.EXTRA_EVENT_ID";
 
-    private static Parcelable scrollState;
-
     private RecyclerView mRecyclerView;
+
+    public EventsFragment() {
+        super("EVENTS");
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -78,27 +82,15 @@ public class EventsFragment extends Fragment {
 
     }
 
-    /**
-     * Save the fragment's scroll state ------------------------------------------
-     */
-
     @Override
-    public void onPause() {
-        super.onPause();
-        scrollState = mRecyclerView.getLayoutManager().onSaveInstanceState();
+    public Object storeState() {
+        return mRecyclerView.getLayoutManager().onSaveInstanceState();
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        if (scrollState != null ) {
-            mRecyclerView.getLayoutManager().onRestoreInstanceState(scrollState);
-        }
+    public void restoreState(Object state) {
+        mRecyclerView.getLayoutManager().onRestoreInstanceState((Parcelable) state);
     }
-
-    /**
-     * Save the fragment's scroll state ------------------------------------------
-     */
 
     class MyAdapter extends RecyclerView.Adapter<CardViewHolder> implements HeaderItemDecoration.StickyHeaderInterface{
 

@@ -1,16 +1,13 @@
-package cvic.anirevo;
+package cvic.anirevo.ui;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,18 +16,22 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import cvic.anirevo.GuestActivity;
+import cvic.anirevo.R;
 import cvic.anirevo.model.anirevo.ArGuest;
 import cvic.anirevo.model.anirevo.GuestManager;
 import cvic.anirevo.utils.LayoutUtils;
 
-public class BrowseGuestsFragment extends Fragment {
+public class BrowseGuestsFragment extends StateHolderFragment {
 
     public static final String EXTRA_GUEST_ID = "cvic.anirevo.EXTRA_GUEST_ID";
 
-    private static Parcelable scrollState;
-
     private RecyclerView mRecyclerView;
     private CustomAdapter mAdapter;
+
+    public BrowseGuestsFragment() {
+        super("BROWSE_GUESTS");
+    }
 
     @Nullable
     @Override
@@ -53,26 +54,18 @@ public class BrowseGuestsFragment extends Fragment {
     }
 
     /**
-     * Save the fragment's scroll state ------------------------------------------
+     * Save and store the fragment's scroll state
      */
 
     @Override
-    public void onPause() {
-        super.onPause();
-        scrollState = mRecyclerView.getLayoutManager().onSaveInstanceState();
+    public Object storeState() {
+        return mRecyclerView.getLayoutManager().onSaveInstanceState();
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        if (scrollState != null ) {
-            mRecyclerView.getLayoutManager().onRestoreInstanceState(scrollState);
-        }
+    public void restoreState(Object state) {
+        mRecyclerView.getLayoutManager().onRestoreInstanceState((Parcelable) state);
     }
-
-    /**
-     * Save the fragment's scroll state ------------------------------------------
-     */
 
     private class CustomAdapter extends RecyclerView.Adapter<CardViewHolder> {
 

@@ -22,14 +22,16 @@ import cvic.anirevo.parser.EventParser;
 import cvic.anirevo.parser.GuestParser;
 import cvic.anirevo.parser.InfoParser;
 import cvic.anirevo.parser.LocationParser;
+import cvic.anirevo.tasks.CheckUpdatesTask;
 import cvic.anirevo.utils.JSONUtils;
+import cvic.anirevo.ui.SettingsFragment;
 import cvic.anirevo.utils.TempUtils;
 
 public class AniRevo extends AppCompatActivity implements SettingsFragment.SettingsFragmentInteractionListener{
 
     private static final String TAG = "cvic.anirevo.MAIN";
 
-    private NavigationHandler navHandler;
+    private NavigationHandler mNavigationHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,11 @@ public class AniRevo extends AppCompatActivity implements SettingsFragment.Setti
         loadJSONData(TempUtils.getAgeRestriction());
 
         initHandlers();
+
+        //check wifi
+        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean(getString(R.string.startup_update_check_key), true)) {
+            new CheckUpdatesTask(this, false).execute();
+        }
     }
 
     private void init() {
@@ -50,12 +57,12 @@ public class AniRevo extends AppCompatActivity implements SettingsFragment.Setti
     }
 
     private void initHandlers() {
-        navHandler = new NavigationHandler(this);
+        mNavigationHandler = new NavigationHandler(this);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        return navHandler.onCreateOptionsMenu(menu);
+        return mNavigationHandler.onCreateOptionsMenu(menu);
     }
 
     /**
@@ -127,7 +134,7 @@ public class AniRevo extends AppCompatActivity implements SettingsFragment.Setti
 
     @Override
     public void onBackPressed() {
-        if (!navHandler.onBackPressed()) {
+        if (!mNavigationHandler.onBackPressed()) {
             super.onBackPressed();
         }
     }
@@ -135,5 +142,10 @@ public class AniRevo extends AppCompatActivity implements SettingsFragment.Setti
     @Override
     public void reloadJSON() {
         loadJSONData(TempUtils.getAgeRestriction(true));
+    }
+
+    @Override
+    public void checkUpdates() {
+        new CheckUpdatesTask(this, true).execute();
     }
 }
