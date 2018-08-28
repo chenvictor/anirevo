@@ -13,9 +13,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import cvic.anirevo.R;
 import cvic.anirevo.ui.BrowseGuestsFragment;
 import cvic.anirevo.ui.EventsFragment;
-import cvic.anirevo.R;
 import cvic.anirevo.ui.ScheduleFragment;
 import cvic.anirevo.ui.SettingsFragment;
 import cvic.anirevo.ui.StateHolderFragment;
@@ -26,6 +26,7 @@ public class NavigationHandler implements NavigationView.OnNavigationItemSelecte
 
     private FragmentStateHolderHandler mFragmentStateHolderHandler;
 
+    private final NavigationView mNavigationView;
     private final AppCompatActivity mActivity;
     private final DrawerLayout mDrawer;
 
@@ -48,10 +49,12 @@ public class NavigationHandler implements NavigationView.OnNavigationItemSelecte
 
         mFragmentStateHolderHandler = new FragmentStateHolderHandler();
 
-        NavigationView navigationView = mActivity.findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        mNavigationView = mActivity.findViewById(R.id.nav_view);
+        mNavigationView.setNavigationItemSelectedListener(this);
+    }
 
-        onNavigationItemSelected(navigationView.getMenu().getItem(0));
+    public void start() {
+        onNavigationItemSelected(mNavigationView.getMenu().getItem(0));
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -27,6 +27,7 @@ public class EventView extends FrameLayout {
 
     private EventClickListener mClickListener;
 
+    private View mConstraint;
     private CardView mEventCard;
     private TextView mEventName;
     private TextView mAge;
@@ -49,6 +50,7 @@ public class EventView extends FrameLayout {
     private void init(AttributeSet attrs) {
         LayoutInflater.from(getContext()).inflate(R.layout.view_event, this, true);
 
+        mConstraint = findViewById(R.id.event_card_constraint);
         mEventCard = findViewById(R.id.calendar_event_card);
         mEventName = findViewById(R.id.item_event_name);
         mAge = findViewById(R.id.item_event_age);
@@ -68,21 +70,15 @@ public class EventView extends FrameLayout {
         mClickListener.setEventId(event.getEvent().getId());
     }
 
-    public void setPosition(Rect rect, int topMargin, int bottomMargin){
-        int extraMargin = getResources().getDimensionPixelSize(R.dimen.cdv_event_margin) / 2;
+    public void setPosition(Rect rect, int hourHeight){
         LayoutParams params =
                 new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.topMargin = rect.top + topMargin + 13 + extraMargin;
-        params.height = rect.height()
-                + bottomMargin - 26 - 2 * extraMargin + 8;
-        params.leftMargin = rect.left;
+        params.topMargin = rect.top - hourHeight / 2;
+        params.height = rect.height();
         setLayoutParams(params);
-        //Set card layout
-        ViewGroup.LayoutParams cardParams = mEventCard.getLayoutParams();
-        cardParams.height = rect.height()
-                + bottomMargin - 26 - 2 * extraMargin;
-        mEventCard.setLayoutParams(cardParams);
+        ViewGroup.LayoutParams constraintParams = mConstraint.getLayoutParams();
+        constraintParams.height = rect.height();
     }
 
     class EventClickListener implements OnClickListener {

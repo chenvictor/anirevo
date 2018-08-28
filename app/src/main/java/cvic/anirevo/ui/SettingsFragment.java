@@ -9,7 +9,6 @@ import android.support.v7.preference.PreferenceFragmentCompat;
 import android.widget.Toast;
 
 import cvic.anirevo.R;
-import cvic.anirevo.tasks.CheckUpdatesTask;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,8 +41,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 if (mListener != null) {
-                    showToastMessage("Applying changes...");
-                    mListener.reloadJSON();
+                    mListener.reload();
                     return true;
                 }
                 return false;
@@ -102,7 +100,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
      */
     public interface SettingsFragmentInteractionListener {
 
-        void reloadJSON ();
+        void reload ();
 
         void checkUpdates();
     }

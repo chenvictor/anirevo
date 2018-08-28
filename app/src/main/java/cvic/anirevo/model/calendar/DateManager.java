@@ -43,4 +43,9 @@ public class DateManager implements Iterable<CalendarDate>{
     public Iterator<CalendarDate> iterator() {
         return dates.iterator();
     }
+
+    public void clear() {
+        dates.clear();
+    }
+
 }

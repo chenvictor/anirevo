@@ -1,18 +1,22 @@
 package cvic.anirevo;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.FileNotFoundException;
+
 import cvic.anirevo.exceptions.InvalidIdException;
 import cvic.anirevo.model.anirevo.ArGuest;
 import cvic.anirevo.model.anirevo.GuestManager;
 import cvic.anirevo.ui.BrowseGuestsFragment;
+import cvic.anirevo.utils.IOUtils;
 
 public class GuestActivity extends AppCompatActivity {
 
@@ -34,8 +38,12 @@ public class GuestActivity extends AppCompatActivity {
         ImageView img = findViewById(R.id.guest_portrait);
         TextView name = findViewById(R.id.guest_name);
         TextView japanese = findViewById(R.id.guest_japanese_name);
-
-        img.setImageDrawable(getResources().getDrawable(R.drawable.placeholder_portrait));
+        try {
+            Bitmap bm = IOUtils.getBitmap(getApplicationContext(), "images/guest" + guest.getId() + ".jpg");
+            img.setImageBitmap(bm);
+        } catch (FileNotFoundException e) {
+            img.setImageDrawable(getResources().getDrawable(R.drawable.placeholder_portrait));
+        }
         name.setText(guest.getName());
         if (guest.hasJapanese()) {
             japanese.setText(guest.getJapanese());

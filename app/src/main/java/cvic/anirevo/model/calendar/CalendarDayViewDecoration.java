@@ -24,7 +24,7 @@ public class CalendarDayViewDecoration {
     public EventView getEventView(CalendarEvent event, Rect eventBound, int hourHeight) {
         EventView eventView = new EventView(mContext);
         eventView.setEvent(event);
-        eventView.setPosition(eventBound, -hourHeight, hourHeight);
+        eventView.setPosition(eventBound, hourHeight);
         eventView.invalidate(); //Invalidate after setting height so constraints can be refreshed
         return eventView;
     }

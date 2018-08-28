@@ -3,6 +3,7 @@ package cvic.anirevo.model.anirevo;
 import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -51,4 +52,15 @@ public class LocationManager implements Iterable<ArLocation>{
     public Iterator<ArLocation> iterator() {
         return locations.iterator();
     }
+
+    public List<ArLocation> getScheduleEvents() {
+        List<ArLocation> list = new ArrayList<>();
+        for (ArLocation loc : locations) {
+            if (loc.isSchedule()) {
+                list.add(loc);
+            }
+        }
+        return Collections.unmodifiableList(list);
+    }
+
 }

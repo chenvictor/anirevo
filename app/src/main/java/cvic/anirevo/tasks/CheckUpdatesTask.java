@@ -8,6 +8,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -22,30 +23,33 @@ import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class CheckUpdatesTask extends AsyncTask <Void, Void, String> {
+public class CheckUpdatesTask extends AsyncTask <Void, Void, String> implements DownloadFileTask.DownloadFileTaskListener{
+
+    private static final String TAG = "anirevo.CUTask";
 
     private static final String LAST_UPDATED_DATE_KEY = "cvic.anirevo.last_updated_key";
     private static final String NO_UPDATE = "cvic.anirevo.updates.NONE";
 
-    private static final String UPDATE_CHECK_URL = "https://api.github.com/repos/chenvictor/anirevo-data";
+    private static final String UPDATE_CHECK_URL = "https://api.github.com/repos/chenvictor/anirevo-data/commits/master";
 
     private static final String TYPE_WIFI = "1";
     private static final String TYPE_ANY = "2";
 
+    private String dateString;
+    private UpdateListener mListener;
+
     private final WeakReference<Context> context;
     private final boolean forced;
 
-    public CheckUpdatesTask(Context context, boolean forced) {
-        this.context = new WeakReference<>(context);
+    public CheckUpdatesTask(WeakReference<Context> context, UpdateListener listener, boolean forced) {
+        this.context = context;
         this.forced = forced;
+        mListener = listener;
     }
 
     @Override
     protected void onPreExecute() {
-        if (checkNetwork()) {
-            //do stuff
-            Toast.makeText(context.get(), "Network Ok.", Toast.LENGTH_SHORT).show();
-        } else {
+        if (!checkNetwork()) {
             cancel(true);
         }
     }
@@ -56,8 +60,8 @@ public class CheckUpdatesTask extends AsyncTask <Void, Void, String> {
             return null;
         }
         //Check date
-        HttpsURLConnection connection = null;
-        BufferedReader reader = null;
+        HttpsURLConnection connection;
+        BufferedReader reader;
         try {
             connection = (HttpsURLConnection) new URL(UPDATE_CHECK_URL).openConnection();
             connection.connect();
@@ -66,7 +70,7 @@ public class CheckUpdatesTask extends AsyncTask <Void, Void, String> {
 
             reader = new BufferedReader(new InputStreamReader(stream));
 
-            StringBuffer buffer = new StringBuffer();
+            StringBuilder buffer = new StringBuilder();
             String line;
 
             while ((line = reader.readLine()) != null) {
@@ -102,22 +106,21 @@ public class CheckUpdatesTask extends AsyncTask <Void, Void, String> {
     protected void onPostExecute(String response) {
         try {
             JSONObject object = new JSONObject(response);
-            String lastPush = object.getString("pushed_at");
-            Toast.makeText(context.get(), lastPush, Toast.LENGTH_SHORT).show();
-            if (shouldUpdate(lastPush)) {
+            JSONObject commit = object.getJSONObject("commit");
+            dateString = commit.getJSONObject("author").getString("date");
+            if (shouldUpdate(dateString)) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context.get());
-                builder.setTitle("AniRevo Updates");
-                builder.setMessage("A content update is available. Download now?");
+                builder.setTitle("AniRevo Update");
+                builder.setMessage("A content update is available." +
+                        //commit.getString("message") +
+                        " Download now?");
 
                 DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int which) {
                         if (which == DialogInterface.BUTTON_POSITIVE) {
                             // DownloadUpdates task
-                            Toast.makeText(context.get(), "Downloading updates...", Toast.LENGTH_LONG).show();
-
-                        } else if (which == DialogInterface.BUTTON_NEGATIVE){
-                            Toast.makeText(context.get(), "Skipping updates...", Toast.LENGTH_SHORT).show();
+                            new DownloadFileTask(context, CheckUpdatesTask.this).execute();
                         }
                     }
                 };
@@ -125,6 +128,11 @@ public class CheckUpdatesTask extends AsyncTask <Void, Void, String> {
                 builder.setPositiveButton("Yes", dialogClickListener);
                 builder.setNegativeButton("No", dialogClickListener);
                 builder.show();
+            } else {
+                if (forced) {
+                    //If forced, show a simple toast to notify the user
+                    Toast.makeText(context.get(), "Content is up to date.", Toast.LENGTH_SHORT).show();
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -139,6 +147,8 @@ public class CheckUpdatesTask extends AsyncTask <Void, Void, String> {
     private boolean shouldUpdate(String lastPush) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context.get());
         String storedPush = prefs.getString(LAST_UPDATED_DATE_KEY,NO_UPDATE);
+        Log.i(TAG, "Stored Push: " + storedPush);
+        Log.i(TAG, "Update Push: " + lastPush);
         return storedPush.equals(NO_UPDATE) || !storedPush.equals(lastPush);
     }
 
@@ -148,4 +158,15 @@ public class CheckUpdatesTask extends AsyncTask <Void, Void, String> {
     }
 
 
+    @Override
+    public void downloadFileTaskFinished() {
+        Log.i(TAG, "Download finished. Updating stored push date: " + dateString);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context.get());
+        prefs.edit().putString(LAST_UPDATED_DATE_KEY, dateString).apply();
+        mListener.updated();
+    }
+
+    public interface UpdateListener {
+        void updated();
+    }
 }

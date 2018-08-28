@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -16,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ScrollView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +42,8 @@ public class ScheduleFragment extends StateHolderFragment implements NavigationH
     private ScrollView mScrollView;
     private CalendarDayView mView;
 
+    private List<ArLocation> mLocations;
+
     private int mDate = 0;
     private int mLocation = 0;
 
@@ -61,6 +61,7 @@ public class ScheduleFragment extends StateHolderFragment implements NavigationH
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        mLocations = LocationManager.getInstance().getScheduleEvents();
         mTabs = getView().findViewById(R.id.schedule_tabs);
         mScrollView = getView().findViewById(R.id.calendar_scroller);
         mView = getView().findViewById(R.id.calendar_view);
@@ -74,37 +75,42 @@ public class ScheduleFragment extends StateHolderFragment implements NavigationH
 
     private void initTabs() {
         //Add tabs
-        Toast.makeText(getContext(), "Init tabs", Toast.LENGTH_SHORT).show();
-        for (ArLocation location : LocationManager.getInstance()) {
-            mTabs.addTab(mTabs.newTab().setText(location.getPurpose()));
+        if (mLocations.size() != 0) {
+            for (ArLocation location : mLocations) {
+                mTabs.addTab(mTabs.newTab().setText(location.getPurpose()));
+            }
+
+            mTabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                @Override
+                public void onTabSelected(TabLayout.Tab tab) {
+                    changeLocation(tab.getPosition());
+                    setEvents();
+                }
+
+                @Override
+                public void onTabUnselected(TabLayout.Tab tab) {
+                    //Do nothing
+                }
+
+                @Override
+                public void onTabReselected(TabLayout.Tab tab) {
+                    //Do nothing
+                }
+            });
+        } else {
+            mTabs.addTab(mTabs.newTab().setText("ERROR: NO LOCATIONS"));
         }
-
-        mTabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                changeLocation(tab.getPosition());
-                setEvents();
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-                //Do nothing
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-                //Do nothing
-            }
-        });
     }
 
     private void setEvents() {
         List<CalendarEvent> events = new ArrayList<>();
 
-        for (ArEvent arEvent : LocationManager.getInstance().getLocation(mLocation)) {
-            for (CalendarEvent calEvent : arEvent.getTimeblocks()) {
-                if (calEvent.getDate().equals(DateManager.getInstance().getDate(mDate))) {
-                    events.add(calEvent);
+        if (mLocations.size() != 0) {
+            for (ArEvent arEvent : mLocations.get(mLocation)) {
+                for (CalendarEvent calEvent : arEvent.getTimeblocks()) {
+                    if (calEvent.getDate().equals(DateManager.getInstance().getDate(mDate))) {
+                        events.add(calEvent);
+                    }
                 }
             }
         }
@@ -196,8 +202,7 @@ public class ScheduleFragment extends StateHolderFragment implements NavigationH
 
     @Override
     public Object storeState() {
-        SchedState state = new SchedState(mDate, mLocation, mTabs.getScrollX());
-        return state;
+        return new SchedState(mDate, mLocation, mTabs.getScrollX());
     }
 
     @Override

@@ -51,7 +51,7 @@ public class EventParser {
                 e.printStackTrace();
                 Log.i(TAG, "JSONError hit, skipping event.");
             } catch (RestrictedException e) {
-                Log.i(TAG, "Skipping an AgeRestricted event.");
+                //Log.i(TAG, "Skipping an AgeRestricted event.");
             }
         }
     }

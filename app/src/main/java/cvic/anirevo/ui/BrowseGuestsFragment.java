@@ -2,10 +2,11 @@ package cvic.anirevo.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,12 +15,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import cvic.anirevo.GuestActivity;
 import cvic.anirevo.R;
 import cvic.anirevo.model.anirevo.ArGuest;
 import cvic.anirevo.model.anirevo.GuestManager;
+import cvic.anirevo.utils.IOUtils;
 import cvic.anirevo.utils.LayoutUtils;
 
 public class BrowseGuestsFragment extends StateHolderFragment {
@@ -93,7 +96,12 @@ public class BrowseGuestsFragment extends StateHolderFragment {
             TextView name = view.findViewById(R.id.guest_card_name);
             TextView title = view.findViewById(R.id.guest_card_title);
 
-            img.setImageDrawable(mCtx.getResources().getDrawable(R.drawable.placeholder_portrait));
+            try {
+                Bitmap bm = IOUtils.getBitmap(mCtx, "images/guest" + guest.getId() + ".jpg");
+                img.setImageBitmap(bm);
+            } catch (FileNotFoundException e) {
+                img.setImageDrawable(mCtx.getResources().getDrawable(R.drawable.placeholder_portrait));
+            }
             name.setText(guest.getName());
             title.setText(guest.getTitle());
 

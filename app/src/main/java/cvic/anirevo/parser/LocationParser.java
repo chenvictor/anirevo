@@ -42,6 +42,9 @@ public class LocationParser {
         String location = loc.getString("location");
         ArLocation arLoc = LocationManager.getInstance().getLocation(purpose);
         arLoc.setLocation(location);
+        if (loc.has("schedule")) {
+            arLoc.setSchedule(loc.getBoolean("schedule"));
+        }
     }
 
 }

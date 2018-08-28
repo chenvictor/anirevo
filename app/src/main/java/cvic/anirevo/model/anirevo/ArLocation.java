@@ -15,6 +15,7 @@ public class ArLocation implements Iterable<ArEvent>{
 
     private final String purpose;
     private String location;
+    private boolean schedule = false;   //true if the location should be shown in the schedule fragment
 
     private List<ArEvent> events;
 
@@ -27,6 +28,14 @@ public class ArLocation implements Iterable<ArEvent>{
         if (!events.contains(event)) {
             events.add(event);
         }
+    }
+
+    public void setSchedule(boolean schedule) {
+        this.schedule = schedule;
+    }
+
+    public boolean isSchedule() {
+        return schedule;
     }
 
     public String getPurpose() {
