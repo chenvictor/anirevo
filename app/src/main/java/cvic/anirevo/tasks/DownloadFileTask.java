@@ -23,8 +23,8 @@ public class DownloadFileTask extends AsyncTask <Void, Void, Void> {
 
     private static final String TAG = "anirevo.DFT";
 
-    private static final String BASE_PATH_URL = "https://api.github.com/repos/chenvictor/anirevo-data/contents/";
-    private static final String BASE_DOWNLOAD_URL = "https://raw.githubusercontent.com/chenvictor/anirevo-data/master/";
+    private static final String BASE_PATH_URL = "https://api.github.com/repos/chenvictor/anirevo-data/contents/data";
+    private static final String BASE_DOWNLOAD_URL = "https://raw.githubusercontent.com/chenvictor/anirevo-data/master/data";
 
     private DownloadFileTaskListener mListener;
     private final WeakReference<Context> context;

@@ -19,13 +19,15 @@ import cvic.anirevo.parser.EventParser;
 import cvic.anirevo.parser.GuestParser;
 import cvic.anirevo.parser.InfoParser;
 import cvic.anirevo.parser.LocationParser;
+import cvic.anirevo.parser.ViewingRoomParser;
 import cvic.anirevo.utils.IOUtils;
 import cvic.anirevo.utils.JSONUtils;
 import cvic.anirevo.utils.TempUtils;
 
 public class StorageHandler {
 
-    private final String TAG = "anirevo.Storage";
+    private static final String TAG = "anirevo.Storage";
+    private static final boolean DEBUG_MODE = true; //DEBUG MODE, forces StorageHandler to fetch fileStrings from asset folder every time
 
     private Context mContext;
 
@@ -44,6 +46,7 @@ public class StorageHandler {
         loadLocations();
         loadGuests();
         loadEvents();
+        loadViewingRooms();
     }
 
     private void loadInfo() {
@@ -82,6 +85,15 @@ public class StorageHandler {
         }
     }
 
+    private void loadViewingRooms() {
+        try {
+            JSONArray viewRoomArray = new JSONArray(getFileString("json/viewing_rooms.json"));
+            ViewingRoomParser.parseViewingRoom(viewRoomArray, TempUtils.getAgeRestriction());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * Gets a data file String, creating it from the default assets if it does not exist
      * @param path  path to check
@@ -89,6 +101,10 @@ public class StorageHandler {
      */
     private String getFileString(String path) {
         try {
+            if (DEBUG_MODE) {
+                //Quick was to force write from assets
+                throw new FileNotFoundException();
+            }
             return IOUtils.readFile(mContext, path);
         } catch (FileNotFoundException e) {
             //Read the file from assets

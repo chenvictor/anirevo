@@ -24,9 +24,6 @@ public class EventParser {
     private static final String TAG = "anirevo.EventParser";
 
     public static void parseEvents(JSONArray categories, AgeRestriction restriction){
-        //Clear EventManager
-        EventManager.getInstance().clear();
-        //
         Log.i(TAG, categories.length() + " categories(s) to parse");
         for(int i = 0; i < categories.length(); i++) {
             try {
@@ -64,25 +61,11 @@ public class EventParser {
         //Check age restriction first in case this should be skipped
         if (event.has("age")) {
             //Set age restriction
-            int ageRestrict = event.getInt("age");
-            AgeRestriction restrict = null;
-            switch(ageRestrict) {
-                case 13:
-                    if (restriction == null) {
-                        throw new RestrictedException();
-                    }
-                    restrict = AgeRestriction.AGE_RESTRICTION_13;
-                    break;
-                case 18:
-                    if (restriction == null || restriction == AgeRestriction.AGE_RESTRICTION_13) {
-                        throw new RestrictedException();
-                    }
-                    restrict = AgeRestriction.AGE_RESTRICTION_18;
-                    break;
-                default:
-                    break;
-            }
+            AgeRestriction restrict = AgeRestriction.getRestriction(event.getInt("age"));
             if (restrict != null) {
+                if (!restriction.allowsFor(restrict)) {
+                    throw new RestrictedException();
+                }
                 arEvent.setRestriction(restrict);
             }
         }
@@ -96,7 +79,7 @@ public class EventParser {
         arEvent.setLocation(LocationManager.getInstance().getLocation(loc));
         arEvent.setDesc(desc);
 
-        //Establish mutual reference
+        //Establish mutual reference with category
         arEvent.setCategory(category);
         category.addEvent(arEvent);
 
