@@ -3,7 +3,9 @@
 Android App for AniRevo
 
 TODO:
-- Improve ScheduleFragment ?
+- Improve ScheduleFragment
+  - Revert to paneview
+  - Isolate calendar and events views
 - Add guest events to GuestActivity
 - Add guests to EventActivity
 - Add guest photobooth/sign booth event times
