@@ -1,6 +1,8 @@
 package cvic.anirevo.utils;
 
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
 import cvic.anirevo.model.anirevo.AgeRestriction;
 
 public class TempUtils {
@@ -37,6 +39,12 @@ public class TempUtils {
             }
         }
         return restriction;
+    }
+
+    private static final String LAST_UPDATED_DATE_KEY = "cvic.anirevo.last_updated_key";
+
+    public static void wipeLastUpdate() {
+        prefs.edit().remove(LAST_UPDATED_DATE_KEY).apply();
     }
 
 }

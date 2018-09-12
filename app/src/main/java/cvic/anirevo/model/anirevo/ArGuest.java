@@ -12,6 +12,8 @@ public class ArGuest {
     private String title;
     private String japanese;
 
+    private String portraitPath;
+
     private Set<ArEvent> events;
 
     ArGuest(String name, int id) {
@@ -64,5 +66,13 @@ public class ArGuest {
 
     public int getId() {
         return id;
+    }
+
+    public String getPortraitPath() {
+        return portraitPath;
+    }
+
+    public void setPortraitPath(String portraitPath) {
+        this.portraitPath = portraitPath;
     }
 }

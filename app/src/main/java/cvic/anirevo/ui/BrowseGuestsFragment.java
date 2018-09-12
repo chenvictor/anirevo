@@ -96,11 +96,15 @@ public class BrowseGuestsFragment extends StateHolderFragment {
             TextView name = view.findViewById(R.id.guest_card_name);
             TextView title = view.findViewById(R.id.guest_card_title);
 
-            try {
-                Bitmap bm = IOUtils.getBitmap(mCtx, "images/guest" + guest.getId() + ".jpg");
-                img.setImageBitmap(bm);
-            } catch (FileNotFoundException e) {
-                img.setImageDrawable(mCtx.getResources().getDrawable(R.drawable.placeholder_portrait));
+            if (guest.getPortraitPath() != null) {
+                try {
+                    Bitmap bm = IOUtils.getBitmap(mCtx, "images/" + guest.getPortraitPath());
+                    img.setImageBitmap(bm);
+                } catch (FileNotFoundException e) {
+                    img.setImageDrawable(getResources().getDrawable(R.drawable.placeholder_portrait));
+                }
+            } else {
+                img.setImageDrawable(getResources().getDrawable(R.drawable.placeholder_portrait));
             }
             name.setText(guest.getName());
             title.setText(guest.getTitle());

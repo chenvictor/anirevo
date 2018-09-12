@@ -38,10 +38,14 @@ public class GuestActivity extends AppCompatActivity {
         ImageView img = findViewById(R.id.guest_portrait);
         TextView name = findViewById(R.id.guest_name);
         TextView japanese = findViewById(R.id.guest_japanese_name);
-        try {
-            Bitmap bm = IOUtils.getBitmap(getApplicationContext(), "images/guest" + guest.getId() + ".jpg");
-            img.setImageBitmap(bm);
-        } catch (FileNotFoundException e) {
+        if (guest.getPortraitPath() != null) {
+            try {
+                Bitmap bm = IOUtils.getBitmap(getApplicationContext(), "images/" + guest.getPortraitPath());
+                img.setImageBitmap(bm);
+            } catch (FileNotFoundException e) {
+                img.setImageDrawable(getResources().getDrawable(R.drawable.placeholder_portrait));
+            }
+        } else {
             img.setImageDrawable(getResources().getDrawable(R.drawable.placeholder_portrait));
         }
         name.setText(guest.getName());

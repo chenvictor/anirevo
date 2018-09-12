@@ -27,7 +27,7 @@ import cvic.anirevo.utils.TempUtils;
 public class StorageHandler {
 
     private static final String TAG = "anirevo.Storage";
-    private static final boolean DEBUG_MODE = true; //DEBUG MODE, forces StorageHandler to fetch fileStrings from asset folder every time
+    private static final boolean DEBUG_MODE = false; //DEBUG MODE, forces StorageHandler to fetch fileStrings from asset folder every time
 
     private Context mContext;
 
@@ -109,6 +109,7 @@ public class StorageHandler {
         } catch (FileNotFoundException e) {
             //Read the file from assets
             Log.i(TAG, path + " not found. Writing from assets.");
+            TempUtils.wipeLastUpdate();
             String asset = getAsset(path);
             IOUtils.writeFile(mContext, path, asset);
             return asset;
