@@ -3,8 +3,8 @@
     <string name="title_activity_ani_revo">AniRevo</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">placeholder_title_string</string>
-    <string name="nav_header_subtitle">placeholder_subtitle_string</string>
+    <string name="nav_header_title">AniRevo</string>
+    <string name="nav_header_subtitle">YEAR_PLACEHOLDER</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 

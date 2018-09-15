@@ -22,6 +22,7 @@ public class InfoParser {
             year = Calendar.getInstance().get(Calendar.YEAR);
             Log.i(TAG, "Year not found, defaulting to " + String.valueOf(year));
         }
+        DateManager.getInstance().setYear(year);
         try {
             parseDates(info.getJSONArray("dates"));
         } catch (JSONException e) {

@@ -11,6 +11,7 @@ public class DateManager implements Iterable<CalendarDate>{
     private static DateManager instance;
 
     private List<CalendarDate> dates;
+    private int year;
 
     public static DateManager getInstance() {
         if (instance == null ){
@@ -48,4 +49,11 @@ public class DateManager implements Iterable<CalendarDate>{
         dates.clear();
     }
 
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
 }

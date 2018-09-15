@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -202,26 +204,33 @@ public class ScheduleFragment extends StateHolderFragment implements NavigationH
 
     @Override
     public Object storeState() {
-        return new SchedState(mDate, mLocation, mTabs.getScrollX());
+        return new SchedState(mDate, mLocation, mScrollView.getScrollY());
     }
 
     @Override
     public void restoreState(Object state) {
-        SchedState schedState = (SchedState) state;
-        mTabs.getTabAt(schedState.loc).select();
-        selectorPicked(schedState.date);
-        setEvents();
+        final SchedState schedState = (SchedState) state;
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                selectorPicked(schedState.date);
+                mTabs.getTabAt(schedState.loc).select();
+                setEvents();
+                mScrollView.scrollTo(mScrollView.getScrollX(), schedState.scrollY);
+            }
+        }, 100);
     }
 }
 
 class SchedState {
     int date;
     int loc;
-    int tabScroll;
+    int scrollY;
 
-    SchedState(int date, int loc, int tabScroll) {
+
+    SchedState(int date, int loc, int scrollY) {
         this.date = date;
         this.loc = loc;
-        this.tabScroll = tabScroll;
+        this.scrollY = scrollY;
     }
 }

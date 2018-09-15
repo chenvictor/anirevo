@@ -11,9 +11,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import cvic.anirevo.R;
+import cvic.anirevo.model.calendar.DateManager;
 import cvic.anirevo.ui.BrowseGuestsFragment;
 import cvic.anirevo.ui.EventsFragment;
 import cvic.anirevo.ui.ScheduleFragment;
@@ -54,7 +56,10 @@ public class NavigationHandler implements NavigationView.OnNavigationItemSelecte
     }
 
     public void start() {
+        //start, and set the year
         onNavigationItemSelected(mNavigationView.getMenu().getItem(0));
+        TextView subtitle = mNavigationView.getHeaderView(0).findViewById(R.id.header_subtitle);
+        subtitle.setText(String.valueOf(DateManager.getInstance().getYear()));
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
