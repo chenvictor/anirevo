@@ -23,9 +23,6 @@ import cvic.anirevo.R;
  */
 public class StarredFragment extends Fragment {
 
-    private TabLayout mTabs;
-    private ViewPager mPager;
-
     public StarredFragment() {
         // Required empty public constructor
     }
@@ -49,8 +46,8 @@ public class StarredFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_starred, container, false);
-        mTabs = view.findViewById(R.id.star_tabs);
-        mPager = view.findViewById(R.id.star_pager);
+        TabLayout mTabs = view.findViewById(R.id.star_tabs);
+        ViewPager mPager = view.findViewById(R.id.star_pager);
         mTabs.setupWithViewPager(mPager);
         mPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
             @Override

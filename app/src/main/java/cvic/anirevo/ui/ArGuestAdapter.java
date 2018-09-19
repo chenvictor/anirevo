@@ -27,11 +27,11 @@ public class ArGuestAdapter extends RecyclerView.Adapter<CardViewHolder> {
     public static final String EXTRA_GUEST_ID = "cvic.anirevo.EXTRA_GUEST_ID";
 
     private Context mCtx;
-    private List<ArGuest> guests;
+    List<ArGuest> items;
 
-    ArGuestAdapter(Context mCtx, List<ArGuest> guests) {
+    ArGuestAdapter(Context mCtx, List<ArGuest> items) {
         this.mCtx = mCtx;
-        this.guests = guests;
+        this.items = items;
     }
 
     @NonNull
@@ -43,7 +43,7 @@ public class ArGuestAdapter extends RecyclerView.Adapter<CardViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull final CardViewHolder viewHolder, int i) {
-        ArGuest guest = guests.get(i);
+        ArGuest guest = items.get(i);
 
         View view = viewHolder.getCardView();
         ImageView img = view.findViewById(R.id.guest_card_portrait);
@@ -87,7 +87,7 @@ public class ArGuestAdapter extends RecyclerView.Adapter<CardViewHolder> {
         });
     }
 
-    private void toggleStar(int i) {
+    protected void toggleStar(int i) {
         ArGuest guest = getGuest(i);
         if (guest.toggleStarred()) {
             StarManager.getInstance().add(guest);
@@ -97,8 +97,8 @@ public class ArGuestAdapter extends RecyclerView.Adapter<CardViewHolder> {
         notifyItemChanged(i);
     }
 
-    private ArGuest getGuest(int i) {
-        return guests.get(i);
+    ArGuest getGuest(int i) {
+        return items.get(i);
     }
 
     @Override
@@ -108,7 +108,7 @@ public class ArGuestAdapter extends RecyclerView.Adapter<CardViewHolder> {
 
     @Override
     public int getItemCount() {
-        return guests.size();
+        return items.size();
     }
 
 }

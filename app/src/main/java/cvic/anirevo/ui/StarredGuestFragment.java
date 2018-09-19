@@ -1,11 +1,14 @@
 package cvic.anirevo.ui;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +29,8 @@ public class StarredGuestFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
 
+    private TextView mTextView;
+
     public StarredGuestFragment() {
         // Required empty public constructor
     }
@@ -44,26 +49,52 @@ public class StarredGuestFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_browse_guest, container, false);
+        View view = inflater.inflate(R.layout.emptyable_recycler_view, container, false);
 
-        mRecyclerView = view.findViewById(R.id.recycler_view_guest);
+        mRecyclerView = view.findViewById(R.id.recycler_view);
+        mTextView = view.findViewById(R.id.empty_text);
+        mTextView.setText("Star a guest to be notified of their events!");
         mRecyclerView.setLayoutManager(LayoutUtils.createGridLayoutManager(getContext(), getResources().getDimension(R.dimen.guest_card_width)));
 
-        if (mAdapter == null) {
-            //temp
-            List<ArGuest> guests = new ArrayList<>(StarManager.getInstance().getStarredGuests());
-            mAdapter = new ArGuestAdapter(getContext(), guests);
-        }
+        List<ArGuest> guests = new ArrayList<>(StarManager.getInstance().getStarredGuests());
+        mAdapter = new StarredGuestAdapter(getContext(), guests);
+        mAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeRemoved(int positionStart, int itemCount) {
+                super.onItemRangeRemoved(positionStart, itemCount);
+                checkEmpty();
+            }
+        });
+        checkEmpty();
         mRecyclerView.setAdapter(mAdapter);
         return view;
+    }
+
+    private void checkEmpty() {
+        boolean empty = mAdapter.getItemCount() == 0;
+        mTextView.setVisibility(empty ? View.VISIBLE : View.GONE);
+        mRecyclerView.setVisibility(empty ? View.GONE : View.VISIBLE);
+    }
+
+    private class StarredGuestAdapter extends ArGuestAdapter {
+
+        StarredGuestAdapter(Context mCtx, List<ArGuest> guests) {
+            super(mCtx, guests);
+        }
+
+        @Override
+        protected void toggleStar(int i) {
+            super.toggleStar(i);
+            ArGuest guest = getGuest(i);
+            if (!guest.isStarred()) {
+                items.remove(i);
+                notifyItemRemoved(i);
+                notifyItemRangeChanged(i, items.size());
+            }
+        }
     }
 
 }

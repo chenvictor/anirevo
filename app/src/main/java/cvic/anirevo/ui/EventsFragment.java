@@ -34,29 +34,13 @@ public class EventsFragment extends StateHolderFragment {
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_events, container, false);
-    }
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.recycler_view, container, false);
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        View view = getView();
-        mRecyclerView = view.findViewById(R.id.recycler_view_events);
-
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
+        mRecyclerView = view.findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
-
-        // use a linear layout manager
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
-
-        // specify an adapter (see also next example)
-
-        //Generate dataset
         List<EventListItem> dataset = new ArrayList<>();
         for (ArCategory category : CategoryManager.getInstance()) {
             dataset.add(new EventListItem(category.getTitle(), Color.BLACK));
@@ -64,19 +48,24 @@ public class EventsFragment extends StateHolderFragment {
                 dataset.add(new EventListItem(event));
             }
         }
-
         ArStickyHeaderEventAdapter mAdapter = new ArStickyHeaderEventAdapter(getContext(), dataset);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addItemDecoration(new ArStickyHeaderEventAdapter.HeaderItemDecoration(mRecyclerView, mAdapter));
+
+        return view;
     }
 
     @Override
     public Object storeState() {
+        if (mRecyclerView == null || mRecyclerView.getLayoutManager() == null)
+            return null;
         return mRecyclerView.getLayoutManager().onSaveInstanceState();
     }
 
     @Override
     public void restoreState(Object state) {
+        if (mRecyclerView == null || mRecyclerView.getLayoutManager() == null)
+            return;
         mRecyclerView.getLayoutManager().onRestoreInstanceState((Parcelable) state);
     }
 

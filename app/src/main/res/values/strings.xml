@@ -6,11 +6,8 @@
     <string name="nav_header_title">AniRevo</string>
     <string name="nav_header_subtitle">YEAR_PLACEHOLDER</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_settings">Settings</string>
 
     <!-- Strings related to Settings -->
 
@@ -19,7 +16,6 @@
     <string name="display_18_key">display_18</string>
 
     <string name="startup_update_check_key">startup_update_check</string>
-    <string name="download_only_wifi_key">download_only_wifi</string>
     <string name="check_updates_key">check_updates_now</string>
 
     <string-array name="download_types">
@@ -33,62 +29,17 @@
     </string-array>
 
     <!-- Example settings for Data & Sync -->
-    <string name="pref_header_data_sync">Data &amp; sync</string>
-
-    <string name="pref_title_sync_frequency">Sync frequency</string>
-    <string-array name="pref_sync_frequency_titles">
-        <item>15 minutes</item>
-        <item>30 minutes</item>
-        <item>1 hour</item>
-        <item>3 hours</item>
-        <item>6 hours</item>
-        <item>Never</item>
-    </string-array>
-    <string-array name="pref_sync_frequency_values">
-        <item>15</item>
-        <item>30</item>
-        <item>60</item>
-        <item>180</item>
-        <item>360</item>
-        <item>-1</item>
-    </string-array>
-
-    <string-array name="list_preference_entries">
-        <item>Entry 1</item>
-        <item>Entry 2</item>
-        <item>Entry 3</item>
-    </string-array>
-
-    <string-array name="list_preference_entry_values">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-    </string-array>
-
-    <string-array name="multi_select_list_preference_default_value" />
-
-    <string name="pref_title_system_sync_settings">System sync settings</string>
 
     <string name="star_filled">★</string>
     <string name="star_empty">☆</string>
 
     <!-- Example settings for Notifications -->
-    <string name="pref_header_notifications">Notifications</string>
 
-    <string name="pref_title_new_message_notifications">New message notifications</string>
-
-    <string name="pref_title_ringtone">Ringtone</string>
-    <string name="pref_ringtone_silent">Silent</string>
-
-    <string name="pref_title_vibrate">Vibrate</string>
     <string name="warning_18">All 18+ panels require an 18+ wristband</string>
     <string name="placeholder_text">placeholder_text</string>
     <string name="age_18_plus">18+</string>
     <string name="guest_portrait_content_description">guest_portrait</string>
     <string name="placeholder_japanese_text">日本語</string>
-    <string name="settings_activity_header_general">General</string>
-    <string name="settings_activity_show_13_plus">Show 13+ Events</string>
-    <string name="settings_activity_show_18_plus">Show 18+ Events</string>
     <string name="nav_drawer_schedule">Schedule</string>
     <string name="nav_drawer_events">Events</string>
     <string name="nav_drawer_guests">Guests</string>

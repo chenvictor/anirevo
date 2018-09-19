@@ -18,8 +18,6 @@ public class DayView extends FrameLayout {
 
     private TextView mTextHour;
 
-    private View mSeparateHour;
-
     public DayView(Context context) {
         super(context);
         init(null);
@@ -39,7 +37,6 @@ public class DayView extends FrameLayout {
         LayoutInflater.from(getContext()).inflate(R.layout.view_day, this, true);
 
         mTextHour = findViewById(R.id.text_hour);
-        mSeparateHour = findViewById(R.id.separate_hour);
     }
 
     public void setText(String text) {

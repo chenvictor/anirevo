@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 import cvic.anirevo.R;
 import cvic.anirevo.model.calendar.DateManager;
-import cvic.anirevo.ui.BrowseGuestsFragment;
+import cvic.anirevo.ui.GuestsFragment;
 import cvic.anirevo.ui.EventsFragment;
 import cvic.anirevo.ui.ScheduleFragment;
 import cvic.anirevo.ui.SettingsFragment;
@@ -98,7 +98,7 @@ public class NavigationHandler implements NavigationView.OnNavigationItemSelecte
                 fragmentClass = EventsFragment.class;
                 break;
             case R.id.nav_guests:
-                fragmentClass = BrowseGuestsFragment.class;
+                fragmentClass = GuestsFragment.class;
                 break;
             case R.id.nav_starred:
                 fragmentClass = StarredFragment.class;
@@ -111,24 +111,26 @@ public class NavigationHandler implements NavigationView.OnNavigationItemSelecte
                 break;
         }
 
-        if (mFragClass == null || !mFragClass.equals(fragmentClass)) {
+        if (fragmentClass != null && (mFragClass == null || !mFragClass.equals(fragmentClass))) {
+            mFragClass = fragmentClass;
+            Fragment fragment;
             try {
-                mFragClass = fragmentClass;
-                Fragment fragment = (Fragment) fragmentClass.newInstance();
-                if (fragment instanceof StateHolderFragment) {
-                    ((StateHolderFragment) fragment).setStateHandler(mFragmentStateHolderHandler);
-                }
-                mActivity.getSupportFragmentManager().beginTransaction().replace(R.id.content_ani_revo, fragment).commit();
-                item.setChecked(true);
-                mActivity.setTitle(item.getTitle());
-                changeMenu(newMenuResource);
-                if (newMenuResource == DEFAULT_MENU) {
-                    removeMenuHandler();
-                } else {
-                    setMenuHandler((MenuHandler) fragment);
-                }
-            } catch (Exception e) {
+                fragment = (Fragment) fragmentClass.newInstance();
+            } catch (IllegalAccessException | InstantiationException e) {
                 e.printStackTrace();
+                return false;
+            }
+            if (fragment instanceof StateHolderFragment) {
+                ((StateHolderFragment) fragment).setStateHandler(mFragmentStateHolderHandler);
+            }
+            mActivity.getSupportFragmentManager().beginTransaction().replace(R.id.content_ani_revo, fragment).commit();
+            item.setChecked(true);
+            mActivity.setTitle(item.getTitle());
+            changeMenu(newMenuResource);
+            if (newMenuResource == DEFAULT_MENU) {
+                removeMenuHandler();
+            } else {
+                setMenuHandler((MenuHandler) fragment);
             }
         }
 
