@@ -42,6 +42,12 @@ public class AniRevo extends AppCompatActivity implements SettingsFragment.Setti
         }
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mStorageHandler.saveJSON();
+    }
+
     private void init() {
         CalendarEvent.setDefaultColor(getResources().getColor(R.color.calendarEventDefault));
         TempUtils.init(PreferenceManager.getDefaultSharedPreferences(this), getString(R.string.display_13_key), getString(R.string.display_18_key));

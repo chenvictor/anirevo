@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import cvic.anirevo.EventActivity;
 import cvic.anirevo.R;
+import cvic.anirevo.model.StarManager;
 import cvic.anirevo.model.anirevo.AgeRestriction;
 import cvic.anirevo.model.calendar.CalendarEvent;
 
@@ -31,6 +32,7 @@ public class EventView extends FrameLayout {
     private CardView mEventCard;
     private TextView mEventName;
     private TextView mAge;
+    private TextView mStar;
 
     public EventView(Context context) {
         super(context);
@@ -54,6 +56,7 @@ public class EventView extends FrameLayout {
         mEventCard = findViewById(R.id.calendar_event_card);
         mEventName = findViewById(R.id.item_event_name);
         mAge = findViewById(R.id.item_event_age);
+        mStar = findViewById(R.id.item_event_star);
         mClickListener = new EventClickListener();
         mEventCard.setOnClickListener(mClickListener);
     }
@@ -67,7 +70,22 @@ public class EventView extends FrameLayout {
         } else {
             mAge.setVisibility(GONE);
         }
+        setStarText();
+        mStar.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                toggleStar();
+            }
+        });
         mClickListener.setEventId(event.getEvent().getId());
+    }
+
+    private void setStarText() {
+        if (mEvent.getEvent().isStarred()) {
+            mStar.setText(getContext().getString(R.string.star_filled));
+        } else {
+            mStar.setText(getContext().getString(R.string.star_empty));
+        }
     }
 
     public void setPosition(Rect rect, int hourHeight){
@@ -81,6 +99,15 @@ public class EventView extends FrameLayout {
         constraintParams.height = rect.height();
     }
 
+    private void toggleStar() {
+        if (mEvent.getEvent().toggleStarred()) {
+            StarManager.getInstance().add(mEvent.getEvent());
+        } else {
+            StarManager.getInstance().remove(mEvent.getEvent());
+        }
+        setStarText();
+    }
+
     class EventClickListener implements OnClickListener {
 
         private int eventId = 0;
@@ -88,7 +115,7 @@ public class EventView extends FrameLayout {
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(getContext(), EventActivity.class);
-            intent.putExtra(EventsFragment.EXTRA_EVENT_ID, eventId);
+            intent.putExtra(ArEventAdapter.EXTRA_EVENT_ID, eventId);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             view.getContext().startActivity(intent);
         }

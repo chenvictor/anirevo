@@ -12,7 +12,7 @@ import cvic.anirevo.exceptions.InvalidIdException;
 import cvic.anirevo.model.anirevo.AgeRestriction;
 import cvic.anirevo.model.anirevo.ArEvent;
 import cvic.anirevo.model.anirevo.EventManager;
-import cvic.anirevo.ui.EventsFragment;
+import cvic.anirevo.ui.ArEventAdapter;
 
 public class EventActivity extends AppCompatActivity {
 
@@ -24,7 +24,7 @@ public class EventActivity extends AppCompatActivity {
         Intent intent = getIntent();
         ArEvent event = null;
         try {
-            event = EventManager.getInstance().getEvent(intent.getIntExtra(EventsFragment.EXTRA_EVENT_ID, 0));
+            event = EventManager.getInstance().getEvent(intent.getIntExtra(ArEventAdapter.EXTRA_EVENT_ID, 0));
         } catch (InvalidIdException e) {
             //Make toast
             Toast.makeText(getApplicationContext(), "Invalid Event ID Provided", Toast.LENGTH_SHORT).show();

@@ -14,8 +14,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:ellipsize="end"
@@ -23,7 +21,7 @@
             android:text="@string/placeholder_text"
             android:textColor="@android:color/holo_blue_bright"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/event_card_age_restriction"
+            app:layout_constraintEnd_toStartOf="@+id/event_card_star"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -65,14 +63,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:layout_marginTop="8dp"
             android:text="@string/age_18_plus"
             android:textColor="@android:color/holo_red_dark"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/event_card_details" />
+
+        <TextView
+            android:id="@+id/event_card_star"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@string/star_empty"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <View
+            android:id="@+id/divider"
             style="@style/Divider"
             app:layout_constraintBottom_toBottomOf="parent" />
     </android.support.constraint.ConstraintLayout>

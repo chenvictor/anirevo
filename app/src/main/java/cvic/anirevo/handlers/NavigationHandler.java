@@ -20,6 +20,7 @@ import cvic.anirevo.ui.BrowseGuestsFragment;
 import cvic.anirevo.ui.EventsFragment;
 import cvic.anirevo.ui.ScheduleFragment;
 import cvic.anirevo.ui.SettingsFragment;
+import cvic.anirevo.ui.StarredFragment;
 import cvic.anirevo.ui.StateHolderFragment;
 
 public class NavigationHandler implements NavigationView.OnNavigationItemSelectedListener{
@@ -98,6 +99,9 @@ public class NavigationHandler implements NavigationView.OnNavigationItemSelecte
                 break;
             case R.id.nav_guests:
                 fragmentClass = BrowseGuestsFragment.class;
+                break;
+            case R.id.nav_starred:
+                fragmentClass = StarredFragment.class;
                 break;
             case R.id.nav_settings:
                 fragmentClass = SettingsFragment.class;

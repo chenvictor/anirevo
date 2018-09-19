@@ -14,6 +14,9 @@
             android:id="@+id/nav_guests"
             android:title="@string/nav_drawer_guests" />
         <item
+            android:id="@+id/nav_starred"
+            android:title="@string/nav_drawer_starred" />
+        <item
             android:id="@+id/nav_settings"
             android:title="@string/nav_drawer_settings" />
     </group>

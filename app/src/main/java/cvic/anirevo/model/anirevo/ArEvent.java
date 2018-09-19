@@ -7,9 +7,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import cvic.anirevo.model.Starrable;
 import cvic.anirevo.model.calendar.CalendarEvent;
 
-public class ArEvent {
+public class ArEvent extends Starrable{
 
     /**
      * Represents an event with a time, location, etc.

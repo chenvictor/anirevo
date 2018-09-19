@@ -15,6 +15,7 @@ import java.io.FileNotFoundException;
 import cvic.anirevo.exceptions.InvalidIdException;
 import cvic.anirevo.model.anirevo.ArGuest;
 import cvic.anirevo.model.anirevo.GuestManager;
+import cvic.anirevo.ui.ArGuestAdapter;
 import cvic.anirevo.ui.BrowseGuestsFragment;
 import cvic.anirevo.utils.IOUtils;
 
@@ -28,7 +29,7 @@ public class GuestActivity extends AppCompatActivity {
         Intent intent = getIntent();
         ArGuest guest = null;
         try {
-            guest = GuestManager.getInstance().getGuest(intent.getIntExtra(BrowseGuestsFragment.EXTRA_GUEST_ID, 0));
+            guest = GuestManager.getInstance().getGuest(intent.getIntExtra(ArGuestAdapter.EXTRA_GUEST_ID, 0));
         } catch (InvalidIdException e) {
             //Make toast
             Toast.makeText(getApplicationContext(), "Invalid Guest ID Provided", Toast.LENGTH_SHORT).show();

@@ -1,0 +1,114 @@
+package cvic.anirevo.ui;
+
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.io.FileNotFoundException;
+import java.util.List;
+
+import cvic.anirevo.GuestActivity;
+import cvic.anirevo.R;
+import cvic.anirevo.model.StarManager;
+import cvic.anirevo.model.anirevo.ArGuest;
+import cvic.anirevo.utils.IOUtils;
+
+public class ArGuestAdapter extends RecyclerView.Adapter<CardViewHolder> {
+
+    public static final String EXTRA_GUEST_ID = "cvic.anirevo.EXTRA_GUEST_ID";
+
+    private Context mCtx;
+    private List<ArGuest> guests;
+
+    ArGuestAdapter(Context mCtx, List<ArGuest> guests) {
+        this.mCtx = mCtx;
+        this.guests = guests;
+    }
+
+    @NonNull
+    @Override
+    public CardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        CardView view = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.guest_card_layout, parent, false);
+        return new CardViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull final CardViewHolder viewHolder, int i) {
+        ArGuest guest = guests.get(i);
+
+        View view = viewHolder.getCardView();
+        ImageView img = view.findViewById(R.id.guest_card_portrait);
+        TextView name = view.findViewById(R.id.guest_card_name);
+        TextView title = view.findViewById(R.id.guest_card_title);
+        TextView star = view.findViewById(R.id.guest_card_star);
+
+        if (guest.getPortraitPath() != null) {
+            try {
+                Bitmap bm = IOUtils.getBitmap(mCtx, "images/" + guest.getPortraitPath());
+                img.setImageBitmap(bm);
+            } catch (FileNotFoundException e) {
+                img.setImageDrawable(mCtx.getResources().getDrawable(R.drawable.placeholder_portrait));
+            }
+        } else {
+            img.setImageDrawable(mCtx.getResources().getDrawable(R.drawable.placeholder_portrait));
+        }
+        name.setText(guest.getName());
+        title.setText(guest.getTitle());
+
+        if (guest.isStarred()) {
+            star.setText(mCtx.getString(R.string.star_filled));
+        } else {
+            star.setText(mCtx.getString(R.string.star_empty));
+        }
+        star.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                toggleStar(viewHolder.getAdapterPosition());
+            }
+        });
+
+        view.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                //Move to GuestActivity
+                Intent intent = new Intent(mCtx, GuestActivity.class);
+                intent.putExtra(EXTRA_GUEST_ID, getGuest(viewHolder.getAdapterPosition()).getId());
+                mCtx.startActivity(intent);
+            }
+        });
+    }
+
+    private void toggleStar(int i) {
+        ArGuest guest = getGuest(i);
+        if (guest.toggleStarred()) {
+            StarManager.getInstance().add(guest);
+        } else {
+            StarManager.getInstance().remove(guest);
+        }
+        notifyItemChanged(i);
+    }
+
+    private ArGuest getGuest(int i) {
+        return guests.get(i);
+    }
+
+    @Override
+    public long getItemId(int i) {
+        return i;
+    }
+
+    @Override
+    public int getItemCount() {
+        return guests.size();
+    }
+
+}

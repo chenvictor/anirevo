@@ -4,7 +4,9 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-public class ArGuest {
+import cvic.anirevo.model.Starrable;
+
+public class ArGuest extends Starrable {
 
     private final int id;
 
@@ -15,6 +17,8 @@ public class ArGuest {
     private String portraitPath;
 
     private Set<ArEvent> events;
+
+    private boolean starred = false;
 
     ArGuest(String name, int id) {
         this.id = id;
@@ -74,5 +78,13 @@ public class ArGuest {
 
     public void setPortraitPath(String portraitPath) {
         this.portraitPath = portraitPath;
+    }
+
+    public boolean isStarred() {
+        return starred;
+    }
+
+    public void setStarred(boolean starred) {
+        this.starred = starred;
     }
 }

@@ -9,6 +9,9 @@ import org.json.JSONObject;
 
 import java.io.FileNotFoundException;
 
+import cvic.anirevo.model.StarManager;
+import cvic.anirevo.model.anirevo.ArEvent;
+import cvic.anirevo.model.anirevo.ArGuest;
 import cvic.anirevo.model.anirevo.CategoryManager;
 import cvic.anirevo.model.anirevo.EventManager;
 import cvic.anirevo.model.anirevo.GuestManager;
@@ -19,6 +22,7 @@ import cvic.anirevo.parser.EventParser;
 import cvic.anirevo.parser.GuestParser;
 import cvic.anirevo.parser.InfoParser;
 import cvic.anirevo.parser.LocationParser;
+import cvic.anirevo.parser.StarParser;
 import cvic.anirevo.parser.ViewingRoomParser;
 import cvic.anirevo.utils.IOUtils;
 import cvic.anirevo.utils.JSONUtils;
@@ -36,6 +40,7 @@ public class StorageHandler {
     }
 
     public void loadJSON() {
+        StarManager.getInstance().clear();
         TagManager.getInstance().clear();
         CategoryManager.getInstance().clear();
         EventManager.getInstance().clear();
@@ -43,16 +48,31 @@ public class StorageHandler {
         LocationManager.getInstance().clear();
         DateManager.getInstance().clear();
         loadInfo();
+        loadStarred();
         loadLocations();
         loadGuests();
         loadEvents();
         loadViewingRooms();
+        StarManager.getInstance().clearNames(); //free name data
+    }
+
+    public void saveJSON() {
+        saveStarred();
     }
 
     private void loadInfo() {
         try {
             JSONObject info = new JSONObject(getFileString("json/info.json"));
             InfoParser.parseInfo(info);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadStarred() {
+        try {
+            JSONObject starred = new JSONObject(getFileString("json/starred.json"));
+            StarParser.parseStars(starred);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -94,6 +114,38 @@ public class StorageHandler {
         }
     }
 
+    private void saveStarred() {
+        JSONObject output = new JSONObject();
+        StarManager starManager = StarManager.getInstance();
+        if (starManager.getStarredGuests().size() != 0) {
+            JSONArray guests = new JSONArray();
+            for (ArGuest guest : starManager.getStarredGuests()) {
+                guests.put(guest.getName());
+            }
+            try {
+                output.put("guests", guests);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        if (starManager.getStarredEvents().size() != 0) {
+            JSONArray events = new JSONArray();
+            for (ArEvent event : starManager.getStarredEvents()) {
+                events.put(event.getTitle());
+            }
+            try {
+                output.put("events", events);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            IOUtils.writeFile(mContext, "json/starred.json", output.toString(2));
+        } catch (JSONException e) {
+            Log.i(TAG, "Failed to write starred");
+        }
+    }
+
     /**
      * Gets a data file String, creating it from the default assets if it does not exist
      * @param path  path to check
@@ -119,10 +171,14 @@ public class StorageHandler {
     /**
      * Fetch a asset file String
      * @param path  path to check
-     * @return      file contents as a String
+     * @return      file contents as a String, if file not found, returns empty string
      */
     private String getAsset (String path) {
-        return JSONUtils.getString(mContext, path);
+        String asset = JSONUtils.getString(mContext, path);
+        if (asset == null) {
+            asset = "";
+        }
+        return asset;
     }
 
 }

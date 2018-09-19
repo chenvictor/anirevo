@@ -7,6 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import cvic.anirevo.exceptions.RestrictedException;
+import cvic.anirevo.model.StarManager;
 import cvic.anirevo.model.anirevo.AgeRestriction;
 import cvic.anirevo.model.anirevo.ArCategory;
 import cvic.anirevo.model.anirevo.ArEvent;
@@ -59,7 +60,6 @@ public class EventParser {
         String title = event.getString("title");
         ArEvent arEvent = EventManager.getInstance().getEvent(title);
 
-
         //Check age restriction first in case this should be skipped
         if (event.has("age")) {
             //Set age restriction
@@ -72,16 +72,21 @@ public class EventParser {
             }
         }
 
+        //Set basic properties
         String loc = event.getString("location");
         String desc = event.getString("desc");
-
-        //Set basic properties
         arEvent.setLocation(LocationManager.getInstance().getLocation(loc));
         arEvent.setDesc(desc);
 
         //Establish mutual reference with category
         arEvent.setCategory(category);
         category.addEvent(arEvent);
+
+        //Add to StarManager if necessary
+        StarManager sManager = StarManager.getInstance();
+        if (sManager.isEventStarred(arEvent.getTitle())) {
+            StarManager.getInstance().add(arEvent);
+        }
 
         //Set CalendarEvents
         if (event.has("time")) {
@@ -96,6 +101,7 @@ public class EventParser {
                 calEvent.setDate(date);
                 calEvent.setStart(start);
                 calEvent.setEnd(end);
+                date.addEvent(calEvent);
                 arEvent.addTimeblock(calEvent);
             }
         }

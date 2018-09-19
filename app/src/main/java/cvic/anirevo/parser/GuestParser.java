@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import cvic.anirevo.model.StarManager;
 import cvic.anirevo.model.anirevo.ArGuest;
 import cvic.anirevo.model.anirevo.GuestManager;
 
@@ -33,6 +34,13 @@ public class GuestParser {
         String title = guest.getString("title");
         ArGuest arGuest = GuestManager.getInstance().getGuest(name);
         arGuest.setTitle(title);
+
+        //Add to StarManager if necessary
+        StarManager sManager = StarManager.getInstance();
+        if (sManager.isGuestStarred(arGuest.getName())) {
+            sManager.add(arGuest);
+        }
+
         if (guest.has("japanese")) {
             String japanese = guest.getString("japanese");
             arGuest.setJapanese(japanese);

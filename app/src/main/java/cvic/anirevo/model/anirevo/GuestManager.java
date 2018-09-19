@@ -1,12 +1,15 @@
 package cvic.anirevo.model.anirevo;
 
+import android.support.annotation.NonNull;
+
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import cvic.anirevo.exceptions.InvalidIdException;
 
-public class GuestManager {
+public class GuestManager implements Iterable<ArGuest>{
 
     /**
      * Singleton Manager to keep track of ArGuests
@@ -54,5 +57,11 @@ public class GuestManager {
 
     public void clear() {
         guests.clear();
+    }
+
+    @NonNull
+    @Override
+    public Iterator<ArGuest> iterator() {
+        return guests.iterator();
     }
 }
