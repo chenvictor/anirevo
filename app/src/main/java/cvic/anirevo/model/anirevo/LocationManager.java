@@ -30,7 +30,7 @@ public class LocationManager implements Iterable<ArLocation>{
                 return loc;
             }
         }
-        ArLocation newLoc = new ArLocation(location);
+        ArLocation newLoc = new ArLocation(location, locations.size());
         locations.add(newLoc);
         return newLoc;
     }

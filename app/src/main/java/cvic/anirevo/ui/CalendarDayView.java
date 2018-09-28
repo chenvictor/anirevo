@@ -131,7 +131,7 @@ public class CalendarDayView extends FrameLayout {
 
     public void setEvents(List<CalendarEvent> events) {
         this.mEvents = events;
-        refresh();
+        drawEvents();
     }
 
     public void setLimitTime(int startHour, int endHour) {

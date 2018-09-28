@@ -13,14 +13,16 @@ public class ArLocation implements Iterable<ArEvent>{
      * Represents a Location for an ArEvent
      */
 
+    private final int id;
     private final String purpose;
     private String location;
     private boolean schedule = false;   //true if the location should be shown in the schedule fragment
 
     private List<ArEvent> events;
 
-    ArLocation(String purpose) {
+    ArLocation(String purpose, int id) {
         this.purpose = purpose;
+        this.id = id;
         events = new ArrayList<>();
     }
 
@@ -68,5 +70,9 @@ public class ArLocation implements Iterable<ArEvent>{
     @Override
     public Iterator<ArEvent> iterator() {
         return events.iterator();
+    }
+
+    public int getId() {
+        return id;
     }
 }

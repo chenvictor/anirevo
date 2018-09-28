@@ -5,11 +5,12 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,22 +19,21 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ScrollView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import cvic.anirevo.R;
 import cvic.anirevo.handlers.NavigationHandler;
-import cvic.anirevo.model.anirevo.ArEvent;
 import cvic.anirevo.model.anirevo.ArLocation;
 import cvic.anirevo.model.anirevo.LocationManager;
 import cvic.anirevo.model.calendar.CalendarDate;
 import cvic.anirevo.model.calendar.CalendarEvent;
 import cvic.anirevo.model.calendar.DateManager;
+import cvic.anirevo.tasks.FetchScheduleEventsTask;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ScheduleFragment extends StateHolderFragment implements NavigationHandler.MenuHandler{
+public class ScheduleFragment extends StateHolderFragment implements NavigationHandler.MenuHandler, FetchScheduleEventsTask.FetchScheduleEventsTaskListener{
 
     private final static String TAG = "anirevo.SchedFrag";
 
@@ -41,6 +41,7 @@ public class ScheduleFragment extends StateHolderFragment implements NavigationH
     private Dialog mDateSelectorDialog;
 
     private TabLayout mTabs;
+    private ViewPager mPager;
     private ScrollView mScrollView;
     private CalendarDayView mView;
 
@@ -57,66 +58,80 @@ public class ScheduleFragment extends StateHolderFragment implements NavigationH
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_schedule, container, false);
+        View view = inflater.inflate(R.layout.fragment_schedule, container, false);
+        //get views
+        mTabs = view.findViewById(R.id.schedule_tabs);
+        mPager = view.findViewById(R.id.pager_tabs);
+        mScrollView = view.findViewById(R.id.calendar_scroller);
+        mView = view.findViewById(R.id.calendar_view);
+        //setup viewpager
+        mTabs.setupWithViewPager(mPager);
+        return view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mLocations = LocationManager.getInstance().getScheduleEvents();
-        mTabs = getView().findViewById(R.id.schedule_tabs);
-        mScrollView = getView().findViewById(R.id.calendar_scroller);
-        mView = getView().findViewById(R.id.calendar_view);
-
         if (mTabs.getTabCount() == 0) {
             initTabs();
         }
-
+        updateDate();
         setEvents();
     }
 
     private void initTabs() {
         //Add tabs
-        if (mLocations.size() != 0) {
-            for (ArLocation location : mLocations) {
-                mTabs.addTab(mTabs.newTab().setText(location.getPurpose()));
+        mPager.setAdapter(new PagerAdapter() {
+            @NonNull
+            @Override
+            public Object instantiateItem(@NonNull ViewGroup container, int position) {
+                View view = new View(getContext());
+                container.addView(view);
+                return view;
             }
 
-            mTabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-                @Override
-                public void onTabSelected(TabLayout.Tab tab) {
-                    changeLocation(tab.getPosition());
-                    setEvents();
-                }
+            @Override
+            public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+                container.removeView((View) object);
+            }
 
-                @Override
-                public void onTabUnselected(TabLayout.Tab tab) {
-                    //Do nothing
-                }
+            @Override
+            public boolean isViewFromObject(@NonNull View view, @NonNull Object o) {
+                return true;
+            }
 
-                @Override
-                public void onTabReselected(TabLayout.Tab tab) {
-                    //Do nothing
-                }
-            });
-        } else {
-            mTabs.addTab(mTabs.newTab().setText("ERROR: NO LOCATIONS"));
-        }
+            @Override
+            public int getCount() {
+                return mLocations.size();
+            }
+
+            @Nullable
+            @Override
+            public CharSequence getPageTitle(int position) {
+                return mLocations.get(position).getPurpose();
+            }
+        });
+        mPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
+            @Override
+            public void onPageSelected(int position) {
+                changeLocation(position);
+                setEvents();
+            }
+        });
     }
 
     private void setEvents() {
-        List<CalendarEvent> events = new ArrayList<>();
+        int locId = mLocations.get(mLocation).getId();
+        int dateId = mDate;
+        new FetchScheduleEventsTask(this).execute(locId, dateId);
+    }
 
-        if (mLocations.size() != 0) {
-            for (ArEvent arEvent : mLocations.get(mLocation)) {
-                for (CalendarEvent calEvent : arEvent.getTimeblocks()) {
-                    if (calEvent.getDate().equals(DateManager.getInstance().getDate(mDate))) {
-                        events.add(calEvent);
-                    }
-                }
-            }
-        }
+    private void updateEvents(List<CalendarEvent> events) {
         mView.setEvents(events);
+    }
+
+    private void updateDate() {
         CalendarDate date = DateManager.getInstance().getDate(mDate);
         mView.setLimitTime(date.getStartHour(), date.getEndHour());
     }
@@ -157,7 +172,9 @@ public class ScheduleFragment extends StateHolderFragment implements NavigationH
                 if (mDateSelectorDialog == null) {
                     mDateSelectorDialog = buildSelectorDialog();
                 }
-                mDateSelectorDialog.show();
+                if (mDateSelectorDialog != null) {
+                    mDateSelectorDialog.show();
+                }
                 return true;
             }
         });
@@ -168,6 +185,7 @@ public class ScheduleFragment extends StateHolderFragment implements NavigationH
         if (name != null && mSelector != null) {
             mSelector.setTitle(name);
         }
+        updateDate();
         setEvents();
     }
 
@@ -214,11 +232,20 @@ public class ScheduleFragment extends StateHolderFragment implements NavigationH
             @Override
             public void run() {
                 selectorPicked(schedState.date);
-                mTabs.getTabAt(schedState.loc).select();
+                TabLayout.Tab  tab = mTabs.getTabAt(schedState.loc);
+                if (tab != null) {
+                    tab.select();
+                }
+                updateDate();
                 setEvents();
                 mScrollView.scrollTo(mScrollView.getScrollX(), schedState.scrollY);
             }
         }, 100);
+    }
+
+    @Override
+    public void onFinished(List<CalendarEvent> events) {
+        updateEvents(events);
     }
 }
 
