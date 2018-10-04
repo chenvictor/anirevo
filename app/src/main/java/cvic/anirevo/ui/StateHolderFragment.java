@@ -12,7 +12,7 @@ public abstract class StateHolderFragment extends Fragment {
     private FragmentStateHolderHandler mStateHandler;
     private final String ID;
 
-    public StateHolderFragment(String id) {
+    StateHolderFragment(String id) {
         ID = id;
     }
 
@@ -45,21 +45,21 @@ public abstract class StateHolderFragment extends Fragment {
      * Store the state of the fragment. Called during Fragment.onPause()
      * @return          the state of the fragment
      */
-    public abstract Object storeState();
+    protected abstract Object storeState();
 
     /**
      * Restore the state of the fragment. Called during Fragment.onResume()
      *      Will NOT be called if no state was stored or the stored state was null
      * @param state     the stored state of the fragment
      */
-    public abstract void restoreState(Object state);
+    protected abstract void restoreState(Object state);
 
     /**
      * Optional override
      * Run anything that should be run if no state is found
      *      Only one of restoreState or onFirstState will be called
      */
-    public void onFirstState() {
+    void onFirstState() {
 
     }
 

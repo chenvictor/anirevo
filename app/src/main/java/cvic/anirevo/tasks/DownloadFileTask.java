@@ -19,7 +19,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 import cvic.anirevo.utils.IOUtils;
 
-public class DownloadFileTask extends AsyncTask <Void, Void, Void> {
+class DownloadFileTask extends AsyncTask <Void, Void, Void> {
 
     private static final String TAG = "anirevo.DFT";
 
@@ -32,11 +32,6 @@ public class DownloadFileTask extends AsyncTask <Void, Void, Void> {
     DownloadFileTask(WeakReference<Context> context, DownloadFileTaskListener listener) {
         this.context = context;
         mListener = listener;
-    }
-
-    @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
     }
 
     @Override

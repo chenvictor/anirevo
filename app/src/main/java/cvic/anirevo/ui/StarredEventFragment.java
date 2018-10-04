@@ -53,7 +53,7 @@ public class StarredEventFragment extends Fragment {
 
         mRecyclerView = view.findViewById(R.id.recycler_view);
         mTextView = view.findViewById(R.id.empty_text);
-        mTextView.setText("Star an event to be notified before it starts!");
+        mTextView.setText(R.string.empty_starred_events_prompt);
         mRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);

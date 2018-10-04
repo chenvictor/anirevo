@@ -7,4 +7,5 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".AniRevo"
     tools:showIn="@layout/app_bar_ani_revo"
-    android:id="@+id/content_ani_revo" />
+    android:id="@+id/content_ani_revo"
+    tools:ignore="MergeRootFrame" />

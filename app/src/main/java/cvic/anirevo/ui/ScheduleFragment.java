@@ -3,6 +3,7 @@ package cvic.anirevo.ui;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -11,17 +12,18 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.NestedScrollView;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ScrollView;
 
 import java.util.List;
 
+import cvic.anirevo.EventActivity;
 import cvic.anirevo.R;
 import cvic.anirevo.handlers.NavigationHandler;
 import cvic.anirevo.model.anirevo.ArLocation;
@@ -31,10 +33,12 @@ import cvic.anirevo.model.calendar.CalendarEvent;
 import cvic.anirevo.model.calendar.DateManager;
 import cvic.anirevo.tasks.FetchScheduleEventsTask;
 
+import static cvic.anirevo.ui.ArEventAdapter.EXTRA_EVENT_ID;
+
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ScheduleFragment extends StateHolderFragment implements NavigationHandler.MenuHandler, FetchScheduleEventsTask.FetchScheduleEventsTaskListener{
+public class ScheduleFragment extends StateHolderFragment implements NavigationHandler.MenuHandler, FetchScheduleEventsTask.FetchScheduleEventsTaskListener, ScheduleFragmentHitboxHandler.EventTappedListener{
 
     private final static String TAG = "anirevo.SchedFrag";
 
@@ -43,13 +47,18 @@ public class ScheduleFragment extends StateHolderFragment implements NavigationH
 
     private TabLayout mTabs;
     private ViewPager mPager;
-    private ScrollView mScrollView;
-    private CalendarDayView mView;
+    private NestedScrollView mScrollView;
+    private RecyclerView mRecyclerView;
+    private DayViewAdapter mAdapter;
 
     private List<ArLocation> mLocations;
 
     private int mDate = 0;
     private int mLocation = 0;
+
+    private int mStartHour = 0;
+
+    private ScheduleFragmentHitboxHandler mHitboxHandler;
 
     public ScheduleFragment() {
         super("SCHEDULE");
@@ -64,7 +73,10 @@ public class ScheduleFragment extends StateHolderFragment implements NavigationH
         mTabs = view.findViewById(R.id.schedule_tabs);
         mPager = view.findViewById(R.id.pager_tabs);
         mScrollView = view.findViewById(R.id.calendar_scroller);
-        mView = view.findViewById(R.id.calendar_view);
+        mRecyclerView = view.findViewById(R.id.recycler_view);
+        mRecyclerView.setNestedScrollingEnabled(false);
+        mAdapter = new DayViewAdapter(getLayoutInflater());
+        mRecyclerView.setAdapter(mAdapter);
         //setup viewpager
         mTabs.setupWithViewPager(mPager);
         return view;
@@ -73,6 +85,8 @@ public class ScheduleFragment extends StateHolderFragment implements NavigationH
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        mHitboxHandler = new ScheduleFragmentHitboxHandler(this);
+        EventDecoration.initialize(getResources());
         mLocations = LocationManager.getInstance().getScheduleEvents();
         if (mTabs.getTabCount() == 0) {
             initTabs();
@@ -87,13 +101,10 @@ public class ScheduleFragment extends StateHolderFragment implements NavigationH
             @Override
             public Object instantiateItem(@NonNull ViewGroup container, int position) {
                 View view = new View(getContext());
+                view.setOnClickListener(mHitboxHandler);
+                view.setOnTouchListener(mHitboxHandler);
+                view.setTag(position);
                 container.addView(view);
-                view.setOnTouchListener(new View.OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View view, MotionEvent motionEvent) {
-                        return false;
-                    }
-                });
                 return view;
             }
 
@@ -104,7 +115,7 @@ public class ScheduleFragment extends StateHolderFragment implements NavigationH
 
             @Override
             public boolean isViewFromObject(@NonNull View view, @NonNull Object o) {
-                return true;
+                return view == o;
             }
 
             @Override
@@ -130,16 +141,28 @@ public class ScheduleFragment extends StateHolderFragment implements NavigationH
     private void setEvents() {
         int locId = mLocations.get(mLocation).getId();
         int dateId = mDate;
+
         new FetchScheduleEventsTask(this).execute(locId, dateId);
     }
 
     private void updateEvents(List<CalendarEvent> events) {
-        mView.setEvents(events);
+        //remove all decorations
+        int toRemove = mRecyclerView.getItemDecorationCount();
+        for (int i = 0; i < toRemove; i++) {
+            mRecyclerView.removeItemDecorationAt(0);
+        }
+        //clear old hitboxes
+        mHitboxHandler.clearHitboxes();
+        //add new decorations
+        for (CalendarEvent event : events) {
+            mRecyclerView.addItemDecoration(new EventDecoration(mHitboxHandler, event, mStartHour));
+        }
     }
 
     private void updateDate() {
         CalendarDate date = DateManager.getInstance().getDate(mDate);
-        mView.setLimitTime(date.getStartHour(), date.getEndHour());
+        mStartHour = date.getStartHour();
+        mAdapter.setHourBounds(date.getStartHour(), date.getEndHour());
     }
 
     /**
@@ -147,7 +170,7 @@ public class ScheduleFragment extends StateHolderFragment implements NavigationH
      * @param idx   index of the date
      * @return      The name of teh date
      */
-    public String changeDate(int idx) {
+    private String changeDate(int idx) {
         if (idx == mDate) {
             //no change
             return null;
@@ -158,7 +181,7 @@ public class ScheduleFragment extends StateHolderFragment implements NavigationH
         return date.getName();
     }
 
-    public void changeLocation(int idx) {
+    private void changeLocation(int idx) {
         if (mLocation == idx) {
             //no change
             return;
@@ -256,16 +279,31 @@ public class ScheduleFragment extends StateHolderFragment implements NavigationH
     public void onFinished(List<CalendarEvent> events) {
         updateEvents(events);
     }
-}
 
-class SchedState {
-    int date;
-    int loc;
-    int scrollY;
+    @Override
+    public void eventTapped(CalendarEvent event) {
+        if (getContext() == null) {
+            return;
+        }
+        Intent intent = new Intent(getContext(), EventActivity.class);
+        intent.putExtra(EXTRA_EVENT_ID, event.getEvent().getId());
+        getContext().startActivity(intent);
+    }
 
-    SchedState(int date, int loc, int scrollY) {
-        this.date = date;
-        this.loc = loc;
-        this.scrollY = scrollY;
+    @Override
+    public void starToggled() {
+        mRecyclerView.invalidate();
+    }
+
+    class SchedState {
+        int date;
+        int loc;
+        int scrollY;
+
+        SchedState(int date, int loc, int scrollY) {
+            this.date = date;
+            this.loc = loc;
+            this.scrollY = scrollY;
+        }
     }
 }

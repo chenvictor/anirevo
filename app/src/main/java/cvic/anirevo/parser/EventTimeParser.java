@@ -3,7 +3,7 @@ package cvic.anirevo.parser;
 import cvic.anirevo.exceptions.InvalidTimeException;
 import cvic.anirevo.model.calendar.EventTime;
 
-public class EventTimeParser {
+class EventTimeParser {
 
     /**
      * Parse a time string into EventTime

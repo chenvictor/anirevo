@@ -66,7 +66,7 @@ public class ArStickyHeaderEventAdapter extends ArEventAdapter {
         return EVENT_ITEM;
     }
 
-    public int getHeaderPositionForItem(int itemPosition) {
+    private int getHeaderPositionForItem(int itemPosition) {
         int headerPosition = 0;
         do {
             if (this.isHeader(itemPosition)) {
@@ -78,11 +78,11 @@ public class ArStickyHeaderEventAdapter extends ArEventAdapter {
         return headerPosition;
     }
 
-    public int getHeaderLayout(int headerPosition) {
+    private int getHeaderLayout(int headerPosition) {
         return R.layout.event_header_card_layout;
     }
 
-    public void bindHeaderData(View header, int headerPosition) {
+    private void bindHeaderData(View header, int headerPosition) {
         CardView card = header.findViewById(R.id.event_header_card);
         TextView text = header.findViewById(R.id.event_header_card_text);
         EventListItem item = items.get(headerPosition);
@@ -90,7 +90,7 @@ public class ArStickyHeaderEventAdapter extends ArEventAdapter {
         card.setCardBackgroundColor(Color.BLACK);
     }
 
-    public boolean isHeader(int itemPosition) {
+    private boolean isHeader(int itemPosition) {
         return items.get(itemPosition).isHeader();
     }
 
