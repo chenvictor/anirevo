@@ -11,9 +11,11 @@
         android:layout_height="match_parent"
         android:minWidth="20dp"
         android:orientation="vertical" />
+
     <FrameLayout
         android:id="@+id/event_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        />
+        android:layout_alignBottom="@+id/day_view_container"
+        android:layout_alignTop="@+id/day_view_container" />
 </RelativeLayout>

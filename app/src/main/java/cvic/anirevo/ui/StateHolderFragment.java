@@ -35,6 +35,8 @@ public abstract class StateHolderFragment extends Fragment {
             Object storedState = mStateHandler.getState(ID);
             if (storedState != null) {
                 restoreState(storedState);
+            } else {
+                onFirstState();
             }
         }
     }
@@ -51,5 +53,14 @@ public abstract class StateHolderFragment extends Fragment {
      * @param state     the stored state of the fragment
      */
     public abstract void restoreState(Object state);
+
+    /**
+     * Optional override
+     * Run anything that should be run if no state is found
+     *      Only one of restoreState or onFirstState will be called
+     */
+    public void onFirstState() {
+
+    }
 
 }

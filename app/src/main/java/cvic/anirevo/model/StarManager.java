@@ -74,7 +74,7 @@ public class StarManager {
     }
 
     public void clearNames() {
-        //Should be called after EventParser completes to free data
+        //Should be called after EventParser completes to allow for garbage collection
         eventTitles = null;
         guestTitles = null;
     }

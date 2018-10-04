@@ -100,7 +100,9 @@ public class CalendarDayView extends FrameLayout {
     }
 
     private void drawEvents() {
+        getDecoration().resetBufferCounter();
         mLayoutEvent.removeAllViews();
+        mLayoutEvent.setMinimumHeight(mLayoutDayView.getHeight());
 
         for (CalendarEvent event : mEvents) {
             Rect rect = getTimeBound(event);

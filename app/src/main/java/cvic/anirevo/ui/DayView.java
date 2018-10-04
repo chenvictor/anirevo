@@ -34,7 +34,6 @@ public class DayView extends FrameLayout {
 
     private void init(AttributeSet attrs) {
         LayoutInflater.from(getContext()).inflate(R.layout.view_day, this, true);
-
         mTextHour = findViewById(R.id.text_hour);
     }
 

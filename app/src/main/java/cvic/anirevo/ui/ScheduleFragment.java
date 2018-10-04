@@ -14,6 +14,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -77,7 +78,6 @@ public class ScheduleFragment extends StateHolderFragment implements NavigationH
             initTabs();
         }
         updateDate();
-        setEvents();
     }
 
     private void initTabs() {
@@ -88,6 +88,12 @@ public class ScheduleFragment extends StateHolderFragment implements NavigationH
             public Object instantiateItem(@NonNull ViewGroup container, int position) {
                 View view = new View(getContext());
                 container.addView(view);
+                view.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View view, MotionEvent motionEvent) {
+                        return false;
+                    }
+                });
                 return view;
             }
 
@@ -196,7 +202,6 @@ public class ScheduleFragment extends StateHolderFragment implements NavigationH
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Date");
 
-//        final ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.select_dialog_singlechoice);
         final ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), R.layout.custom_select_dialog_singlechoice);
         for (CalendarDate date : DateManager.getInstance()) {
             adapter.add(date.getName());
@@ -226,6 +231,11 @@ public class ScheduleFragment extends StateHolderFragment implements NavigationH
     }
 
     @Override
+    public void onFirstState() {
+        setEvents();
+    }
+
+    @Override
     public void restoreState(Object state) {
         final SchedState schedState = (SchedState) state;
         new Handler().postDelayed(new Runnable() {
@@ -237,7 +247,6 @@ public class ScheduleFragment extends StateHolderFragment implements NavigationH
                     tab.select();
                 }
                 updateDate();
-                setEvents();
                 mScrollView.scrollTo(mScrollView.getScrollX(), schedState.scrollY);
             }
         }, 100);
@@ -253,7 +262,6 @@ class SchedState {
     int date;
     int loc;
     int scrollY;
-
 
     SchedState(int date, int loc, int scrollY) {
         this.date = date;

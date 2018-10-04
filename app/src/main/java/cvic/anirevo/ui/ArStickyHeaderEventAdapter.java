@@ -1,7 +1,6 @@
 package cvic.anirevo.ui;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
@@ -15,10 +14,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import cvic.anirevo.EventActivity;
 import cvic.anirevo.R;
-import cvic.anirevo.model.anirevo.AgeRestriction;
-import cvic.anirevo.model.anirevo.ArEvent;
 
 public class ArStickyHeaderEventAdapter extends ArEventAdapter {
 
