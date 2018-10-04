@@ -22,7 +22,7 @@ public class TempUtils {
         return getAgeRestriction(false);
     }
 
-    public static AgeRestriction getAgeRestriction(boolean forceRecalculate) {
+    private static AgeRestriction getAgeRestriction(boolean forceRecalculate) {
         if (RESTRICTION == null || forceRecalculate) {
             RESTRICTION = calculateAgeRestriction();
         }

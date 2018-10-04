@@ -10,7 +10,7 @@ import android.widget.TextView;
 import cvic.anirevo.R;
 import cvic.anirevo.utils.TimeUtils;
 
-public class DayViewAdapter extends RecyclerView.Adapter {
+class DayViewAdapter extends RecyclerView.Adapter {
 
     private int startHour;
     private int endHour;
@@ -36,10 +36,6 @@ public class DayViewAdapter extends RecyclerView.Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = mInflater.inflate(R.layout.view_calendar_hour, viewGroup, false);
         return new RecyclerView.ViewHolder(view) {
-            @Override
-            public String toString() {
-                return super.toString();
-            }
         };
     }
 

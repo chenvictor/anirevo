@@ -6,10 +6,14 @@
     <dimen name="nav_header_height">176dp</dimen>
 
     <!-- Schedule View -->
+        <!-- Positioning -->
     <dimen name="hour_height">64dp</dimen>
     <dimen name="left_margin">48dp</dimen>
-    <dimen name="eventblock_margin">4dp</dimen>
-    <dimen name="text_size">20dp</dimen>
+    <dimen name="event_block_margin">4dp</dimen>
+
+        <!-- Sizing -->
+    <dimen name="text_size">14dp</dimen>
+    <dimen name="star_size">15dp</dimen>
 
     <!-- BrowseGuests -->
     <dimen name="guest_card_width">110dp</dimen>

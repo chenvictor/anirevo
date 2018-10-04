@@ -56,7 +56,7 @@ public class StarredGuestFragment extends Fragment {
 
         mRecyclerView = view.findViewById(R.id.recycler_view);
         mTextView = view.findViewById(R.id.empty_text);
-        mTextView.setText("Star a guest to be notified of their events!");
+        mTextView.setText(R.string.empty_starred_guests_prompt);
         mRecyclerView.setLayoutManager(LayoutUtils.createGridLayoutManager(getContext(), getResources().getDimension(R.dimen.guest_card_width)));
 
         List<ArGuest> guests = new ArrayList<>(StarManager.getInstance().getStarredGuests());

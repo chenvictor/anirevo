@@ -58,7 +58,7 @@ public class ScheduleFragment extends StateHolderFragment implements NavigationH
 
     private int mStartHour = 0;
 
-    ScheduleFragmentHitboxHandler mHitboxHandler;
+    private ScheduleFragmentHitboxHandler mHitboxHandler;
 
     public ScheduleFragment() {
         super("SCHEDULE");
@@ -73,8 +73,7 @@ public class ScheduleFragment extends StateHolderFragment implements NavigationH
         mTabs = view.findViewById(R.id.schedule_tabs);
         mPager = view.findViewById(R.id.pager_tabs);
         mScrollView = view.findViewById(R.id.calendar_scroller);
-        EventDecoration.setViewHeight(mScrollView.getHeight());
-        mRecyclerView = view.findViewById(R.id.recyclerview);
+        mRecyclerView = view.findViewById(R.id.recycler_view);
         mRecyclerView.setNestedScrollingEnabled(false);
         mAdapter = new DayViewAdapter(getLayoutInflater());
         mRecyclerView.setAdapter(mAdapter);
@@ -171,7 +170,7 @@ public class ScheduleFragment extends StateHolderFragment implements NavigationH
      * @param idx   index of the date
      * @return      The name of teh date
      */
-    public String changeDate(int idx) {
+    private String changeDate(int idx) {
         if (idx == mDate) {
             //no change
             return null;
@@ -182,7 +181,7 @@ public class ScheduleFragment extends StateHolderFragment implements NavigationH
         return date.getName();
     }
 
-    public void changeLocation(int idx) {
+    private void changeLocation(int idx) {
         if (mLocation == idx) {
             //no change
             return;

@@ -85,7 +85,7 @@ public class ArGuestAdapter extends RecyclerView.Adapter<CardViewHolder> {
         });
     }
 
-    protected void toggleStar(int i) {
+    void toggleStar(int i) {
         ArGuest guest = getGuest(i);
         guest.toggleStarred();
         notifyItemChanged(i);

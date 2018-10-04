@@ -45,5 +45,8 @@
     <string name="nav_drawer_guests">Guests</string>
     <string name="nav_drawer_starred">Starred</string>
     <string name="nav_drawer_settings">Settings</string>
-    <string name="placeholder_time">12:00PM</string>
+    <string name="placeholder_time">12PM</string>
+    <string name="default_empty_recyclerview_text">No items are in this view!</string>
+    <string name="empty_starred_events_prompt">Star an event to be notified before it starts!</string>
+    <string name="empty_starred_guests_prompt">Star a guest to be notified of their events!</string>
 </resources>

@@ -8,7 +8,7 @@ import java.util.Map;
  */
 public class FragmentStateHolderHandler {
 
-    Map<String, Object> savedStates;
+    private Map<String, Object> savedStates;
 
     FragmentStateHolderHandler() {
         savedStates = new HashMap<>();

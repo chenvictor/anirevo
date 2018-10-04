@@ -11,34 +11,38 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import cvic.anirevo.R;
+import cvic.anirevo.model.anirevo.AgeRestriction;
 import cvic.anirevo.model.calendar.CalendarEvent;
 
-public class EventDecoration extends RecyclerView.ItemDecoration {
+class EventDecoration extends RecyclerView.ItemDecoration {
 
     private static final float RECT_ROUND = 8f;
     private static float TEXT_SIZE = 40;
+    private static float STAR_SIZE = 40;
 
-    private static Paint rectPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private static Paint textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private static Paint starPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private static Paint PAINT_RECT = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private static Paint PAINT_TEXT = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private static Paint PAINT_STAR = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private static int EVENT_DEFAULT = Color.BLUE;
+    private static int EVENT_13 = Color.BLUE;
+    private static int EVENT_18 = Color.BLUE;
 
     private static String STAR_EMPTY = "";
     private static String STAR_FILLED = "";
 
-    private static int mViewHeight = 100;
     private static float mHourHeight = 50;
     private static float mMinuteHeight = mHourHeight / 60;
     private static float mLeftMargin = 0;
     private static float mMargin = 0;
 
     static {
-        rectPaint.setColor(Color.CYAN);
-        textPaint.setColor(Color.BLACK);
-        textPaint.setTextAlign(Paint.Align.LEFT);
-        textPaint.setTextSize(TEXT_SIZE);
-        starPaint.setTextAlign(Paint.Align.RIGHT);
-        starPaint.setColor(Color.BLACK);
-        starPaint.setTextSize(TEXT_SIZE);
+        PAINT_RECT.setColor(Color.CYAN);
+        PAINT_TEXT.setColor(Color.WHITE);
+        PAINT_TEXT.setTextAlign(Paint.Align.LEFT);
+        PAINT_TEXT.setTextSize(TEXT_SIZE);
+        PAINT_STAR.setTextAlign(Paint.Align.RIGHT);
+        PAINT_STAR.setColor(Color.GRAY);
+        PAINT_STAR.setTextSize(STAR_SIZE);
     }
 
     private RectListener mListener;
@@ -49,17 +53,17 @@ public class EventDecoration extends RecyclerView.ItemDecoration {
         mHourHeight = resources.getDimension(R.dimen.hour_height);
         mMinuteHeight = mHourHeight / 60;
         mLeftMargin = resources.getDimension(R.dimen.left_margin);
-        mMargin = resources.getDimension(R.dimen.eventblock_margin);
+        mMargin = resources.getDimension(R.dimen.event_block_margin);
         STAR_EMPTY = resources.getString(R.string.star_empty);
         STAR_FILLED = resources.getString(R.string.star_filled);
         TEXT_SIZE = resources.getDimension(R.dimen.text_size);
-        textPaint.setTextSize(TEXT_SIZE);
-        starPaint.setTextSize(TEXT_SIZE);
-        ScheduleFragmentHitboxHandler.setSTARHITBOX((int) (TEXT_SIZE + 2 * mMargin));
-    }
-
-    public static void setViewHeight(int viewHeight) {
-        mViewHeight = viewHeight;
+        STAR_SIZE = resources.getDimension(R.dimen.star_size);
+        PAINT_TEXT.setTextSize(TEXT_SIZE);
+        PAINT_STAR.setTextSize(STAR_SIZE);
+        EVENT_DEFAULT = resources.getColor(R.color.calendarEventDefault);
+        EVENT_13 = resources.getColor(R.color.calendarEvent13plus);
+        EVENT_18 = resources.getColor(R.color.calendarEvent18plus);
+        ScheduleFragmentHitboxHandler.setSTARHITBOX((int) (STAR_SIZE + 2 * mMargin));
     }
 
     EventDecoration(RectListener listener, @NonNull CalendarEvent event, int startHourOffset) {
@@ -83,10 +87,16 @@ public class EventDecoration extends RecyclerView.ItemDecoration {
             if (isVisible(parent, rectTop, rectHeight)) {
                 RectF rect = calculateRect(parent, rectTop, rectHeight);
                 c.save();
-                c.drawRoundRect(rect, RECT_ROUND, RECT_ROUND, rectPaint);
-                c.drawText((mEvent.getEvent().isStarred() ? STAR_FILLED : STAR_EMPTY), rect.right - 10, rect.top + TEXT_SIZE + 10, starPaint);
+                AgeRestriction restriction = mEvent.getEvent().getRestriction();
+                if (restriction == null) {
+                    PAINT_RECT.setColor(EVENT_DEFAULT);
+                } else {
+                    PAINT_RECT.setColor(restriction.getTextColor());
+                }
+                c.drawRoundRect(rect, RECT_ROUND, RECT_ROUND, PAINT_RECT);
+                c.drawText((mEvent.getEvent().isStarred() ? STAR_FILLED : STAR_EMPTY), rect.right - 10, rect.top + TEXT_SIZE + 10, PAINT_STAR);
                 c.clipRect(rect.left + 50, rect.top + 8, rect.right - 50, rect.bottom);
-                c.drawText(mEvent.getName(), rect.left + 50, rect.top + 8 + TEXT_SIZE, textPaint);
+                c.drawText(mEvent.getName(), rect.left + 50, rect.top + 8 + TEXT_SIZE, PAINT_TEXT);
                 c.restore();
                 if (mListener != null) {
                     mListener.addRect(rect, mEvent);

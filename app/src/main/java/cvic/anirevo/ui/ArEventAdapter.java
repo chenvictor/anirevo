@@ -82,7 +82,7 @@ public class ArEventAdapter extends RecyclerView.Adapter<CardViewHolder> {
         });
     }
 
-    protected void toggleStar(int i) {
+    void toggleStar(int i) {
         ArEvent event = getEvent(i);
         if (event.toggleStarred()) {
             StarManager.getInstance().add(event);
