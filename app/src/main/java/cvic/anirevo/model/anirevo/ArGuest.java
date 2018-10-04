@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import cvic.anirevo.model.StarManager;
 import cvic.anirevo.model.Starrable;
 
 public class ArGuest extends Starrable {
@@ -80,11 +81,14 @@ public class ArGuest extends Starrable {
         this.portraitPath = portraitPath;
     }
 
-    public boolean isStarred() {
+    @Override
+    public boolean toggleStarred() {
+        boolean starred = super.toggleStarred();
+        if (starred) {
+            StarManager.getInstance().add(this);
+        } else {
+            StarManager.getInstance().remove(this);
+        }
         return starred;
-    }
-
-    public void setStarred(boolean starred) {
-        this.starred = starred;
     }
 }

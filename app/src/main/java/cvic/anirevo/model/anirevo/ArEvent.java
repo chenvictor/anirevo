@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import cvic.anirevo.model.StarManager;
 import cvic.anirevo.model.Starrable;
 import cvic.anirevo.model.calendar.CalendarEvent;
 
@@ -127,4 +128,16 @@ public class ArEvent extends Starrable{
     public int getId() {
         return id;
     }
+
+    @Override
+    public boolean toggleStarred() {
+        boolean starred = super.toggleStarred();
+        if (starred) {
+            StarManager.getInstance().add(this);
+        } else {
+            StarManager.getInstance().remove(this);
+        }
+        return starred;
+    }
+
 }

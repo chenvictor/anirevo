@@ -18,7 +18,7 @@
         app:tabMode="scrollable"
         app:tabSelectedTextColor="@android:color/white" />
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:id="@+id/calendar_scroller"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -29,21 +29,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <cvic.anirevo.ui.CalendarDayView
-                android:id="@+id/calendar_view"
-                android:layout_width="match_parent"
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerview"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:visibility="visible"
-                app:layout_constraintTop_toTopOf="parent">
-
-            </cvic.anirevo.ui.CalendarDayView>
+                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <android.support.v4.view.ViewPager
                 android:id="@+id/pager_tabs"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:visibility="visible"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/recyclerview"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -51,6 +52,6 @@
             </android.support.v4.view.ViewPager>
 
         </android.support.constraint.ConstraintLayout>
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 
 </LinearLayout>

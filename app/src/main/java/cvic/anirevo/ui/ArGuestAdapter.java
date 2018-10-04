@@ -17,7 +17,6 @@ import java.util.List;
 
 import cvic.anirevo.GuestActivity;
 import cvic.anirevo.R;
-import cvic.anirevo.model.StarManager;
 import cvic.anirevo.model.anirevo.ArGuest;
 import cvic.anirevo.utils.IOUtils;
 
@@ -88,11 +87,7 @@ public class ArGuestAdapter extends RecyclerView.Adapter<CardViewHolder> {
 
     protected void toggleStar(int i) {
         ArGuest guest = getGuest(i);
-        if (guest.toggleStarred()) {
-            StarManager.getInstance().add(guest);
-        } else {
-            StarManager.getInstance().remove(guest);
-        }
+        guest.toggleStarred();
         notifyItemChanged(i);
     }
 
