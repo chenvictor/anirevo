@@ -3,19 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".ui.StarredFragment">
-
-    <android.support.design.widget.TabLayout
-        android:id="@+id/star_tabs"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:visibility="visible"
-        app:tabGravity="fill"
-        app:tabIndicatorColor="@android:color/white"
-        app:tabSelectedTextColor="@android:color/white" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/star_pager"

@@ -15,6 +15,13 @@ import java.io.InputStreamReader;
 
 public class IOUtils {
 
+    private static final BitmapFactory.Options OPTIONS;
+
+    static {
+        OPTIONS = new BitmapFactory.Options();
+        OPTIONS.inPreferredConfig = Bitmap.Config.RGB_565;
+    }
+
     public static Bitmap getBitmap(Context context, String path) throws FileNotFoundException {
         FileInputStream inputStream;
         File file = getFile(context, path);
@@ -22,7 +29,7 @@ public class IOUtils {
             throw new FileNotFoundException();
         }
         inputStream = new FileInputStream(file);
-        return BitmapFactory.decodeStream(inputStream);
+        return BitmapFactory.decodeStream(inputStream, null, OPTIONS);
     }
 
     public static String readFile(Context context, String path) throws FileNotFoundException {

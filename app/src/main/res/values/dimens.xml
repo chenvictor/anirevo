@@ -5,6 +5,8 @@
     <dimen name="nav_header_vertical_spacing">8dp</dimen>
     <dimen name="nav_header_height">176dp</dimen>
 
+    <dimen name="guest_card_portrait_size">100dp</dimen>
+
     <!-- Schedule View -->
         <!-- Positioning -->
     <dimen name="hour_height">64dp</dimen>

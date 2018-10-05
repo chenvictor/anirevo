@@ -3,9 +3,9 @@ package cvic.anirevo;
 import android.content.Context;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
-import android.widget.Toast;
 
 import java.lang.ref.WeakReference;
 
@@ -21,12 +21,13 @@ public class AniRevo extends AppCompatActivity implements SettingsFragment.Setti
 
     private NavigationHandler mNavigationHandler;
     private StorageHandler mStorageHandler;
+    private TabLayout mAppBarTabs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ani_revo);
-
+        mAppBarTabs = findViewById(R.id.appbar_tabs);
         init();
 
         initHandlers();
@@ -52,7 +53,7 @@ public class AniRevo extends AppCompatActivity implements SettingsFragment.Setti
     }
 
     private void initHandlers() {
-        mNavigationHandler = new NavigationHandler(this);
+        mNavigationHandler = new NavigationHandler(this, mAppBarTabs);
         mStorageHandler = new StorageHandler(this);
     }
 
@@ -70,8 +71,8 @@ public class AniRevo extends AppCompatActivity implements SettingsFragment.Setti
 
     @Override
     public void reload() {
-        Toast.makeText(this, "Reloading Activity", Toast.LENGTH_SHORT).show();
         finish();
+        TempUtils.getAgeRestriction(true);
         startActivity(getIntent());
     }
 

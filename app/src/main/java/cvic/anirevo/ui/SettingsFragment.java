@@ -41,6 +41,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 if (mListener != null) {
+                    cancelToast();
                     mListener.reload();
                     return true;
                 }
@@ -81,11 +82,15 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     private Toast preferenceToast = null;
 
     private void showToastMessage(String message) {
+        cancelToast();
+        preferenceToast = Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT);
+        preferenceToast.show();
+    }
+
+    private void cancelToast() {
         if (preferenceToast != null) {
             preferenceToast.cancel();
         }
-        preferenceToast = Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT);
-        preferenceToast.show();
     }
 
     /**

@@ -3,6 +3,7 @@ package cvic.anirevo.handlers;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -11,17 +12,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import cvic.anirevo.R;
 import cvic.anirevo.model.calendar.DateManager;
-import cvic.anirevo.ui.GuestsFragment;
+import cvic.anirevo.ui.CustomFragment;
 import cvic.anirevo.ui.EventsFragment;
+import cvic.anirevo.ui.GuestsFragment;
 import cvic.anirevo.ui.ScheduleFragment;
 import cvic.anirevo.ui.SettingsFragment;
 import cvic.anirevo.ui.StarredFragment;
-import cvic.anirevo.ui.StateHolderFragment;
 
 public class NavigationHandler implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -31,6 +33,7 @@ public class NavigationHandler implements NavigationView.OnNavigationItemSelecte
 
     private final NavigationView mNavigationView;
     private final AppCompatActivity mActivity;
+    private final TabLayout mAppBarTabs;
     private final DrawerLayout mDrawer;
 
     private int mMenuToChoose = R.menu.empty;
@@ -38,8 +41,9 @@ public class NavigationHandler implements NavigationView.OnNavigationItemSelecte
 
     private Class mFragClass = null;
 
-    public NavigationHandler(AppCompatActivity activity) {
+    public NavigationHandler(AppCompatActivity activity, TabLayout appBarTabs) {
         this.mActivity = activity;
+        mAppBarTabs = appBarTabs;
         mDrawer = mActivity.findViewById(R.id.drawer_layout);
 
         Toolbar toolbar = mActivity.findViewById(R.id.toolbar);
@@ -120,10 +124,15 @@ public class NavigationHandler implements NavigationView.OnNavigationItemSelecte
                 e.printStackTrace();
                 return false;
             }
-            if (fragment instanceof StateHolderFragment) {
-                ((StateHolderFragment) fragment).setStateHandler(mFragmentStateHolderHandler);
+            if (fragment instanceof CustomFragment) {
+                ((CustomFragment) fragment).setStateHandler(mFragmentStateHolderHandler);
             }
             mActivity.getSupportFragmentManager().beginTransaction().replace(R.id.content_ani_revo, fragment).commit();
+            if (fragment instanceof CustomFragment) {
+                ((CustomFragment) fragment).setAppBarTabs(mAppBarTabs);
+            } else {
+                mAppBarTabs.setVisibility(View.GONE);
+            }
             item.setChecked(true);
             mActivity.setTitle(item.getTitle());
             changeMenu(newMenuResource);

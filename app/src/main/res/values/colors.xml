@@ -6,6 +6,11 @@
     <color name="colorTertiary">#000000</color>
     <color name="colorAccent">#415ff4</color>
 
+    <color name="anirevoPrimary">#59c5f1</color>
+    <color name="anirevoPrimaryDark">#1e97e6</color>
+
+    <color name="anirevoAccent">#ffd308</color>
+
     <!-- Calendar View Stuff-->
     <color name="calendarEventDefault">#fbd75b</color>
     <color name="calendarEvent13plus">#a4bdfc</color>

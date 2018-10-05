@@ -13,7 +13,7 @@ import cvic.anirevo.R;
 import cvic.anirevo.model.anirevo.GuestManager;
 import cvic.anirevo.utils.LayoutUtils;
 
-public class GuestsFragment extends StateHolderFragment {
+public class GuestsFragment extends CustomFragment {
 
     private RecyclerView mRecyclerView;
 
@@ -27,7 +27,7 @@ public class GuestsFragment extends StateHolderFragment {
         View view = inflater.inflate(R.layout.recycler_view, container, false);
         mRecyclerView = view.findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(LayoutUtils.createGridLayoutManager(getContext(), getResources().getDimension(R.dimen.guest_card_width)));
-
+        mRecyclerView.setHasFixedSize(true);
         RecyclerView.Adapter mAdapter = new ArGuestAdapter(getContext(), GuestManager.getInstance().getGuests());
         mRecyclerView.setAdapter(mAdapter);
         return view;

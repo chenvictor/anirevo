@@ -88,13 +88,12 @@ public class StarredEventFragment extends Fragment {
         }
 
         @Override
-        protected void toggleStar(int i) {
-            super.toggleStar(i);
+        protected void clickStar(CardViewHolder holder) {
+            int i = holder.getAdapterPosition();
             ArEvent event = getEvent(i);
             if (!event.isStarred()) {
                 items.remove(i);
                 notifyItemRemoved(i);
-                notifyItemRangeChanged(i, items.size());
             }
         }
 

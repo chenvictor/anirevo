@@ -22,7 +22,7 @@ public class TempUtils {
         return getAgeRestriction(false);
     }
 
-    private static AgeRestriction getAgeRestriction(boolean forceRecalculate) {
+    public static AgeRestriction getAgeRestriction(boolean forceRecalculate) {
         if (RESTRICTION == null || forceRecalculate) {
             RESTRICTION = calculateAgeRestriction();
         }
@@ -30,7 +30,7 @@ public class TempUtils {
     }
 
     private static AgeRestriction calculateAgeRestriction() {
-        AgeRestriction restriction = null;
+        AgeRestriction restriction = AgeRestriction.DEFAULT;
         if (prefs.getBoolean(DISPLAY_13_KEY, true)) {
             restriction = AgeRestriction.AGE_RESTRICTION_13;
             if (prefs.getBoolean(DISPLAY_18_KEY, false)) {

@@ -38,14 +38,13 @@ import static cvic.anirevo.ui.ArEventAdapter.EXTRA_EVENT_ID;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ScheduleFragment extends StateHolderFragment implements NavigationHandler.MenuHandler, FetchScheduleEventsTask.FetchScheduleEventsTaskListener, ScheduleFragmentHitboxHandler.EventTappedListener{
+public class ScheduleFragment extends CustomFragment implements NavigationHandler.MenuHandler, FetchScheduleEventsTask.FetchScheduleEventsTaskListener, ScheduleFragmentHitboxHandler.EventTappedListener{
 
     private final static String TAG = "anirevo.SchedFrag";
 
     private MenuItem mSelector;
     private Dialog mDateSelectorDialog;
 
-    private TabLayout mTabs;
     private ViewPager mPager;
     private NestedScrollView mScrollView;
     private RecyclerView mRecyclerView;
@@ -70,15 +69,14 @@ public class ScheduleFragment extends StateHolderFragment implements NavigationH
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_schedule, container, false);
         //get views
-        mTabs = view.findViewById(R.id.schedule_tabs);
         mPager = view.findViewById(R.id.pager_tabs);
         mScrollView = view.findViewById(R.id.calendar_scroller);
         mRecyclerView = view.findViewById(R.id.recycler_view);
         mRecyclerView.setNestedScrollingEnabled(false);
+        mRecyclerView.setHasFixedSize(true);
         mAdapter = new DayViewAdapter(getLayoutInflater());
         mRecyclerView.setAdapter(mAdapter);
         //setup viewpager
-        mTabs.setupWithViewPager(mPager);
         return view;
     }
 
@@ -88,10 +86,15 @@ public class ScheduleFragment extends StateHolderFragment implements NavigationH
         mHitboxHandler = new ScheduleFragmentHitboxHandler(this);
         EventDecoration.initialize(getResources());
         mLocations = LocationManager.getInstance().getScheduleEvents();
-        if (mTabs.getTabCount() == 0) {
-            initTabs();
-        }
+        initTabs();
         updateDate();
+    }
+
+    @Override
+    protected void handleAppBar() {
+        mAppBarTabs.setupWithViewPager(mPager);
+        mAppBarTabs.setTabMode(TabLayout.MODE_SCROLLABLE);
+        mAppBarTabs.setVisibility(View.VISIBLE);
     }
 
     private void initTabs() {
@@ -265,7 +268,7 @@ public class ScheduleFragment extends StateHolderFragment implements NavigationH
             @Override
             public void run() {
                 selectorPicked(schedState.date);
-                TabLayout.Tab  tab = mTabs.getTabAt(schedState.loc);
+                TabLayout.Tab  tab = mAppBarTabs.getTabAt(schedState.loc);
                 if (tab != null) {
                     tab.select();
                 }

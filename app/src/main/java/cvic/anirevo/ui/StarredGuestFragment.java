@@ -86,13 +86,12 @@ public class StarredGuestFragment extends Fragment {
         }
 
         @Override
-        protected void toggleStar(int i) {
-            super.toggleStar(i);
-            ArGuest guest = getGuest(i);
-            if (!guest.isStarred()) {
-                items.remove(i);
-                notifyItemRemoved(i);
-                notifyItemRangeChanged(i, items.size());
+        protected void clickStar(CardViewHolder holder) {
+            int idx = holder.getAdapterPosition();
+            ArGuest guest = getGuest(idx);
+            if (!guest.toggleStarred()) {
+                items.remove(idx);
+                notifyItemRemoved(idx);
             }
         }
     }

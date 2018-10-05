@@ -18,10 +18,12 @@ import cvic.anirevo.R;
  * Use the {@link StarredFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class StarredFragment extends Fragment {
+public class StarredFragment extends CustomFragment{
+
+    private ViewPager mPager;
 
     public StarredFragment() {
-        // Required empty public constructor
+        super("StarredFragment");
     }
 
     /**
@@ -43,9 +45,7 @@ public class StarredFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_starred, container, false);
-        TabLayout mTabs = view.findViewById(R.id.star_tabs);
-        ViewPager mPager = view.findViewById(R.id.star_pager);
-        mTabs.setupWithViewPager(mPager);
+        mPager = view.findViewById(R.id.star_pager);
         mPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
             @Override
             public Fragment getItem(int i) {
@@ -73,4 +73,10 @@ public class StarredFragment extends Fragment {
         return view;
     }
 
+    @Override
+    protected void handleAppBar() {
+        mAppBarTabs.setupWithViewPager(mPager);
+        mAppBarTabs.setTabMode(TabLayout.MODE_FIXED);
+        mAppBarTabs.setVisibility(View.VISIBLE);
+    }
 }

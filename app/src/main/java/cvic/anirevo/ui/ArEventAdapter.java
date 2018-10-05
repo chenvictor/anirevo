@@ -14,7 +14,6 @@ import java.util.List;
 
 import cvic.anirevo.EventActivity;
 import cvic.anirevo.R;
-import cvic.anirevo.model.StarManager;
 import cvic.anirevo.model.anirevo.AgeRestriction;
 import cvic.anirevo.model.anirevo.ArEvent;
 
@@ -36,7 +35,21 @@ public class ArEventAdapter extends RecyclerView.Adapter<CardViewHolder> {
     public CardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         CardView view = (CardView) LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.event_card_layout, parent, false);
-        return new CardViewHolder(view);
+        TextView star = view.findViewById(R.id.event_card_star);
+        final CardViewHolder holder = new CardViewHolder(view);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clickEvent(holder);
+            }
+        });
+        star.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clickStar(holder);
+            }
+        });
+        return holder;
     }
 
     @Override
@@ -66,30 +79,22 @@ public class ArEventAdapter extends RecyclerView.Adapter<CardViewHolder> {
         } else {
             star.setText(mCtx.getString(R.string.star_empty));
         }
-        star.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                toggleStar(holder.getAdapterPosition());
-            }
-        });
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(mCtx, EventActivity.class);
-                intent.putExtra(EXTRA_EVENT_ID, event.getId());
-                mCtx.startActivity(intent);
-            }
-        });
     }
 
-    void toggleStar(int i) {
-        ArEvent event = getEvent(i);
-        if (event.toggleStarred()) {
-            StarManager.getInstance().add(event);
-        } else {
-            StarManager.getInstance().remove(event);
-        }
+    void clickStar(CardViewHolder holder) {
+        int i = holder.getAdapterPosition();
+        getEvent(i).toggleStarred();
         notifyItemChanged(i);
+    }
+
+    private void clickEvent(CardViewHolder holder) {
+        int i = holder.getAdapterPosition();
+        Intent intent = new Intent(mCtx, EventActivity.class);
+        ArEvent event = items.get(i).getEvent();
+        if (event != null) {
+            intent.putExtra(EXTRA_EVENT_ID, event.getId());
+            mCtx.startActivity(intent);
+        }
     }
 
     ArEvent getEvent(int i) {

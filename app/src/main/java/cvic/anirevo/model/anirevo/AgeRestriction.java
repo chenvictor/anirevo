@@ -5,6 +5,7 @@ import android.util.Log;
 
 public enum AgeRestriction {
 
+    DEFAULT(0, Color.GRAY),
     AGE_RESTRICTION_13(13, Color.BLUE),
     AGE_RESTRICTION_18(18, Color.RED);
 
