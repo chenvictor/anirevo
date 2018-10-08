@@ -22,7 +22,7 @@ import cvic.anirevo.model.anirevo.CategoryManager;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class EventsFragment extends CustomFragment {
+public class EventsFragment extends AniRevoFragment {
 
     public static final String TAG = "cvic.anirevo.EVENTS";
 

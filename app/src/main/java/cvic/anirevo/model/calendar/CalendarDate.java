@@ -15,7 +15,6 @@ public class CalendarDate implements Iterable<CalendarEvent>{
     private List<CalendarEvent> events;
 
     //Default is 10AM - 10PM
-    private boolean visible = false;    //visibility in the schedule fragment, default false
     private int startHour = 10;
     private int endHour = 22;
 
@@ -23,18 +22,6 @@ public class CalendarDate implements Iterable<CalendarEvent>{
         this.name = name;
         this.id = id;
         events = new ArrayList<>();
-    }
-
-    public void setVisible() {
-        setVisible(true);
-    }
-
-    public void setVisible(boolean visible) {
-        this.visible = visible;
-    }
-
-    public boolean isVisible() {
-        return visible;
     }
 
     public String getName() {

@@ -69,7 +69,7 @@ public class ArEventAdapter extends RecyclerView.Adapter<CardViewHolder> {
         if (event.isAgeRestricted()) {
             AgeRestriction restriction = event.getRestriction();
             age.setText(restriction.toString());
-            age.setTextColor(restriction.getTextColor());
+            age.setBackgroundColor(restriction.getColor());
             age.setVisibility(View.VISIBLE);
         } else {
             age.setVisibility(View.INVISIBLE);

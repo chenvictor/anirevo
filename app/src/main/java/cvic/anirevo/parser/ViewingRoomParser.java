@@ -37,6 +37,10 @@ public class ViewingRoomParser {
     private static void parseDay(JSONObject day, AgeRestriction restriction) throws JSONException {
         CalendarDate date = DateManager.getInstance().getDate(day.getString("day"));
         EventTime start = EventTimeParser.parse(day.getString("start"));
+        if (start == null) {
+            Log.i(TAG, "JSON Missing 'start' value, skipping room.");
+            return;
+        }
         JSONArray rooms = day.getJSONArray("rooms");
         for (int i = 0; i < rooms.length(); i++) {
             try {
@@ -70,7 +74,7 @@ public class ViewingRoomParser {
             //Set age restriction
             AgeRestriction restrict = AgeRestriction.getRestriction(show.getInt("age"));
             if (restrict != null) {
-                if (!restriction.allowsFor(restrict)) {
+                if (restriction.restricts(restrict)) {
                     throw new RestrictedException();
                 }
                 arEvent.setRestriction(restrict);

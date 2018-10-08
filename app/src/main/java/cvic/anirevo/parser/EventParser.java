@@ -65,7 +65,7 @@ public class EventParser {
             //Set age restriction
             AgeRestriction restrict = AgeRestriction.getRestriction(event.getInt("age"));
             if (restrict != null) {
-                if (!restriction.allowsFor(restrict)) {
+                if (restriction.restricts(restrict)) {
                     throw new RestrictedException();
                 }
                 arEvent.setRestriction(restrict);

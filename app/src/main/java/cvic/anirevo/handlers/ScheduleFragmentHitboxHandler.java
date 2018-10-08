@@ -1,4 +1,4 @@
-package cvic.anirevo.ui;
+package cvic.anirevo.handlers;
 
 import android.annotation.SuppressLint;
 import android.graphics.RectF;
@@ -9,12 +9,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import cvic.anirevo.model.calendar.CalendarEvent;
+import cvic.anirevo.ui.EventDecoration;
 
 public class ScheduleFragmentHitboxHandler implements EventDecoration.RectListener, View.OnClickListener, View.OnTouchListener {
 
     private static final String TAG = "anirevo.hitbox";
+    private static final int HITBOX_FAT_FINGER = 10;
 
-    private static int STARHITBOX = 0;
+    private static int STAR_HITBOX = 0;
 
     private float xPos = 0;
     private float yPos = 0;
@@ -22,11 +24,11 @@ public class ScheduleFragmentHitboxHandler implements EventDecoration.RectListen
     private EventTappedListener mListener;
     private Map<RectF, CalendarEvent> hitboxes;
 
-    public static void setSTARHITBOX(int hitbox) {
-        STARHITBOX = hitbox;
+    public static void setStarHitbox(int hitbox) {
+        STAR_HITBOX = hitbox;
     }
 
-    ScheduleFragmentHitboxHandler(EventTappedListener listener) {
+    public ScheduleFragmentHitboxHandler(EventTappedListener listener) {
         hitboxes = new HashMap<>();
         mListener = listener;
     }
@@ -35,10 +37,10 @@ public class ScheduleFragmentHitboxHandler implements EventDecoration.RectListen
         for (RectF rect : hitboxes.keySet()) {
             if (rect.contains(xPos, yPos)) {
                 RectF starRect = new RectF();
-                starRect.left = rect.right - STARHITBOX;
+                starRect.left = rect.right - STAR_HITBOX - HITBOX_FAT_FINGER;
                 starRect.right = rect.right;
                 starRect.top = rect.top;
-                starRect.bottom = rect.top + STARHITBOX;
+                starRect.bottom = rect.top + STAR_HITBOX + HITBOX_FAT_FINGER;
                 if (starRect.contains(xPos, yPos)) {
                     starTapped(hitboxes.get(rect));
                 } else if (mListener != null) {
@@ -76,7 +78,7 @@ public class ScheduleFragmentHitboxHandler implements EventDecoration.RectListen
         return false;
     }
 
-    interface EventTappedListener {
+    public interface EventTappedListener {
 
         void eventTapped(CalendarEvent event);
         void starToggled();

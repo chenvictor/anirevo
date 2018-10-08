@@ -37,7 +37,6 @@
         tools:ignore="RtlHardcoded" />
 
     <View
-        android:id="@+id/left_border"
         android:layout_width="1dp"
         android:layout_height="0dp"
         android:background="#FFFFFF"

@@ -11,9 +11,6 @@
             android:title="Show 18+ events"
             android:defaultValue="false"
             android:dependency="@string/display_13_key" />
-        <Preference
-            android:key="@string/apply_age_restriction_key"
-            android:title="Apply Changes"/>
     </PreferenceCategory>
     <PreferenceCategory
         android:title="Download Preferences">

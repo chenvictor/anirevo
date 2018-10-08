@@ -2,22 +2,23 @@ package cvic.anirevo.ui;
 
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.view.Menu;
 import android.view.View;
 
+import cvic.anirevo.R;
 import cvic.anirevo.handlers.FragmentStateHolderHandler;
 
 /**
- * Fragments that wish to have a saved state should extend this class
- * OR
- * Fragments that will utilize the app bar tab layout should extend this class
+ * Fragments contained by the AniRevoActivity should extend this class
+ * to provide functionality for state saving, tab_layouts, and more
  */
-public abstract class CustomFragment extends Fragment {
+public abstract class AniRevoFragment extends Fragment {
 
     private FragmentStateHolderHandler mStateHandler;
     private final String ID;
-    protected TabLayout mAppBarTabs;
+    TabLayout mAppBarTabs;
 
-    CustomFragment(String id) {
+    AniRevoFragment(String id) {
         ID = id;
     }
 
@@ -43,7 +44,7 @@ public abstract class CustomFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        handleAppBar();
+        handleAppBarTabLayout();
         if (mStateHandler != null) {
             Object storedState = mStateHandler.getState(ID);
             if (storedState != null) {
@@ -62,7 +63,7 @@ public abstract class CustomFragment extends Fragment {
      * Store the state of the fragment. Called during Fragment.onPause()
      * @return          the state of the fragment
      */
-    protected Object storeState() {
+    Object storeState() {
         return null;
     }
 
@@ -71,7 +72,7 @@ public abstract class CustomFragment extends Fragment {
      *      Will NOT be called if no state was stored or the stored state was null
      * @param state     the stored state of the fragment
      */
-    protected void restoreState(Object state) {
+    void restoreState(Object state) {
 
     }
 
@@ -87,9 +88,26 @@ public abstract class CustomFragment extends Fragment {
      * Subclasses can optionally override this function if they wish to use the appBar
      * If not overriden, will reset and hide app bar tab_layout
      */
-    protected void handleAppBar() {
+    void handleAppBarTabLayout() {
         mAppBarTabs.setVisibility(View.GONE);
         mAppBarTabs.setupWithViewPager(null);
+    }
+
+    /**
+     * Subclasses can optionally override this function if they wish to set menu items
+     * The Menu object will be accessible through onMenuInflated()
+     * @return  int id for the menu resource
+     */
+    public int menuResource() {
+        return R.menu.empty;
+    }
+
+    /**
+     * Subclasses will also override this function to handle menu after its inflation
+     * @param menu  the inflate Menu object
+     */
+    public void onMenuInflated(Menu menu) {
+
     }
 
 }

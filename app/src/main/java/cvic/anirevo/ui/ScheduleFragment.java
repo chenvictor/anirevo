@@ -25,7 +25,7 @@ import java.util.List;
 
 import cvic.anirevo.EventActivity;
 import cvic.anirevo.R;
-import cvic.anirevo.handlers.NavigationHandler;
+import cvic.anirevo.handlers.ScheduleFragmentHitboxHandler;
 import cvic.anirevo.model.anirevo.ArLocation;
 import cvic.anirevo.model.anirevo.LocationManager;
 import cvic.anirevo.model.calendar.CalendarDate;
@@ -38,7 +38,7 @@ import static cvic.anirevo.ui.ArEventAdapter.EXTRA_EVENT_ID;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ScheduleFragment extends CustomFragment implements NavigationHandler.MenuHandler, FetchScheduleEventsTask.FetchScheduleEventsTaskListener, ScheduleFragmentHitboxHandler.EventTappedListener{
+public class ScheduleFragment extends AniRevoFragment implements FetchScheduleEventsTask.FetchScheduleEventsTaskListener, ScheduleFragmentHitboxHandler.EventTappedListener{
 
     private final static String TAG = "anirevo.SchedFrag";
 
@@ -66,9 +66,8 @@ public class ScheduleFragment extends CustomFragment implements NavigationHandle
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_schedule, container, false);
-        //get views
+
         mPager = view.findViewById(R.id.pager_tabs);
         mScrollView = view.findViewById(R.id.calendar_scroller);
         mRecyclerView = view.findViewById(R.id.recycler_view);
@@ -91,7 +90,7 @@ public class ScheduleFragment extends CustomFragment implements NavigationHandle
     }
 
     @Override
-    protected void handleAppBar() {
+    protected void handleAppBarTabLayout() {
         mAppBarTabs.setupWithViewPager(mPager);
         mAppBarTabs.setTabMode(TabLayout.MODE_SCROLLABLE);
         mAppBarTabs.setVisibility(View.VISIBLE);
@@ -193,7 +192,7 @@ public class ScheduleFragment extends CustomFragment implements NavigationHandle
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu) {
+    public void onMenuInflated(Menu menu) {
         if (mSelector == null) {
             mSelector = menu.findItem(R.id.schedule_date_selector);
         }
@@ -210,6 +209,11 @@ public class ScheduleFragment extends CustomFragment implements NavigationHandle
                 return true;
             }
         });
+    }
+
+    @Override
+    public int menuResource() {
+        return R.menu.fragment_schedule;
     }
 
     private void selectorPicked(int which) {
@@ -268,10 +272,7 @@ public class ScheduleFragment extends CustomFragment implements NavigationHandle
             @Override
             public void run() {
                 selectorPicked(schedState.date);
-                TabLayout.Tab  tab = mAppBarTabs.getTabAt(schedState.loc);
-                if (tab != null) {
-                    tab.select();
-                }
+                mPager.setCurrentItem(schedState.loc, false);
                 updateDate();
                 mScrollView.scrollTo(mScrollView.getScrollX(), schedState.scrollY);
             }

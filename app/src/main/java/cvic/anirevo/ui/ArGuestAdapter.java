@@ -103,7 +103,7 @@ public class ArGuestAdapter extends RecyclerView.Adapter<CardViewHolder> {
 
     }
 
-    protected void clickStar(CardViewHolder holder) {
+    void clickStar(CardViewHolder holder) {
         int idx = holder.getAdapterPosition();
         getGuest(idx).toggleStarred();
         notifyItemChanged(idx);

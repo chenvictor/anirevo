@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#efd31f</color>
-    <color name="colorPrimaryDark">#adc000</color>
-    <color name="colorSecondary">#4286f4</color>
-    <color name="colorTertiary">#000000</color>
-    <color name="colorAccent">#415ff4</color>
+    <color name="colorPrimary">@color/anirevoPrimary</color>
+    <color name="colorPrimaryDark">@color/anirevoPrimaryDark</color>
+    <color name="colorAccent">@color/anirevoAccent</color>
 
     <color name="anirevoPrimary">#59c5f1</color>
     <color name="anirevoPrimaryDark">#1e97e6</color>
 
     <color name="anirevoAccent">#ffd308</color>
 
-    <!-- Calendar View Stuff-->
-    <color name="calendarEventDefault">#fbd75b</color>
-    <color name="calendarEvent13plus">#a4bdfc</color>
-    <color name="calendarEvent18plus">#ff887c</color>
+    <!-- Age Restriction -->
+    <color name="restriction13plus">#a4bdfc</color>
+    <color name="restriction18plus">#ff887c</color>
+
+    <!-- Calendar View -->
+    <color name="calendarEventBlock">#e4c441</color>
+    <color name="calendarEventText">@android:color/black</color>
 
 </resources>

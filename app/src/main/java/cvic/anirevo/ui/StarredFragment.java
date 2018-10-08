@@ -18,7 +18,7 @@ import cvic.anirevo.R;
  * Use the {@link StarredFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class StarredFragment extends CustomFragment{
+public class StarredFragment extends AniRevoFragment {
 
     private ViewPager mPager;
 
@@ -74,7 +74,18 @@ public class StarredFragment extends CustomFragment{
     }
 
     @Override
-    protected void handleAppBar() {
+    protected Object storeState() {
+        return mPager.getCurrentItem();
+    }
+
+    @Override
+    protected void restoreState(Object state) {
+        Integer index = (Integer) state;
+        mPager.setCurrentItem(index);
+    }
+
+    @Override
+    protected void handleAppBarTabLayout() {
         mAppBarTabs.setupWithViewPager(mPager);
         mAppBarTabs.setTabMode(TabLayout.MODE_FIXED);
         mAppBarTabs.setVisibility(View.VISIBLE);

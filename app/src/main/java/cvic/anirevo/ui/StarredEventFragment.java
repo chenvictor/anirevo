@@ -91,7 +91,7 @@ public class StarredEventFragment extends Fragment {
         protected void clickStar(CardViewHolder holder) {
             int i = holder.getAdapterPosition();
             ArEvent event = getEvent(i);
-            if (!event.isStarred()) {
+            if (!event.toggleStarred()) {
                 items.remove(i);
                 notifyItemRemoved(i);
             }

@@ -18,7 +18,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:text="@string/placeholder_text"
-            android:textColor="@android:color/holo_blue_bright"
+            android:textColor="@color/anirevoPrimary"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/event_card_star"
             app:layout_constraintStart_toStartOf="parent"
@@ -63,7 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:text="@string/age_18_plus"
-            android:textColor="@android:color/holo_red_dark"
+            android:textColor="@android:color/white"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/event_card_details" />

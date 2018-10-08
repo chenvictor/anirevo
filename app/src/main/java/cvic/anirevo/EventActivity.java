@@ -1,8 +1,8 @@
 package cvic.anirevo;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -22,15 +22,18 @@ public class EventActivity extends AppCompatActivity {
         setContentView(R.layout.activity_event);
 
         Intent intent = getIntent();
-        ArEvent event = null;
         try {
-            event = EventManager.getInstance().getEvent(intent.getIntExtra(ArEventAdapter.EXTRA_EVENT_ID, 0));
+            ArEvent event = EventManager.getInstance().getEvent(intent.getIntExtra(ArEventAdapter.EXTRA_EVENT_ID, 0));
+            bindEvent(event);
         } catch (InvalidIdException e) {
             //Make toast
             Toast.makeText(getApplicationContext(), "Invalid Event ID Provided", Toast.LENGTH_SHORT).show();
             finish();
         }
 
+    }
+
+    private void bindEvent(ArEvent event) {
         TextView warn = findViewById(R.id.event_activity_warning_18);
         TextView age = findViewById(R.id.event_activity_age_restriction);
         TextView title = findViewById(R.id.event_activity_title);
@@ -39,7 +42,7 @@ public class EventActivity extends AppCompatActivity {
         TextView desc = findViewById(R.id.event_activity_description);
 
         title.setText(event.getTitle());
-        time.setText(event.getDetails()); //TODO: modify this
+        time.setText(event.getDetails());
         loc.setText(event.getLocation().getPurpose());
         desc.setText(event.getDesc());
 
@@ -48,7 +51,7 @@ public class EventActivity extends AppCompatActivity {
         if (event.isAgeRestricted()) {
             age.setVisibility(View.VISIBLE);
             age.setText(event.getRestriction().toString());
-            age.setTextColor(event.getRestriction().getTextColor());
+            age.setTextColor(event.getRestriction().getColor());
             if (event.getRestriction() == AgeRestriction.AGE_RESTRICTION_18) {
                 warn.setVisibility(View.VISIBLE);
             }

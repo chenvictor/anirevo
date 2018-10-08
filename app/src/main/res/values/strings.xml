@@ -7,11 +7,8 @@
     <string name="nav_header_subtitle">YEAR_PLACEHOLDER</string>
     <string name="nav_header_desc">Navigation header</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-
     <!-- Strings related to Settings -->
 
-    <string name="apply_age_restriction_key">apply_age_restriction</string>
     <string name="display_13_key">display_13</string>
     <string name="display_18_key">display_18</string>
 
@@ -28,12 +25,9 @@
         <item>2</item>
     </string-array>
 
-    <!-- Example settings for Data & Sync -->
-
     <string name="star_filled">★</string>
     <string name="star_empty">☆</string>
 
-    <!-- Example settings for Notifications -->
 
     <string name="warning_18">All 18+ panels require an 18+ wristband</string>
     <string name="placeholder_text">placeholder_text</string>
@@ -49,4 +43,6 @@
     <string name="default_empty_recyclerview_text">No items are in this view!</string>
     <string name="empty_starred_events_prompt">Star an event to be notified before it starts!</string>
     <string name="empty_starred_guests_prompt">Star a guest to be notified of their events!</string>
+    <string name="title_activity_settings">Settings</string>
+
 </resources>
