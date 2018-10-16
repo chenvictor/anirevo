@@ -21,6 +21,7 @@ import cvic.anirevo.model.calendar.DateManager;
 import cvic.anirevo.ui.AniRevoFragment;
 import cvic.anirevo.ui.EventsFragment;
 import cvic.anirevo.ui.GuestsFragment;
+import cvic.anirevo.ui.MapFragment;
 import cvic.anirevo.ui.ScheduleFragment;
 import cvic.anirevo.ui.StarredFragment;
 
@@ -94,6 +95,9 @@ public class NavigationHandler implements NavigationView.OnNavigationItemSelecte
         switch (item.getItemId()) {
             case R.id.nav_schedule:
                 fragmentClass = ScheduleFragment.class;
+                break;
+            case R.id.nav_map:
+                fragmentClass = MapFragment.class;
                 break;
             case R.id.nav_events:
                 fragmentClass = EventsFragment.class;

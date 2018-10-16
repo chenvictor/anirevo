@@ -80,8 +80,9 @@ public class ViewingRoomParser {
                 arEvent.setRestriction(restrict);
             }
         }
-        String showDesc = show.getString("desc");
-        arEvent.setDesc(showDesc);
+        if (show.has("desc")) {
+            arEvent.setDesc(show.getString("desc"));
+        }
         arEvent.setLocation(location);
         //Create CalendarEvent
         CalendarEvent calEvent = new CalendarEvent(arEvent);
