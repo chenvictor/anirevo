@@ -22,6 +22,7 @@ import cvic.anirevo.parser.EventParser;
 import cvic.anirevo.parser.GuestParser;
 import cvic.anirevo.parser.InfoParser;
 import cvic.anirevo.parser.LocationParser;
+import cvic.anirevo.parser.MapParser;
 import cvic.anirevo.parser.StarParser;
 import cvic.anirevo.parser.ViewingRoomParser;
 import cvic.anirevo.utils.IOUtils;
@@ -53,6 +54,7 @@ public class StorageHandler {
         loadGuests();
         loadEvents();
         loadViewingRooms();
+        loadMap();
         StarManager.getInstance().clearNames(); //free name data
     }
 
@@ -109,6 +111,15 @@ public class StorageHandler {
         try {
             JSONArray viewRoomArray = new JSONArray(getFileString("json/viewing_rooms.json"));
             ViewingRoomParser.parseViewingRoom(viewRoomArray, TempUtils.getAgeRestriction());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadMap() {
+        try {
+            JSONArray mapArray = new JSONArray(getFileString("json/map.json"));
+            MapParser.parse(mapArray);
         } catch (JSONException e) {
             e.printStackTrace();
         }

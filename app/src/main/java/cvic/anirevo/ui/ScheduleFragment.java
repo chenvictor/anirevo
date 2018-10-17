@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -52,8 +51,8 @@ public class ScheduleFragment extends AniRevoFragment implements FetchScheduleEv
 
     private List<ArLocation> mLocations;
 
-    private int mDate = 0;
-    private int mLocation = 0;
+    private int mDate = -1;
+    private int mLocation = -1;
 
     private int mStartHour = 0;
 
@@ -86,7 +85,6 @@ public class ScheduleFragment extends AniRevoFragment implements FetchScheduleEv
         EventDecoration.initialize(getResources());
         mLocations = LocationManager.getInstance().getScheduleEvents();
         initTabs();
-        updateDate();
     }
 
     @Override
@@ -173,10 +171,6 @@ public class ScheduleFragment extends AniRevoFragment implements FetchScheduleEv
      * @return      The name of teh date
      */
     private String changeDate(int idx) {
-        if (idx == mDate) {
-            //no change
-            return null;
-        }
         mDate = idx;
         CalendarDate date = DateManager.getInstance().getDate(mDate);
         mScrollView.setScrollY(0);
@@ -193,10 +187,10 @@ public class ScheduleFragment extends AniRevoFragment implements FetchScheduleEv
 
     @Override
     public void onMenuInflated(Menu menu) {
-        if (mSelector == null) {
-            mSelector = menu.findItem(R.id.schedule_date_selector);
+        mSelector = menu.findItem(R.id.schedule_date_selector);
+        if (mDate >= 0) {
+            mSelector.setTitle(DateManager.getInstance().getDate(mDate).toString());
         }
-        mSelector.setTitle(DateManager.getInstance().getDate(mDate).getName());
         mSelector.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
@@ -218,11 +212,11 @@ public class ScheduleFragment extends AniRevoFragment implements FetchScheduleEv
 
     private void selectorPicked(int which) {
         String name = changeDate(which);
-        if (name != null && mSelector != null) {
-            mSelector.setTitle(name);
-        }
         updateDate();
         setEvents();
+        if (mSelector != null) {
+            mSelector.setTitle(name);
+        }
     }
 
     private Dialog buildSelectorDialog() {
@@ -262,21 +256,18 @@ public class ScheduleFragment extends AniRevoFragment implements FetchScheduleEv
 
     @Override
     public void onFirstState() {
-        setEvents();
+        mLocation = 0;
+        selectorPicked(0);
     }
 
     @Override
     public void restoreState(Object state) {
         final SchedState schedState = (SchedState) state;
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                selectorPicked(schedState.date);
-                mPager.setCurrentItem(schedState.loc, false);
-                updateDate();
-                mScrollView.scrollTo(mScrollView.getScrollX(), schedState.scrollY);
-            }
-        }, 100);
+        mLocation = ((SchedState) state).loc;
+        selectorPicked(schedState.date);
+        mPager.setCurrentItem(schedState.loc, false);
+        updateDate();
+        mScrollView.scrollTo(mScrollView.getScrollX(), schedState.scrollY);
     }
 
     @Override
