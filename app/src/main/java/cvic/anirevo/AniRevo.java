@@ -3,10 +3,10 @@ package cvic.anirevo;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.preference.PreferenceManager;
 import android.view.Menu;
 
 import java.lang.ref.WeakReference;
@@ -27,8 +27,11 @@ public class AniRevo extends AppCompatActivity implements CheckUpdatesTask.Updat
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme_NoActionBar);
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_ani_revo);
+
         mAppBarTabs = findViewById(R.id.appbar_tabs);
         init();
 
@@ -37,6 +40,7 @@ public class AniRevo extends AppCompatActivity implements CheckUpdatesTask.Updat
         mStorageHandler.loadJSON();
 
         mNavigationHandler.start();
+
 
         //check wifi
         if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean(getString(R.string.startup_update_check_key), true)) {

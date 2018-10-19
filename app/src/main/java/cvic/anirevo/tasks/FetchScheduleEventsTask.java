@@ -5,7 +5,6 @@ import android.os.AsyncTask;
 import java.util.ArrayList;
 import java.util.List;
 
-import cvic.anirevo.model.anirevo.ArEvent;
 import cvic.anirevo.model.anirevo.ArLocation;
 import cvic.anirevo.model.anirevo.LocationManager;
 import cvic.anirevo.model.calendar.CalendarDate;
@@ -38,11 +37,9 @@ public class FetchScheduleEventsTask extends AsyncTask <Integer, Void, List<Cale
 
         List<CalendarEvent> events = new ArrayList<>();
 
-        for (ArEvent arEvent : location) {
-            for (CalendarEvent calEvent : arEvent.getTimeblocks()) {
-                if (calEvent.getDate().equals(date)) {
-                    events.add(calEvent);
-                }
+        for (CalendarEvent calEvent : location) {
+            if (calEvent.getDate().equals(date)) {
+                events.add(calEvent);
             }
         }
 

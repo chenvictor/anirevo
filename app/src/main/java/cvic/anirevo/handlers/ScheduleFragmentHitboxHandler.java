@@ -5,7 +5,10 @@ import android.graphics.RectF;
 import android.view.MotionEvent;
 import android.view.View;
 
-import java.util.HashMap;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import cvic.anirevo.model.calendar.CalendarEvent;
@@ -29,12 +32,14 @@ public class ScheduleFragmentHitboxHandler implements EventDecoration.RectListen
     }
 
     public ScheduleFragmentHitboxHandler(EventTappedListener listener) {
-        hitboxes = new HashMap<>();
+        hitboxes = new LinkedHashMap<>();
         mListener = listener;
     }
 
     private void tap() {
-        for (RectF rect : hitboxes.keySet()) {
+        List<RectF> keyset = new LinkedList<>(hitboxes.keySet());
+        Collections.reverse(keyset);
+        for (RectF rect : keyset) {
             if (rect.contains(xPos, yPos)) {
                 RectF starRect = new RectF();
                 starRect.left = rect.right - STAR_HITBOX - HITBOX_FAT_FINGER;
@@ -52,7 +57,7 @@ public class ScheduleFragmentHitboxHandler implements EventDecoration.RectListen
     }
 
     private void starTapped(CalendarEvent event) {
-        event.getEvent().toggleStarred();
+        event.getStarrable().toggleStarred();
         mListener.starToggled();
     }
 

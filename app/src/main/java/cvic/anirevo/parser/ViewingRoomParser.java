@@ -83,10 +83,10 @@ public class ViewingRoomParser {
         if (show.has("desc")) {
             arEvent.setDesc(show.getString("desc"));
         }
-        arEvent.setLocation(location);
         //Create CalendarEvent
         CalendarEvent calEvent = new CalendarEvent(arEvent);
         calEvent.setDate(date);
+        calEvent.setLocation(location);
         try {
             calEvent.setStart(new EventTime(hour, 0));
             calEvent.setEnd(new EventTime(hour + 1, 0));

@@ -5,6 +5,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PointF;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,29 +22,38 @@ import cvic.anirevo.model.calendar.CalendarEvent;
 
 public class EventDecoration extends RecyclerView.ItemDecoration {
 
+    private static final String TAG = "anirevo.eventDeco";
+
     private static final float RECT_ROUND = 8f;
     private static float TEXT_SIZE = 40;
     private static float STAR_SIZE = 40;
 
     private static Paint PAINT_RECT = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private static Paint BORDER_RECT = new Paint(Paint.ANTI_ALIAS_FLAG);
     private static TextPaint PAINT_TEXT = new TextPaint(Paint.ANTI_ALIAS_FLAG);
     private static TextPaint PAINT_AGE = new TextPaint(Paint.ANTI_ALIAS_FLAG);
     private static TextPaint PAINT_STAR = new TextPaint(Paint.ANTI_ALIAS_FLAG);
     private static int COLOR_EVENT_BLOCK = Color.BLACK;
+    private static int COLOR_EVENT_BORDER = Color.BLACK;
 
     private static String STAR_EMPTY = "";
     private static String STAR_FILLED = "";
 
     private static float mHourHeight = 50;
     private static float mMinuteHeight = mHourHeight / 60;
-    private static float mLeftMargin = 0;
+    static float mLeftMargin = 0;
     private static float mMargin = 0;
     private static float mPadding = 0;
+
+    private float mRightShift;
+    private float mLeftShift = 0;
 
     static {
         PAINT_AGE.setTextSize(TEXT_SIZE);
         PAINT_AGE.setTextAlign(Paint.Align.LEFT);
         PAINT_RECT.setColor(COLOR_EVENT_BLOCK);
+        BORDER_RECT.setStyle(Paint.Style.STROKE);
+        BORDER_RECT.setStrokeWidth(5);
         PAINT_TEXT.setTextAlign(Paint.Align.LEFT);
         PAINT_TEXT.setTextSize(TEXT_SIZE);
         PAINT_STAR.setTextAlign(Paint.Align.RIGHT);
@@ -54,7 +65,7 @@ public class EventDecoration extends RecyclerView.ItemDecoration {
     private final CalendarEvent mEvent;
     private int mStartHourOffset;
 
-    public static void initialize(Resources resources) {
+    static void initialize(Resources resources) {
         mHourHeight = resources.getDimension(R.dimen.hour_height);
         mMinuteHeight = mHourHeight / 60;
         mLeftMargin = resources.getDimension(R.dimen.left_margin);
@@ -69,14 +80,25 @@ public class EventDecoration extends RecyclerView.ItemDecoration {
         PAINT_TEXT.setColor(resources.getColor(R.color.calendarEventText));
         PAINT_STAR.setTextSize(STAR_SIZE);
         COLOR_EVENT_BLOCK = resources.getColor(R.color.calendarEventBlock);
+        COLOR_EVENT_BORDER = resources.getColor(R.color.anirevoAccent);
         PAINT_RECT.setColor(COLOR_EVENT_BLOCK);
+        BORDER_RECT.setColor(COLOR_EVENT_BORDER);
         ScheduleFragmentHitboxHandler.setStarHitbox((int) (STAR_SIZE + 2 * mPadding));
     }
 
     EventDecoration(RectListener listener, @NonNull CalendarEvent event, int startHourOffset) {
+        this(listener, event, startHourOffset, 0);
+    }
+
+    EventDecoration(RectListener listener, @NonNull CalendarEvent event, int startHourOffset, int rightMargin) {
         mListener = listener;
         mEvent = event;
         mStartHourOffset = startHourOffset;
+        mRightShift = rightMargin;
+    }
+
+    void setLeftShift(int shift) {
+        mLeftShift = shift;
     }
 
     @Override
@@ -99,6 +121,7 @@ public class EventDecoration extends RecyclerView.ItemDecoration {
         RectF rect = calculateBaseRect(parent, rectTop, rectHeight);
 
         c.save();
+        //clearEdges(c, rect);
         drawBackgroundCard(c, rect);
         drawStar(c, rect);
         drawName(c, rect);
@@ -108,9 +131,20 @@ public class EventDecoration extends RecyclerView.ItemDecoration {
         }
     }
 
+    private void clearEdges(@NonNull Canvas c, RectF rect) {
+        RectF unmargined = new RectF(rect);
+        unmargined.top -= mMargin;
+        unmargined.bottom += mMargin;
+        unmargined.left -= mMargin;
+        unmargined.right += mMargin;
+        Paint clear = new Paint();
+        clear.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
+        c.drawRect(unmargined, clear);
+    }
+
     private void drawName(@NonNull Canvas c, RectF rect) {
         String name = mEvent.getName();
-        AgeRestriction restriction = mEvent.getEvent().getRestriction();
+        AgeRestriction restriction = mEvent.getRestriction();
         PointF point = new PointF();
         point.x = rect.left + mPadding;
         point.y = rect.top + TEXT_SIZE + mPadding;
@@ -142,11 +176,12 @@ public class EventDecoration extends RecyclerView.ItemDecoration {
     }
 
     private void drawStar(@NonNull Canvas c, RectF rect) {
-        c.drawText((mEvent.getEvent().isStarred() ? STAR_FILLED : STAR_EMPTY), rect.right - mPadding, rect.top + STAR_SIZE + mPadding, PAINT_STAR);
+        c.drawText((mEvent.getStarrable().isStarred() ? STAR_FILLED : STAR_EMPTY), rect.right - mPadding, rect.top + STAR_SIZE + mPadding, PAINT_STAR);
     }
 
     private void drawBackgroundCard(@NonNull Canvas c, RectF rect) {
         c.drawRoundRect(rect, RECT_ROUND, RECT_ROUND, PAINT_RECT);
+        c.drawRoundRect(rect, RECT_ROUND, RECT_ROUND, BORDER_RECT);
     }
 
     private String ellipsize(String name, float width) {
@@ -165,8 +200,8 @@ public class EventDecoration extends RecyclerView.ItemDecoration {
         RectF rect = new RectF();
         rect.top = rectTop;
         rect.bottom = rectTop + rectHeight;
-        rect.left = mLeftMargin;
-        rect.right = parent.getWidth();
+        rect.left = mLeftMargin + mLeftShift;
+        rect.right = parent.getWidth() - mRightShift;
         applyMargins(rect);
         return rect;
     }

@@ -7,7 +7,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
-public class ArLocation implements Iterable<ArEvent>{
+import cvic.anirevo.model.calendar.CalendarEvent;
+
+public class ArLocation implements Iterable<CalendarEvent>{
 
     /**
      * Represents a Location for an ArEvent
@@ -18,7 +20,7 @@ public class ArLocation implements Iterable<ArEvent>{
     private String location;
     private boolean schedule = false;   //true if the location should be shown in the schedule fragment
 
-    private List<ArEvent> events;
+    private List<CalendarEvent> events;
 
     ArLocation(String purpose, int id) {
         this.purpose = purpose;
@@ -26,9 +28,10 @@ public class ArLocation implements Iterable<ArEvent>{
         events = new ArrayList<>();
     }
 
-    public void addEvent(ArEvent event) {
+    public void addEvent(CalendarEvent event) {
         if (!events.contains(event)) {
             events.add(event);
+            event.setLocation(this);
         }
     }
 
@@ -36,7 +39,7 @@ public class ArLocation implements Iterable<ArEvent>{
         this.schedule = schedule;
     }
 
-    public boolean isSchedule() {
+    boolean isSchedule() {
         return schedule;
     }
 
@@ -68,7 +71,7 @@ public class ArLocation implements Iterable<ArEvent>{
 
     @NonNull
     @Override
-    public Iterator<ArEvent> iterator() {
+    public Iterator<CalendarEvent> iterator() {
         return events.iterator();
     }
 

@@ -20,9 +20,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import cvic.anirevo.EventActivity;
+import cvic.anirevo.GuestActivity;
 import cvic.anirevo.R;
 import cvic.anirevo.handlers.ScheduleFragmentHitboxHandler;
 import cvic.anirevo.model.anirevo.ArLocation;
@@ -33,6 +36,7 @@ import cvic.anirevo.model.calendar.DateManager;
 import cvic.anirevo.tasks.FetchScheduleEventsTask;
 
 import static cvic.anirevo.ui.ArEventAdapter.EXTRA_EVENT_ID;
+import static cvic.anirevo.ui.ArGuestAdapter.EXTRA_GUEST_ID;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -154,10 +158,66 @@ public class ScheduleFragment extends AniRevoFragment implements FetchScheduleEv
         //clear old hitboxes
         mHitboxHandler.clearHitboxes();
         //add new decorations
+        Collections.sort(events, new Comparator<CalendarEvent>() {
+            @Override
+            public int compare(CalendarEvent calendarEvent, CalendarEvent t1) {
+                return (calendarEvent.getStartHour() - t1.getStartHour());
+            }
+        });
+
+        CalendarEvent prevEvent = null;
+        EventDecoration prevDeco = null;
+        int rightMargin = 0;
         for (CalendarEvent event : events) {
-            mRecyclerView.addItemDecoration(new EventDecoration(mHitboxHandler, event, mStartHour));
+            if (sameStart(event, prevEvent)) {
+                int width = mScrollView.getWidth() - rightMargin - (int) EventDecoration.mLeftMargin;
+                int leftShift =  width / 2;
+                rightMargin += leftShift;
+                prevDeco.setLeftShift(leftShift);
+            } else if (intersects(event, prevEvent)) {
+                //increment margin
+                rightMargin += 40;
+            } else {
+                //reset margin
+                rightMargin = 0;
+            }
+            EventDecoration deco = new EventDecoration(mHitboxHandler, event, mStartHour, rightMargin);
+            mRecyclerView.addItemDecoration(deco);
+            prevDeco = deco;
+            prevEvent = event;
         }
     }
+
+    private boolean sameStart(CalendarEvent event1, CalendarEvent event2) {
+        if (event2 == null) {
+            return false;
+        }
+        return event1.getStartTime().equals(event2.getStartTime());
+    }
+
+    /**
+     * Calculates if two events will intersect in the calendar
+     * @param event1    first event
+     * @param event2    second event
+     * @return     true if the events will intersect, false otherwise
+     */
+    private boolean intersects(CalendarEvent event1, CalendarEvent event2) {
+        if (event2 == null) {
+            return false;
+        }
+        double event1Start = event1.getStartTime().getHour() + (event1.getStartTime().getMinute() / 60.0);
+        double event1End = event1.getEndTime().getHour() + (event1.getEndTime().getMinute() / 60.0);
+        double event2Start = event2.getStartTime().getHour() + (event2.getStartTime().getMinute() / 60.0);
+        double event2End = event2.getEndTime().getHour() + (event2.getEndTime().getMinute() / 60.0);
+
+        if (event1Start >= event2End) {
+            //if event1 starts after event2 ends, false
+            return false;
+        }
+        return !(event2Start >= event1End);
+    }
+
+
 
     private void updateDate() {
         CalendarDate date = DateManager.getInstance().getDate(mDate);
@@ -277,6 +337,26 @@ public class ScheduleFragment extends AniRevoFragment implements FetchScheduleEv
 
     @Override
     public void eventTapped(CalendarEvent event) {
+        switch (event.getType()) {
+            case CalendarEvent.TYPE_EVENT:
+                openEvent(event);
+                break;
+            case CalendarEvent.TYPE_GUEST:
+                openGuest(event);
+                break;
+        }
+    }
+
+    private void openGuest(CalendarEvent event) {
+        if (getContext() == null) {
+            return;
+        }
+        Intent intent = new Intent(getContext(), GuestActivity.class);
+        intent.putExtra(EXTRA_GUEST_ID, event.getGuest().getId());
+        getContext().startActivity(intent);
+    }
+
+    private void openEvent(CalendarEvent event) {
         if (getContext() == null) {
             return;
         }

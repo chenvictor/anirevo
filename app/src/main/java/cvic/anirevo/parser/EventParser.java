@@ -12,6 +12,7 @@ import cvic.anirevo.model.anirevo.AgeRestriction;
 import cvic.anirevo.model.anirevo.ArCategory;
 import cvic.anirevo.model.anirevo.ArEvent;
 import cvic.anirevo.model.anirevo.ArGuest;
+import cvic.anirevo.model.anirevo.ArLocation;
 import cvic.anirevo.model.anirevo.CategoryManager;
 import cvic.anirevo.model.anirevo.EventManager;
 import cvic.anirevo.model.anirevo.GuestManager;
@@ -75,7 +76,7 @@ public class EventParser {
         //Set basic properties
         String loc = event.getString("location");
         String desc = event.getString("desc");
-        arEvent.setLocation(LocationManager.getInstance().getLocation(loc));
+        ArLocation arLocation = LocationManager.getInstance().getLocation(loc);
         arEvent.setDesc(desc);
 
         //Establish mutual reference with category
@@ -98,6 +99,8 @@ public class EventParser {
                 EventTime start = EventTimeParser.parse(time.getString("start"));
                 EventTime end = EventTimeParser.parse(time.getString("end"));
                 CalendarEvent calEvent = new CalendarEvent(arEvent);
+                calEvent.setLocation(arLocation);
+                arLocation.addEvent(calEvent);
                 calEvent.setDate(date);
                 calEvent.setStart(start);
                 calEvent.setEnd(end);

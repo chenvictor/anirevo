@@ -21,7 +21,6 @@ public class ArEvent extends Starrable{
     private final int id;
 
     private final String title;
-    private ArLocation location;
     private String desc;
     private AgeRestriction restriction;
 
@@ -42,14 +41,13 @@ public class ArEvent extends Starrable{
         if (timeblocks.size() == 1) {
             //If 1 event, details show specifics
             CalendarEvent calEvent = timeblocks.get(0);
-            return String.format("%s, %s - %s | %s", calEvent.getDate(), calEvent.getStartTime(), calEvent.getEndTime(), getLocation().getPurpose());
+            return String.format("%s, %s - %s | %s", calEvent.getDate(), calEvent.getStartTime(), calEvent.getEndTime(), calEvent.getLocation());
         } else {
             //If multiple event, details show only each day
             StringBuilder details = new StringBuilder();
             for (CalendarEvent calEvent : timeblocks) {
                 details.append(calEvent.getDate()).append(" | ");
             }
-            details.append(getLocation().getPurpose());
             return details.toString();
         }
     }
@@ -74,11 +72,6 @@ public class ArEvent extends Starrable{
         this.desc = desc;
     }
 
-    public void setLocation(ArLocation location) {
-        this.location = location;
-        location.addEvent(this);
-    }
-
     public String getTitle() {
         return title;
     }
@@ -87,22 +80,17 @@ public class ArEvent extends Starrable{
         return desc;
     }
 
-    public ArLocation getLocation() {
-        return location;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ArEvent arEvent = (ArEvent) o;
-        return  Objects.equals(title, arEvent.title) &&
-                Objects.equals(location, arEvent.location);
+        return  Objects.equals(title, arEvent.title);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(location);
+        return Objects.hash(title);
     }
 
     public ArCategory getCategory() {
