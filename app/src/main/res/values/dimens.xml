@@ -8,15 +8,17 @@
     <dimen name="guest_card_portrait_size">100dp</dimen>
 
     <!-- Schedule View -->
+
         <!-- Positioning -->
-    <dimen name="hour_height">64dp</dimen>
-    <dimen name="left_margin">48dp</dimen>
-    <dimen name="event_block_margin">2dp</dimen>
-    <dimen name="event_block_padding">4dp</dimen>
+        <dimen name="hour_height">64dp</dimen>
+        <dimen name="left_margin">48dp</dimen>
+        <dimen name="event_block_margin">2dp</dimen>
+        <dimen name="event_block_padding">4dp</dimen>
+        <dimen name="event_block_round">4dp</dimen>
 
         <!-- Sizing -->
-    <dimen name="text_size">14dp</dimen>
-    <dimen name="star_size">15dp</dimen>
+        <dimen name="text_size">14dp</dimen>
+        <dimen name="star_size">15dp</dimen>
 
     <!-- BrowseGuests -->
     <dimen name="guest_card_width">110dp</dimen>

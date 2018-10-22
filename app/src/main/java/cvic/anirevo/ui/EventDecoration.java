@@ -53,7 +53,7 @@ public class EventDecoration extends RecyclerView.ItemDecoration {
         PAINT_AGE.setTextAlign(Paint.Align.LEFT);
         PAINT_RECT.setColor(COLOR_EVENT_BLOCK);
         BORDER_RECT.setStyle(Paint.Style.STROKE);
-        BORDER_RECT.setStrokeWidth(5);
+        BORDER_RECT.setStrokeWidth(2);
         PAINT_TEXT.setTextAlign(Paint.Align.LEFT);
         PAINT_TEXT.setTextSize(TEXT_SIZE);
         PAINT_STAR.setTextAlign(Paint.Align.RIGHT);
@@ -80,7 +80,7 @@ public class EventDecoration extends RecyclerView.ItemDecoration {
         PAINT_TEXT.setColor(resources.getColor(R.color.calendarEventText));
         PAINT_STAR.setTextSize(STAR_SIZE);
         COLOR_EVENT_BLOCK = resources.getColor(R.color.calendarEventBlock);
-        COLOR_EVENT_BORDER = resources.getColor(R.color.anirevoAccent);
+        COLOR_EVENT_BORDER = resources.getColor(R.color.calendarEventBlockBorder);
         PAINT_RECT.setColor(COLOR_EVENT_BLOCK);
         BORDER_RECT.setColor(COLOR_EVENT_BORDER);
         ScheduleFragmentHitboxHandler.setStarHitbox((int) (STAR_SIZE + 2 * mPadding));

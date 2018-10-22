@@ -3,6 +3,8 @@ package cvic.anirevo.tasks;
 import android.os.AsyncTask;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import cvic.anirevo.model.anirevo.ArLocation;
@@ -42,7 +44,13 @@ public class FetchScheduleEventsTask extends AsyncTask <Integer, Void, List<Cale
                 events.add(calEvent);
             }
         }
-
+        //Sort the events in order of start time
+        Collections.sort(events, new Comparator<CalendarEvent>() {
+            @Override
+            public int compare(CalendarEvent calendarEvent, CalendarEvent t1) {
+                return (calendarEvent.getStartHour() * 60 + calendarEvent.getStartTime().getMinute() - t1.getStartHour() * 60 - t1.getStartTime().getMinute());
+            }
+        });
         return events;
     }
 

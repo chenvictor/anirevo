@@ -20,8 +20,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import cvic.anirevo.EventActivity;
@@ -158,13 +156,6 @@ public class ScheduleFragment extends AniRevoFragment implements FetchScheduleEv
         //clear old hitboxes
         mHitboxHandler.clearHitboxes();
         //add new decorations
-        Collections.sort(events, new Comparator<CalendarEvent>() {
-            @Override
-            public int compare(CalendarEvent calendarEvent, CalendarEvent t1) {
-                return (calendarEvent.getStartHour() - t1.getStartHour());
-            }
-        });
-
         CalendarEvent prevEvent = null;
         EventDecoration prevDeco = null;
         int rightMargin = 0;
@@ -295,7 +286,9 @@ public class ScheduleFragment extends AniRevoFragment implements FetchScheduleEv
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
-                selectorPicked(i);
+                if (mDate != i) {
+                    selectorPicked(i);
+                }
             }
         });
 
@@ -327,7 +320,12 @@ public class ScheduleFragment extends AniRevoFragment implements FetchScheduleEv
         selectorPicked(schedState.date);
         mPager.setCurrentItem(schedState.loc, false);
         updateDate();
-        mScrollView.scrollTo(mScrollView.getScrollX(), schedState.scrollY);
+        mScrollView.post(new Runnable() {
+            @Override
+            public void run() {
+                mScrollView.scrollTo(mScrollView.getScrollX(), schedState.scrollY);
+            }
+        });
     }
 
     @Override

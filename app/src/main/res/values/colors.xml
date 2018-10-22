@@ -14,7 +14,8 @@
     <color name="restriction18plus">#ff887c</color>
 
     <!-- Calendar View -->
-    <color name="calendarEventBlock">#e4c441</color>
+    <color name="calendarEventBlock">@color/anirevoAccent</color>
     <color name="calendarEventText">@android:color/black</color>
+    <color name="calendarEventBlockBorder">@android:color/white</color>
 
 </resources>
