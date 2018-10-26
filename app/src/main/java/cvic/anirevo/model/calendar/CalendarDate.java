@@ -3,6 +3,7 @@ package cvic.anirevo.model.calendar;
 import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
@@ -52,6 +53,10 @@ public class CalendarDate implements Iterable<CalendarEvent>{
             }
             events.add(calEvent);
         }
+    }
+
+    public List<CalendarEvent> getEvents() {
+        return Collections.unmodifiableList(events);
     }
 
     @Override

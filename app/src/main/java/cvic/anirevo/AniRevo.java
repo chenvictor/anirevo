@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Menu;
 
 import java.lang.ref.WeakReference;
@@ -78,12 +79,19 @@ public class AniRevo extends AppCompatActivity implements CheckUpdatesTask.Updat
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (resultCode == RESULT_OK && requestCode == NavigationHandler.AGE_CHANGED_REQUEST_CODE && data != null) {
-            boolean shouldReload = data.getBooleanExtra(SettingsActivity.EXTRA_SHOULD_RELOAD, false);
-            if (shouldReload) {
-                reload();
-            }
+        switch (requestCode) {
+            case NavigationHandler.AGE_CHANGED_REQUEST_CODE:
+                if (resultCode == RESULT_OK && data != null) {
+                    boolean shouldReload = data.getBooleanExtra(SettingsActivity.EXTRA_SHOULD_RELOAD, false);
+                    if (shouldReload) {
+                        reload();
+                    }
+                }
+                break;
+            default:
+                Log.i(TAG, "Unknown activity result: requestCode " + requestCode);
         }
+
     }
 
     private void reload() {

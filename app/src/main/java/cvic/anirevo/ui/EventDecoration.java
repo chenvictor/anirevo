@@ -79,6 +79,7 @@ public class EventDecoration extends RecyclerView.ItemDecoration {
         PAINT_TEXT.setTextSize(TEXT_SIZE);
         PAINT_TEXT.setColor(resources.getColor(R.color.calendarEventText));
         PAINT_STAR.setTextSize(STAR_SIZE);
+        PAINT_STAR.setColor(resources.getColor(R.color.colorStar));
         COLOR_EVENT_BLOCK = resources.getColor(R.color.calendarEventBlock);
         COLOR_EVENT_BORDER = resources.getColor(R.color.calendarEventBlockBorder);
         PAINT_RECT.setColor(COLOR_EVENT_BLOCK);

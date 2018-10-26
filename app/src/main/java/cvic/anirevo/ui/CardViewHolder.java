@@ -7,7 +7,7 @@ public class CardViewHolder extends RecyclerView.ViewHolder {
 
     private CardView mCardView;
 
-    CardViewHolder(CardView v) {
+    public CardViewHolder(CardView v) {
         super(v);
         mCardView = v;
     }

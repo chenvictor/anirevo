@@ -19,15 +19,16 @@ import java.util.Map;
 
 import cvic.anirevo.GuestActivity;
 import cvic.anirevo.R;
+import cvic.anirevo.model.Starrable;
 import cvic.anirevo.model.anirevo.ArGuest;
 import cvic.anirevo.utils.IOUtils;
 
-public class ArGuestAdapter extends RecyclerView.Adapter<CardViewHolder> {
+public class ArGuestAdapter extends RecyclerView.Adapter<CardViewHolder> implements Starrable.StarListener {
 
     public static final String EXTRA_GUEST_ID = "cvic.anirevo.EXTRA_GUEST_ID";
 
     private Context mCtx;
-    List<ArGuest> items;
+    private List<ArGuest> items;
 
     private Bitmap DEFAULT_IMAGE;
     private Map<ArGuest, Bitmap> imageCache;
@@ -94,19 +95,14 @@ public class ArGuestAdapter extends RecyclerView.Adapter<CardViewHolder> {
         img.setImageBitmap(getImage(guest));
         name.setText(guest.getName());
         title.setText(guest.getTitle());
+        star.setText(guest.isStarred() ? mCtx.getString(R.string.star_filled) : mCtx.getString(R.string.star_empty));
 
-        if (guest.isStarred()) {
-            star.setText(mCtx.getString(R.string.star_filled));
-        } else {
-            star.setText(mCtx.getString(R.string.star_empty));
-        }
-
+        guest.setListener(this, viewHolder.getAdapterPosition());
     }
 
     void clickStar(CardViewHolder holder) {
         int idx = holder.getAdapterPosition();
         getGuest(idx).toggleStarred();
-        notifyItemChanged(idx);
     }
 
     private void clickGuest(CardViewHolder holder) {
@@ -137,4 +133,8 @@ public class ArGuestAdapter extends RecyclerView.Adapter<CardViewHolder> {
         return items.size();
     }
 
+    @Override
+    public void onValueChange(Starrable object) {
+        notifyItemChanged(object.getListenerIndex());
+    }
 }

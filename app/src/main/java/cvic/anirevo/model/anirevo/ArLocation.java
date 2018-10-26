@@ -78,4 +78,9 @@ public class ArLocation implements Iterable<CalendarEvent>{
     public int getId() {
         return id;
     }
+
+    @Override
+    public String toString() {
+        return getPurpose() + " - " + getLocation();
+    }
 }

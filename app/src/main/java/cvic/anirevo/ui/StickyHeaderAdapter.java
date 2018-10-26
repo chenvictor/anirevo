@@ -2,7 +2,6 @@ package cvic.anirevo.ui;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -10,48 +9,88 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import java.util.List;
 
-import cvic.anirevo.R;
+/**
+ * A custom RecyclerView Adapter class that implements StickyHeaders
+ *      can be applied to a generic type
+ * @param <T>   type of items the adapter should hold
+ */
 
-public class ArStickyHeaderEventAdapter extends ArEventAdapter {
+public abstract class StickyHeaderAdapter<T> extends RecyclerView.Adapter<CardViewHolder> {
 
-    private static final int HEADER_ITEM = 0;
-    private static final int EVENT_ITEM = 1;
+    private static final int ITEM_HEADER = 0;
+    private static final int ITEM_ITEM = 1;
 
-    ArStickyHeaderEventAdapter(Context ctx, List<EventListItem> items) {
-        super(ctx, items);
+    Context mCtx;
+    private List<ListItem<T>> mItems;
+
+    public StickyHeaderAdapter(Context ctx, List<ListItem<T>> items) {
+        mCtx = ctx;
+        mItems = items;
     }
+
+    /**
+     * Override this method to set the header layout
+     *  should be a CardView
+     * @return  resource id of the header layout
+     */
+    protected abstract int headerLayout();
+
+    /**
+     * Override this method to set the item layout
+     *  should be a CardView
+     * @return  resource id of the item layout
+     */
+    protected abstract int itemLayout();
+
+    protected abstract CardViewHolder createHeader(@NonNull ViewGroup parent);
+
+    protected abstract CardViewHolder createItem(@NonNull ViewGroup parent);
+
+    /**
+     * Override this method to bind the header to its view
+     * @param card      CardView of the header
+     * @param header    ListItem with the header information
+     */
+    protected abstract void bindHeader(@NonNull CardView card, ListItem header);
+
+    /**
+     * Override this method to bind the item to its view
+     * @param view      CardView of the item
+     * @param item      Generic item of type T to bind
+     */
+    protected abstract void bindItem(@NonNull CardView view, T item);
 
     @NonNull
     @Override
-    public CardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    final public CardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         switch (viewType) {
-            case HEADER_ITEM:
-                return new CardViewHolder((CardView) LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.event_header_card_layout, parent, false));
-            case EVENT_ITEM:
-                return super.onCreateViewHolder(parent, viewType);
+            case ITEM_HEADER:
+                return createHeader(parent);
+            case ITEM_ITEM:
+                return createItem(parent);
             default:
                 throw new UnsupportedOperationException("ViewType is invalid");
         }
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CardViewHolder holder, int position) {
-        EventListItem item = items.get(position);
+    final public int getItemCount() {
+        return mItems.size();
+    }
+
+    @Override
+    final public void onBindViewHolder(@NonNull CardViewHolder holder, int position) {
+        ListItem<T> item = mItems.get(position);
         CardView view = holder.getCardView();
         switch (holder.getItemViewType()) {
-            case HEADER_ITEM:
-                view.setCardBackgroundColor(item.getHeaderColor());
-                TextView text = view.findViewById(R.id.event_header_card_text);
-                text.setText(item.getHeaderText());
-                holder.itemView.setOnClickListener(null);
+            case ITEM_HEADER:
+                bindHeader(view, item);
                 break;
-            case EVENT_ITEM:
-                super.onBindViewHolder(holder, position);
+            case ITEM_ITEM:
+                bindItem(view, item.getItem());
                 break;
             default:
                 throw new UnsupportedOperationException("ViewType is invalid");
@@ -59,11 +98,11 @@ public class ArStickyHeaderEventAdapter extends ArEventAdapter {
     }
 
     @Override
-    public int getItemViewType(int position) {
+    final public int getItemViewType(int position) {
         if (isHeader(position)) {
-            return HEADER_ITEM;
+            return ITEM_HEADER;
         }
-        return EVENT_ITEM;
+        return ITEM_ITEM;
     }
 
     private int getHeaderPositionForItem(int itemPosition) {
@@ -78,39 +117,27 @@ public class ArStickyHeaderEventAdapter extends ArEventAdapter {
         return headerPosition;
     }
 
-    private int getHeaderLayout(int headerPosition) {
-        return R.layout.event_header_card_layout;
-    }
-
-    private void bindHeaderData(View header, int headerPosition) {
-        CardView card = header.findViewById(R.id.event_header_card);
-        TextView text = header.findViewById(R.id.event_header_card_text);
-        EventListItem item = items.get(headerPosition);
-        text.setText(item.getHeaderText());
-        card.setCardBackgroundColor(Color.BLACK);
+    private void bindHeaderData(CardView card, int headerPosition) {
+        ListItem item = mItems.get(headerPosition);
+        bindHeader(card, item);
     }
 
     private boolean isHeader(int itemPosition) {
-        return items.get(itemPosition).isHeader();
+        return mItems.get(itemPosition).isHeader();
     }
 
-    static class HeaderItemDecoration extends RecyclerView.ItemDecoration {
+    public static class HeaderItemDecoration extends RecyclerView.ItemDecoration {
 
-        private ArStickyHeaderEventAdapter mListener;
+        private StickyHeaderAdapter mListener;
         private int mStickyHeaderHeight;
 
-        HeaderItemDecoration(RecyclerView recyclerView, @NonNull ArStickyHeaderEventAdapter listener) {
+        public HeaderItemDecoration(RecyclerView recyclerView, @NonNull StickyHeaderAdapter listener) {
             mListener = listener;
 
             // On Sticky Header Click
             recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
                 public boolean onInterceptTouchEvent(@NonNull RecyclerView recyclerView, @NonNull MotionEvent motionEvent) {
-                    if (motionEvent.getY() <= mStickyHeaderHeight) {
-                        // Handle the clicks on the header here ...
-                        // TODO: Header clicks scroll user to the header content
-                        return true;
-                    }
-                    return false;
+                    return motionEvent.getY() <= mStickyHeaderHeight;
                 }
 
                 public void onTouchEvent(@NonNull RecyclerView recyclerView, @NonNull MotionEvent motionEvent) {
@@ -155,8 +182,8 @@ public class ArStickyHeaderEventAdapter extends ArEventAdapter {
 
         private View getHeaderViewForItem(int itemPosition, RecyclerView parent) {
             int headerPosition = mListener.getHeaderPositionForItem(itemPosition);
-            int layoutResId = mListener.getHeaderLayout(headerPosition);
-            View header = LayoutInflater.from(parent.getContext()).inflate(layoutResId, parent, false);
+            int layoutResId = mListener.headerLayout();
+            CardView header = (CardView) LayoutInflater.from(parent.getContext()).inflate(layoutResId, parent, false);
             mListener.bindHeaderData(header, headerPosition);
             return header;
         }

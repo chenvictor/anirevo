@@ -1,6 +1,5 @@
 package cvic.anirevo.ui;
 
-
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -57,9 +56,9 @@ public class StarredEventFragment extends Fragment {
         mRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        List<EventListItem> starredEvents = new ArrayList<>();
+        List<ListItem<ArEvent>> starredEvents = new ArrayList<>();
         for (ArEvent event : StarManager.getInstance().getStarredEvents()) {
-            starredEvents.add(new EventListItem(event));
+            starredEvents.add(new ListItem<>(event));
         }
         mAdapter = new StarredEventAdapter(getContext(), starredEvents);
         mAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
@@ -83,7 +82,7 @@ public class StarredEventFragment extends Fragment {
 
     private class StarredEventAdapter extends ArEventAdapter {
 
-        StarredEventAdapter(Context ctx, List<EventListItem> items) {
+        StarredEventAdapter(Context ctx, List<ListItem<ArEvent>> items) {
             super(ctx, items);
         }
 

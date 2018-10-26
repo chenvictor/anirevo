@@ -9,6 +9,8 @@
 
     <color name="anirevoAccent">#ffd308</color>
 
+    <color name="colorStar">#606060</color>
+
     <!-- Age Restriction -->
     <color name="restriction13plus">#a4bdfc</color>
     <color name="restriction18plus">#ff887c</color>

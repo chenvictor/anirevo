@@ -22,10 +22,10 @@ public class ArEventAdapter extends RecyclerView.Adapter<CardViewHolder> {
     public static final String EXTRA_EVENT_ID = "cvic.anirevo.EXTRA_EVENT_ID";
 
     private Context mCtx;
-    List<EventListItem> items;
+    List<ListItem<ArEvent>> items;
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    ArEventAdapter(Context ctx, List<EventListItem> items) {
+    ArEventAdapter(Context ctx, List<ListItem<ArEvent>> items) {
         this.items = items;
         mCtx = ctx;
     }
@@ -35,7 +35,7 @@ public class ArEventAdapter extends RecyclerView.Adapter<CardViewHolder> {
     public CardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         CardView view = (CardView) LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.event_card_layout, parent, false);
-        TextView star = view.findViewById(R.id.event_card_star);
+        TextView star = view.findViewById(R.id.btn_star);
         final CardViewHolder holder = new CardViewHolder(view);
         view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,15 +54,15 @@ public class ArEventAdapter extends RecyclerView.Adapter<CardViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull final CardViewHolder holder, int position) {
-        EventListItem item = items.get(position);
+        ListItem<ArEvent> item = items.get(position);
         CardView view = holder.getCardView();
-        TextView name = view.findViewById(R.id.event_header_card_text);
-        TextView details = view.findViewById(R.id.event_card_details);
+        TextView name = view.findViewById(R.id.cal_event_title);
+        TextView details = view.findViewById(R.id.cal_event_time);
         TextView desc = view.findViewById(R.id.event_card_description);
         TextView age = view.findViewById(R.id.event_card_age_restriction);
-        TextView star = view.findViewById(R.id.event_card_star);
+        TextView star = view.findViewById(R.id.btn_star);
 
-        final ArEvent event = item.getEvent();
+        final ArEvent event = item.getItem();
         name.setText(event.getTitle());
         details.setText(event.getDetails());
         desc.setText(event.getDesc());
@@ -90,7 +90,7 @@ public class ArEventAdapter extends RecyclerView.Adapter<CardViewHolder> {
     private void clickEvent(CardViewHolder holder) {
         int i = holder.getAdapterPosition();
         Intent intent = new Intent(mCtx, EventActivity.class);
-        ArEvent event = items.get(i).getEvent();
+        ArEvent event = items.get(i).getItem();
         if (event != null) {
             intent.putExtra(EXTRA_EVENT_ID, event.getId());
             mCtx.startActivity(intent);
@@ -98,7 +98,7 @@ public class ArEventAdapter extends RecyclerView.Adapter<CardViewHolder> {
     }
 
     ArEvent getEvent(int i) {
-        return items.get(i).getEvent();
+        return items.get(i).getItem();
     }
 
     @Override

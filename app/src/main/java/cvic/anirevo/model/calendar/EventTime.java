@@ -46,4 +46,8 @@ public class EventTime {
     public void increment() {
         this.hour += 24;
     }
+
+    public int toInt() {
+        return hour * 60 + minute;
+    }
 }

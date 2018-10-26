@@ -26,6 +26,11 @@ public class ArEvent extends Starrable{
 
     private List<CalendarEvent> timeblocks;
     private ArCategory category;
+
+    public Set<ArGuest> getGuests() {
+        return Collections.unmodifiableSet(guests);
+    }
+
     private Set<ArGuest> guests;
     private Set<ArTag> tags;
 
